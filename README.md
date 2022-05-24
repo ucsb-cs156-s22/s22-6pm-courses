@@ -1,4 +1,4 @@
-# team01-s22-6pm-courses
+# proj01-s22-6pm-courses
 
 [![codecov](https://codecov.io/gh/ucsb-cs156-s22/s22-6pm-courses/branch/main/graph/badge.svg?token=Vx1oeBFenX)](https://codecov.io/gh/ucsb-cs156-s22/s22-6pm-courses)
 
