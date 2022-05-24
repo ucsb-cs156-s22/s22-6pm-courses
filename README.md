@@ -18,6 +18,7 @@ Storybook is here:
 * QA dashboard: <https://dashboard.heroku.com/apps/s22-6pm-2-courses-qa/>
 * QA app: <https://s22-6pm-2-courses-qa.herokuapp.com/>
 
+
 The GitHub actions script to deploy the Storybook to QA requires some configuration; see [docs/github-actions.md](docs/github-actions.md) for details.
 
 If these repos are not yet setup, see the setup steps in [`docs/storybook.md`](docs/storybook.md).
