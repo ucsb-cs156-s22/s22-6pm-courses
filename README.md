@@ -1,5 +1,9 @@
 # team04-w22-5pm-courses
 
+Heroku:
+* Production: <https://s22-6pm-courses.herokuapp.com/>
+* Dashboard: <https://dashboard.heroku.com/apps/s22-6pm-courses>
+
 [![codecov](https://codecov.io/gh/ucsb-cs156-w22/team04-w22-5pm-courses/branch/main/graph/badge.svg?token=LvEIQ6tYti)](https://codecov.io/gh/ucsb-cs156-w22/team04-w22-5pm-courses)
 
 Storybook is here:
