@@ -14,7 +14,7 @@ export default function CoursesWithSectionsTable({ courses }) {
         
         {
             Header: 'Sections Eneroll Code',
-            accessor: (row, _rowIndex) => row.classSections.enrollCode,
+            accessor: (row, _rowIndex) => row.classSections.enrollCode[1],
             id: 'classSections.enrollCode',
         },
         
