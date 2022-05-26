@@ -22,9 +22,8 @@ public class PersonalCourses {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
-  @ManyToOne
-  @JoinColumn(name = "psId")
-  private PersonalSchedule personalSchedule;
+  private long psID;
+  //private PersonalSchedule personalSchedule;
   private String enrollCd;
   private String quarter;
 }
