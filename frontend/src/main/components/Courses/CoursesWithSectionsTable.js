@@ -11,12 +11,13 @@ export default function CoursesWithSectionsTable({ courses }) {
             accessor: 'courseId',
 
         },
-        /*
+        
         {
-            Header: 'Sections',
-            accessor: 'classSections',
+            Header: 'Sections Eneroll Code',
+            accessor: (row, _rowIndex) => row.classSections.enrollCode,
+            id: 'classSections.enrollCode',
         },
-        */
+        
     ];
 
     return <OurTable
