@@ -1,12 +1,12 @@
 package edu.ucsb.cs156.courses.controllers;
 
-//FIX
+//
 import edu.ucsb.cs156.courses.entities.PersonalCourses;
 //
 import edu.ucsb.cs156.courses.entities.User;
 import edu.ucsb.cs156.courses.errors.EntityNotFoundException;
 import edu.ucsb.cs156.courses.models.CurrentUser;
-//FIX
+//
 import edu.ucsb.cs156.courses.repositories.PersonalCoursesRepository;
 //
 import io.swagger.annotations.Api;
@@ -35,25 +35,29 @@ import java.util.Optional;
 
 @Api(description = "PersonalCourses")
 //CHECK
-@RequestMapping("/api/personalcourse")
+@RequestMapping("/api/personalcourses")
 //
 @RestController
 @Slf4j
 public class PersonalCoursesController extends ApiController {
 
-    //FIX
+    //
     @Autowired
     PersonalCoursesRepository personalcoursesRepository;
     
     /*
-    @ApiOperation(value = "List all personal schedules")
+
+    @ApiOperation(value = "List all personal courses")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/admin/all")
-    public Iterable<PersonalSchedule> allUsersSchedules() {
-        Iterable<PersonalSchedule> personalschedules = personalscheduleRepository.findAll();
-        return personalschedules;
+    public Iterable<PersonalCourses> allPersonalCourses() {
+        Iterable<PersonalCourses> personalcourses = personalcoursesRepository.findAll();
+        return personalcourses;
     }
+    */
 
+    /*
+    FIX
     @ApiOperation(value = "List this user's personal schedules")
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/all")
@@ -100,7 +104,7 @@ public class PersonalCoursesController extends ApiController {
         PersonalCourses personalcourse = new PersonalCourses();
         personalcourse.setEnrollCd(enrollCd);
         personalcourse.setQuarter(quarter);
-
+        personalcourse.setPsID(psID);        
         //personalcourse.getPersonalSchedule().setDescription(description);;
 
         
