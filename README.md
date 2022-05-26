@@ -1,6 +1,5 @@
 # proj01-s22-6pm-courses
 
-<<<<<<< HEAD
 Heroku:
 * Production: <https://s22-6pm-courses.herokuapp.com/>
 * Dashboard: <https://dashboard.heroku.com/apps/s22-6pm-courses>
@@ -10,9 +9,6 @@ Heroku:
 6pm-1 
 * Heroku QA dashboard: <https://dashboard.heroku.com/apps/s22-6pm-1-courses-qa>
 * Heroku QA deployment: <https://s22-6pm-1-courses-qa.herokuapp.com/>
-=======
-[![codecov](https://codecov.io/gh/ucsb-cs156-s22/s22-6pm-courses/branch/main/graph/badge.svg?token=Vx1oeBFenX)](https://codecov.io/gh/ucsb-cs156-s22/s22-6pm-courses)
->>>>>>> 2595627 (Merge branch 'main' of github.com:ucsb-cs156-s22/s22-6pm-courses)
 
 Storybook is here:
 * Production: <https://ucsb-cs156-s22.github.io/s22-6pm-courses-docs/>
@@ -21,7 +17,6 @@ Storybook is here:
 6pm-2
 * QA dashboard: <https://dashboard.heroku.com/apps/s22-6pm-2-courses-qa/>
 * QA app: <https://s22-6pm-2-courses-qa.herokuapp.com/>
-
 
 The GitHub actions script to deploy the Storybook to QA requires some configuration; see [docs/github-actions.md](docs/github-actions.md) for details.
 
