@@ -11,10 +11,16 @@ export default function CoursesWithSectionsTable({ courses }) {
             accessor: 'courseId',
 
         },
-        
         {
             Header: 'Sections Eneroll Code',
-            accessor: (row, _rowIndex) => row.classSections[1].enrollCode,
+            accessor: data => {
+                let output = [];
+                _.map(data.classSections, section => {
+                    output.push(section.enrollCode);
+                });
+                return output.join(', ');
+            },
+            //accessor: (row, _rowIndex) => row.classSections[1].enrollCode,
             id: 'classSections.enrollCode',
         },
         
