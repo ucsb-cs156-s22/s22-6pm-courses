@@ -170,6 +170,6 @@ describe("AppNavbar tests", () => {
         expect(aElement).toBeInTheDocument();
         aElement?.click();
 
-        expect(await screen.findByTestId("appnavbar-schedulesearch-list")).toBeInTheDocument();
+        expect(await screen.findByTestId("appnavbar-sectionsearch-list")).toBeInTheDocument();
     });
 });
