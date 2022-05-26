@@ -11,10 +11,12 @@ export default function CoursesWithSectionsTable({ courses }) {
             accessor: 'courseId',
 
         },
+        /*
         {
             Header: 'Sections',
             accessor: 'classSections',
         },
+        */
     ];
 
     return <OurTable
