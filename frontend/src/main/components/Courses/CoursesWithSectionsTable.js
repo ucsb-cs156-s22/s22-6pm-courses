@@ -13,9 +13,9 @@ export default function CoursesWithSectionsTable({ courses }) {
         },
         {
             Header: 'Sections Eneroll Code',
-            accessor: data => {
+            accessor: row => {
                 let output = [];
-                _.map(data.classSections, section => {
+                row.map(row.classSections, section => {
                     output.push(section.enrollCode);
                 });
                 return output.join(', ');
