@@ -21,9 +21,7 @@ public class PersonalCourses {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
-
-  private long psID;
-  //private PersonalSchedule personalSchedule;
+  private long psId;
   private String enrollCd;
   private String quarter;
 }
