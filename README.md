@@ -10,6 +10,9 @@ Heroku:
 * Heroku QA dashboard: <https://dashboard.heroku.com/apps/s22-6pm-1-courses-qa>
 * Heroku QA deployment: <https://s22-6pm-1-courses-qa.herokuapp.com/>
 
+* Heroku QA dashboard: <https://dashboard.heroku.com/apps/cs156-s22-6pm-courses-qa>
+* Heroku QA deployment: <https://cs156-s22-6pm-courses-qa.herokuapp.com/>
+
 Storybook is here:
 * Production: <https://ucsb-cs156-s22.github.io/s22-6pm-courses-docs/>
 * QA:  <https://ucsb-cs156-s22.github.io/s22-6pm-courses-docs-qa/>
