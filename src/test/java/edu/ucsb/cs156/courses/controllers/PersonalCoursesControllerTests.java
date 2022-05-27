@@ -43,17 +43,33 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
     // Authorization tests for /api/personalcourses/admin/all
 
     @Test
-    public void api_schedules_all__logged_out__returns_403() throws Exception {
+    public void api_courses_all__logged_out__returns_403() throws Exception {
         mockMvc.perform(get("/api/personalcourses/all"))
                 .andExpect(status().is(403));
     }
     
     @WithMockUser(roles = { "USER" })
     @Test
-    public void api_schedules_all__user_logged_in__returns_200() throws Exception {
+    public void api_courses_all__user_logged_in__returns_200() throws Exception {
         mockMvc.perform(get("/api/personalcourses/all"))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    public void api_courses_getBypsID__logged_out__returns_403() throws Exception {
+        mockMvc.perform(get("/api/personalcourses/getBypsID?psID=1"))
+                .andExpect(status().is(403));
+    }
+    
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void api_courses_getBypsID__user_logged_in__returns_200() throws Exception {
+        mockMvc.perform(get("/api/personalcourses/getBypsID?psID=1"))
+                .andExpect(status().isOk());
+    }
+
+
+
     /*
     @WithMockUser(roles = { "USER" })
     @Test
@@ -88,8 +104,8 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
     // Authorization tests for /api/personalschedules/post
     
     @Test
-    public void api_schedules_post__logged_out__returns_403() throws Exception {
-        mockMvc.perform(post("/api/personalcourses/post"))
+    public void api_schedules_add__logged_out__returns_403() throws Exception {
+        mockMvc.perform(post("/api/personalcourses/add"))
                 .andExpect(status().is(403));
     }
 
@@ -242,6 +258,73 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         String responseString = response.getResponse().getContentAsString();
         assertEquals(expectedJson, responseString);
     }
+
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void api_courses__admin_logged_in__get_courses_by_personal_schedule_ID() throws Exception {
+
+        // arrange
+        /*
+        User u1 = User.builder().id(1L).build();
+        User u2 = User.builder().id(2L).build();
+        User u = currentUserService.getCurrentUser().getUser();
+        */
+
+        PersonalCourses p1 = PersonalCourses.builder().psID(1).enrollCd("123456").quarter("20222").id(0L).build();
+        PersonalCourses p2 = PersonalCourses.builder().psID(1).enrollCd("789123").quarter("20222").id(1L).build();
+        PersonalCourses p3 = PersonalCourses.builder().psID(2).enrollCd("654321").quarter("20222").id(2L).build();
+        //PersonalSchedule p3 = PersonalSchedule.builder().name("Name 3").description("Description 3").quarter("20223").user(u).id(3L).build();
+
+        ArrayList<PersonalCourses> expectedCourses = new ArrayList<>();
+        expectedCourses.addAll(Arrays.asList(p1, p2, p3));
+
+
+        when(personalcoursesRepository.findAllByPsID(1L)).thenReturn(expectedCourses);
+
+        // act
+        MvcResult response = mockMvc.perform(get("/api/personalcourses/getBypsID?psID=1"))
+                .andExpect(status().isOk()).andReturn();
+
+        // assert
+
+        verify(personalcoursesRepository, times(1)).findAllByPsID(1L);
+        String expectedJson = mapper.writeValueAsString(expectedCourses);
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedJson, responseString);
+    }
+
+    /*
+    @WithMockUser(roles = { "ADMIN", "USER" })
+    @Test
+    public void api_courses__admin_logged_in__get_courses_by_personal_schedule_ID() throws Exception {
+
+        // arrange
+
+        //User u = currentUserService.getCurrentUser().getUser();
+        //User otherUser = User.builder().id(999L).build();
+        
+        PersonalCourses personalcourses1 = PersonalCourses.builder().psID(1L).enrollCd("123456").quarter("20222").id(0L).build();
+        PersonalCourses personalcourses2 = PersonalCourses.builder().psID(2L).enrollCd("654321").quarter("20222").id(1L).build();
+        ArrayList<PersonalCourses> expectedCourses = new ArrayList<>();
+        expectedCourses.addAll(Arrays.asList(personalcourses1, personalcourses2));
+        when(personalcoursesRepository.findAllByPsID(eq(1L))).thenReturn(expectedCourses);
+        
+        PersonalCourses expectedCourse = PersonalCourses.builder().psID(1L).enrollCd("123456").quarter("20222").id(0L).build();
+        when(personalcoursesRepository.save(eq(expectedCourse))).thenReturn(expectedCourse);
+
+        // act
+        MvcResult response = mockMvc.perform(get("/api/personalcourses/getBypsID?psID=1"))
+                .andExpect(status().isOk()).andReturn();
+
+        // assert
+
+        verify(personalcoursesRepository, times(1)).findAllByPsID(1L);
+        String expectedJson = mapper.writeValueAsString(expectedCourse);
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedJson, responseString);
+    }
+    */
+
     /*
     @WithMockUser(roles = { "USER" })
     @Test

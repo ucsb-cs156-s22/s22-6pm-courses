@@ -54,7 +54,17 @@ public class PersonalCoursesController extends ApiController {
         Iterable<PersonalCourses> personalcourses = personalcoursesRepository.findAll();
         return personalcourses;
     }
-    
+
+    @ApiOperation(value = "List personal courses in a personal schedule")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/getBypsID")
+    public Iterable<PersonalCourses> getPersonalCoursesByPersonalScheduleID (
+        @ApiParam("personal schedule id") @RequestParam Long psID
+    ) {
+        Iterable<PersonalCourses> personalcourses = personalcoursesRepository.findAllByPsID(psID);
+        
+        return personalcourses;
+    }
 
     /*
     FIX
