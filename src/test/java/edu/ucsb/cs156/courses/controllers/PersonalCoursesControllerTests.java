@@ -39,22 +39,22 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
 
     @MockBean
     UserRepository userRepository;
-    /*
-    // Authorization tests for /api/personalschedules/admin/all
+    
+    // Authorization tests for /api/personalcourses/admin/all
 
     @Test
-    public void api_schedules_admin_all__logged_out__returns_403() throws Exception {
-        mockMvc.perform(get("/api/personalcourses/admin/all"))
-                .andExpect(status().is(403));
-    }
-
-    @WithMockUser(roles = { "USER" })
-    @Test
-    public void api_schedules_admin_all__user_logged_in__returns_403() throws Exception {
-        mockMvc.perform(get("/api/personalcourses/admin/all"))
+    public void api_schedules_all__logged_out__returns_403() throws Exception {
+        mockMvc.perform(get("/api/personalcourses/all"))
                 .andExpect(status().is(403));
     }
     
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void api_schedules_all__user_logged_in__returns_200() throws Exception {
+        mockMvc.perform(get("/api/personalcourses/all"))
+                .andExpect(status().isOk());
+    }
+    /*
     @WithMockUser(roles = { "USER" })
     @Test
     public void api_schedules_admin__user_logged_in__returns_403() throws Exception {
@@ -62,15 +62,16 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
                 .andExpect(status().is(403));
     }
     
+    
     @WithMockUser(roles = { "ADMIN" })
     @Test
     public void api_schedules_admin_all__admin_logged_in__returns_200() throws Exception {
-        mockMvc.perform(get("/api/personalcourses/admin/all"))
+        mockMvc.perform(get("/api/personalcourses/all"))
                 .andExpect(status().isOk());
     }
-
+    */
     // Authorization tests for /api/personalschedules/all
-
+    /*
     @Test
     public void api_schedules_all__logged_out__returns_403() throws Exception {
         mockMvc.perform(get("/api/personalcourses/all"))
@@ -207,38 +208,41 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         assertEquals("EntityNotFoundException", json.get("type"));
         assertEquals("PersonalSchedule with id 29 not found", json.get("message"));
     }
+    */
 
-    @WithMockUser(roles = { "ADMIN", "USER" })
+    @WithMockUser(roles = { "USER" })
     @Test
     public void api_schedules_admin_all__admin_logged_in__returns_all_schedules() throws Exception {
 
         // arrange
-
+        /*
         User u1 = User.builder().id(1L).build();
         User u2 = User.builder().id(2L).build();
         User u = currentUserService.getCurrentUser().getUser();
+        */
 
-        PersonalSchedule p1 = PersonalSchedule.builder().name("Name 1").description("Description 1").quarter("20221").user(u1).id(1L).build();
-        PersonalSchedule p2 = PersonalSchedule.builder().name("Name 2").description("Description 2").quarter("20222").user(u2).id(2L).build();
-        PersonalSchedule p3 = PersonalSchedule.builder().name("Name 3").description("Description 3").quarter("20223").user(u).id(3L).build();
+        PersonalCourses p1 = PersonalCourses.builder().psID(1).enrollCd("123456").quarter("20222").id(0L).build();
+        PersonalCourses p2 = PersonalCourses.builder().psID(2).enrollCd("789123").quarter("20222").id(1L).build();
+        PersonalCourses p3 = PersonalCourses.builder().psID(3).enrollCd("654321").quarter("20222").id(2L).build();
+        //PersonalSchedule p3 = PersonalSchedule.builder().name("Name 3").description("Description 3").quarter("20223").user(u).id(3L).build();
 
-        ArrayList<PersonalSchedule> expectedSchedules = new ArrayList<>();
-        expectedSchedules.addAll(Arrays.asList(p1, p2, p3));
+        ArrayList<PersonalCourses> expectedCourses = new ArrayList<>();
+        expectedCourses.addAll(Arrays.asList(p1, p2, p3));
 
-        when(personalscheduleRepository.findAll()).thenReturn(expectedSchedules);
+        when(personalcoursesRepository.findAll()).thenReturn(expectedCourses);
 
         // act
-        MvcResult response = mockMvc.perform(get("/api/personalschedules/admin/all"))
+        MvcResult response = mockMvc.perform(get("/api/personalcourses/all"))
                 .andExpect(status().isOk()).andReturn();
 
         // assert
 
-        verify(personalscheduleRepository, times(1)).findAll();
-        String expectedJson = mapper.writeValueAsString(expectedSchedules);
+        verify(personalcoursesRepository, times(1)).findAll();
+        String expectedJson = mapper.writeValueAsString(expectedCourses);
         String responseString = response.getResponse().getContentAsString();
         assertEquals(expectedJson, responseString);
     }
-
+    /*
     @WithMockUser(roles = { "USER" })
     @Test
     public void api_schedules_all__user_logged_in__returns_only_schedules_for_user() throws Exception {

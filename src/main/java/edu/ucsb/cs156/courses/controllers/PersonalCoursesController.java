@@ -45,16 +45,16 @@ public class PersonalCoursesController extends ApiController {
     @Autowired
     PersonalCoursesRepository personalcoursesRepository;
     
-    /*
+    
 
     @ApiOperation(value = "List all personal courses")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/admin/all")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/all")
     public Iterable<PersonalCourses> allPersonalCourses() {
         Iterable<PersonalCourses> personalcourses = personalcoursesRepository.findAll();
         return personalcourses;
     }
-    */
+    
 
     /*
     FIX
@@ -105,7 +105,7 @@ public class PersonalCoursesController extends ApiController {
         personalcourse.setEnrollCd(enrollCd);
         personalcourse.setQuarter(quarter);
         personalcourse.setPsID(psID);        
-        //personalcourse.getPersonalSchedule().setDescription(description);;
+        
 
         
         
