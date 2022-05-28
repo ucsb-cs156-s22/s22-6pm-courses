@@ -12,16 +12,16 @@ export default function CoursesWithSectionsTable({ courses }) {
 
         },
         {
-            Header: 'Sections Eneroll Code',
-            accessor: row => {
+            Header: 'Section code',
+            accessor: data => {
+                let temp = "sss";
                 let output = [];
-                row.map(row.classSections, section => {
+                _.map(data.classSections, section => {
                     output.push(section.enrollCode);
                 });
-                return output.join(', ');
+                return temp;
+                //return output.join(', ');
             },
-            //accessor: (row, _rowIndex) => row.classSections[1].enrollCode,
-            id: 'classSections.enrollCode',
         },
         
     ];
