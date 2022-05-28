@@ -17,4 +17,4 @@ public class CSRFController {
   public CsrfToken csrf(CsrfToken token) {
     return token;
   }
-}
+} 
