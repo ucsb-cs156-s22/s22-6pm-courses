@@ -1,14 +1,14 @@
 package edu.ucsb.cs156.courses.controllers;
 
-//
+
 import edu.ucsb.cs156.courses.entities.PersonalCourses;
-//
+
 import edu.ucsb.cs156.courses.entities.User;
 import edu.ucsb.cs156.courses.errors.EntityNotFoundException;
 import edu.ucsb.cs156.courses.models.CurrentUser;
-//
+
 import edu.ucsb.cs156.courses.repositories.PersonalCoursesRepository;
-//
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -41,12 +41,10 @@ import java.util.Optional;
 @Slf4j
 public class PersonalCoursesController extends ApiController {
 
-    //
+    
     @Autowired
     PersonalCoursesRepository personalcoursesRepository;
     
-    
-
     @ApiOperation(value = "List all personal courses")
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/all")
@@ -55,48 +53,12 @@ public class PersonalCoursesController extends ApiController {
         return personalcourses;
     }
     
-
-    /*
-    FIX
-    @ApiOperation(value = "List this user's personal schedules")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    @GetMapping("/all")
-    public Iterable<PersonalSchedule> thisUsersSchedules() {
-        CurrentUser currentUser = getCurrentUser();
-        Iterable<PersonalSchedule> personalschedules = personalscheduleRepository.findAllByUserId(currentUser.getUser().getId());
-        return personalschedules;
-    }
-
-    @ApiOperation(value = "Get a single personal schedule (if it belongs to current user)")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    @GetMapping("")
-    public PersonalSchedule getScheduleById(
-            @ApiParam("id") @RequestParam Long id) {
-        User currentUser = getCurrentUser().getUser();
-        PersonalSchedule personalschedule = personalscheduleRepository.findByIdAndUser(id, currentUser)
-          .orElseThrow(() -> new EntityNotFoundException(PersonalSchedule.class, id));
-
-        return personalschedule;
-    }
-
-    @ApiOperation(value = "Get a single personal schedule (no matter who it belongs to, admin only)")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/admin")
-    public PersonalSchedule getScheduleById_admin(
-            @ApiParam("id") @RequestParam Long id) {
-              PersonalSchedule personalschedule = personalscheduleRepository.findById(id)
-          .orElseThrow(() -> new EntityNotFoundException(PersonalSchedule.class, id));
-
-        return personalschedule;
-    }
-    */
-    //FIX
     @ApiOperation(value = "Add a new personal course")
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/add")
     public PersonalCourses addCourse(
             @ApiParam("enrollCd") @RequestParam String enrollCd,
-            @ApiParam("psID") @RequestParam long psID,
+            @ApiParam("psID") @RequestParam long psId,
             @ApiParam("Quarter (in yyyyq)") @RequestParam String quarter) {
         CurrentUser currentUser = getCurrentUser();
         log.info("currentUser={}", currentUser);
@@ -104,79 +66,9 @@ public class PersonalCoursesController extends ApiController {
         PersonalCourses personalcourse = new PersonalCourses();
         personalcourse.setEnrollCd(enrollCd);
         personalcourse.setQuarter(quarter);
-        personalcourse.setPsID(psID);        
-        
-
-        
-        
+        personalcourse.setPsId(psId);
         PersonalCourses savedPersonalCourse = personalcoursesRepository.save(personalcourse);
         return savedPersonalCourse;
     }
-    /*
-    @ApiOperation(value = "Delete a personal schedule owned by this user")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    @DeleteMapping("")
-    public Object deleteSchedule(
-            @ApiParam("id") @RequestParam Long id) {
-        User currentUser = getCurrentUser().getUser();
-        PersonalSchedule personalschedule = personalscheduleRepository.findByIdAndUser(id, currentUser)
-          .orElseThrow(() -> new EntityNotFoundException(PersonalSchedule.class, id));
-
-          personalscheduleRepository.delete(personalschedule);
-
-        return genericMessage("PersonalSchedule with id %s deleted".formatted(id));
-
-    }
-
-    @ApiOperation(value = "Delete another user's personal schedule")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping("/admin")
-    public Object deleteSchedule_Admin(
-            @ApiParam("id") @RequestParam Long id) {
-              PersonalSchedule personalschedule = personalscheduleRepository.findById(id)
-          .orElseThrow(() -> new EntityNotFoundException(PersonalSchedule.class, id));
-
-          personalscheduleRepository.delete(personalschedule);
-
-        return genericMessage("PersonalSchedule with id %s deleted".formatted(id));
-    }
-
-    @ApiOperation(value = "Update a single personal schedule (if it belongs to current user)")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    @PutMapping("")
-    public PersonalSchedule putScheduleById(
-            @ApiParam("id") @RequestParam Long id,
-            @RequestBody @Valid PersonalSchedule incomingSchedule) {
-        User currentUser = getCurrentUser().getUser();
-        PersonalSchedule personalschedule = personalscheduleRepository.findByIdAndUser(id, currentUser)
-          .orElseThrow(() -> new EntityNotFoundException(PersonalSchedule.class, id));
-
-        personalschedule.setName(incomingSchedule.getName());
-        personalschedule.setDescription(incomingSchedule.getDescription());
-        personalschedule.setQuarter(incomingSchedule.getQuarter());
-
-        personalscheduleRepository.save(personalschedule);
-
-        return personalschedule;
-    }
-
-    @ApiOperation(value = "Update a single Schedule (regardless of ownership, admin only, can't change ownership)")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping("/admin")
-    public PersonalSchedule putScheduleById_admin(
-            @ApiParam("id") @RequestParam Long id,
-            @RequestBody @Valid PersonalSchedule incomingSchedule) {
-              PersonalSchedule personalschedule = personalscheduleRepository.findById(id)
-          .orElseThrow(() -> new EntityNotFoundException(PersonalSchedule.class, id));
-
-        personalschedule.setName(incomingSchedule.getName());
-        personalschedule.setDescription(incomingSchedule.getDescription());
-        personalschedule.setQuarter(incomingSchedule.getQuarter());
-
-        personalscheduleRepository.save(personalschedule);
-
-        return personalschedule;
-    }
-    */
     
 }
