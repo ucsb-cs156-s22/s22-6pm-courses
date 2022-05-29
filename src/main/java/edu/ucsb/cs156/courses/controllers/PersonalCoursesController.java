@@ -81,5 +81,21 @@ public class PersonalCoursesController extends ApiController {
         PersonalCourses savedPersonalCourse = personalcoursesRepository.save(personalcourse);
         return savedPersonalCourse;
     }
+
+    @ApiOperation(value = "Delete a personal course")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @DeleteMapping("/delete")
+    public Object deleteSchedule(
+            @ApiParam("id") @RequestParam Long id) {
+        
+        PersonalCourses personcourse = personalcoursesRepository.findById(id)
+          .orElseThrow(() -> new EntityNotFoundException(PersonalCourses.class, id));
+
+          personalcoursesRepository.delete(personcourse);
+
+        return genericMessage("Personal Course with id %s deleted".formatted(id));
+
+    }
+
     
 }
