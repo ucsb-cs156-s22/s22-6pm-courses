@@ -31,9 +31,9 @@ export const location = (loc) => {
         if (i + 1 < loc.length) {
             ans += `,`
         } 
-        ans = ans.split(',')
     }
-    return ans.map((line)=><div>{line}</div>);
+    ans = ans.split(`,`);
+    return ans.map((a)=><div>{a}</div>);;
 }
 
 export const enrollTotal = (loc) => {
