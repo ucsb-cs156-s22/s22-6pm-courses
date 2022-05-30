@@ -19,7 +19,7 @@ export default function HomePage() {
   });
 
   const onSuccess = (courses) => {
-    setCourseJSON(courses.classessection);
+    setCourseJSON(courses.classes.classSections);
   };
 
   const mutation = useBackendMutation(
