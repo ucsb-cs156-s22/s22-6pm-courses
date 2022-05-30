@@ -13,36 +13,37 @@ export default function CoursesWithSectionsTable({ courses }) {
         {
             Header: 'Course ID',
             accessor: 'courseId',
-        },
-        {
-            Header: 'Location',
-            accessor: (row) => location(row.timeLocations),
-            id: 'location',
-        },
-        {
-            Header: 'Total enrolled',
-            accessor: 'classSections[0].enrolledTotal',
-        },
-        {
-            Header: 'Max Students',
-            accessor: 'maxEnroll',
-        },
-        {
-            Header: 'Days',
-            accessor: 'timeLocations[0].days',
-        },
-        {
-            Header: 'Start Time',
-            accessor: 'timeLocations[0].beginTime',
-        },
-        {
-            Header: 'End Time',
-            accessor: 'timeLocations[0].beginTime',
-        },
-        {
-            Header: 'Instructor',
-            accessor: 'instructors[0].instructor',
         }
+        //,
+        // {
+        //     Header: 'Location',
+        //     accessor: (row) => location(row.timeLocations),
+        //     id: 'location',
+        // },
+        // {
+        //     Header: 'Total enrolled',
+        //     accessor: 'classSections[0].enrolledTotal',
+        // },
+        // {
+        //     Header: 'Max Students',
+        //     accessor: 'maxEnroll',
+        // },
+        // {
+        //     Header: 'Days',
+        //     accessor: 'timeLocations[0].days',
+        // },
+        // {
+        //     Header: 'Start Time',
+        //     accessor: 'timeLocations[0].beginTime',
+        // },
+        // {
+        //     Header: 'End Time',
+        //     accessor: 'timeLocations[0].beginTime',
+        // },
+        // {
+        //     Header: 'Instructor',
+        //     accessor: 'instructors[0].instructor',
+        // }
         
     ];
 
