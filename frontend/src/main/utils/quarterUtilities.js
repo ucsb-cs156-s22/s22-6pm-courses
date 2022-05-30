@@ -22,9 +22,9 @@ const qtrNumToQuarter = {
 export const location = (loc) => {
     let ans = "";
     for (let i = 0; i < loc.length; i++) {
-        for (let j = 0; j < loc[i].timeLocations.length; i++) {
+        for (let j = 0; j < loc[i].timeLocations.length; j++) {
             ans += `${loc[i].timeLocations[j].building} ${loc[i].timeLocations[j].room}`;
-            if (i + 1 < loc[i].timeLocations.length) {
+            if (j + 1 < loc[i].timeLocations.length) {
                 ans += `, `
             } 
         }
