@@ -25,11 +25,11 @@ export const location = (loc) => {
         for (let j = 0; j < loc[i].timeLocations.length; j++) {
             ans += `${loc[i].timeLocations[j].building} ${loc[i].timeLocations[j].room}`;
             if (j + 1 < loc[i].timeLocations.length) {
-                ans += `,`
+                ans += `,`;
             } 
         }
         if (i + 1 < loc.length) {
-            ans += `,`
+            ans += `,`;
         }
     }
     ans = ans.split(`,`);
@@ -41,11 +41,12 @@ export const enrollTotal = (loc) => {
     for (let i = 1; i < loc.length; i++) {
         ans += `${loc[i].enrolledTotal}`;
         if (i + 1 < loc.length) {
-            ans += `, `
+            ans += `,`
         } 
 
     }
-    return ans;
+    ans = ans.split(`,`);
+    return ans.map((a)=><div>{a}</div>);
 }
 
 export const maxEnroll = (loc) => {
@@ -53,11 +54,12 @@ export const maxEnroll = (loc) => {
     for (let i = 1; i < loc.length; i++) {
         ans += `${loc[i].maxEnroll}`;
         if (i + 1 < loc.length) {
-            ans += `, `
+            ans += `,`
         } 
 
     }
-    return ans;
+    ans = ans.split(`,`);
+    return ans.map((a)=><div>{a}</div>);
 }
 
 export const days = (loc) => {
@@ -66,15 +68,16 @@ export const days = (loc) => {
         for (let j = 0; j < loc[i].timeLocations.length; j++) {
             ans += `${loc[i].timeLocations[j].days}`;
             if (j + 1 < loc[i].timeLocations.length) {
-                ans += `, `
+                ans += `,`
             } 
         }
         if (i + 1 < loc.length) {
-            ans += `, `
+            ans += `,`
         } 
 
     }
-    return ans;
+    ans = ans.split(`,`);
+    return ans.map((a)=><div>{a}</div>);
 }
 
 export const start = (loc) => {
@@ -83,15 +86,16 @@ export const start = (loc) => {
         for (let j = 0; j < loc[i].timeLocations.length; j++) {
             ans += `${loc[i].timeLocations[j].beginTime}`;
             if (j + 1 < loc[i].timeLocations.length) {
-                ans += `, `
+                ans += `,`
             } 
         }
         if (i + 1 < loc.length) {
-            ans += `, `
+            ans += `,`
         } 
 
     }
-    return ans;
+    ans = ans.split(`,`);
+    return ans.map((a)=><div>{a}</div>);
 }
 
 export const end = (loc) => {
@@ -100,15 +104,16 @@ export const end = (loc) => {
         for (let j = 0; j < loc[i].timeLocations.length; j++) {
             ans += `${loc[i].timeLocations[j].endTime}`;
             if (j + 1 < loc[i].timeLocations.length) {
-                ans += `, `
+                ans += `,`
             } 
         }
         if (i + 1 < loc.length) {
-            ans += `, `
+            ans += `,`
         } 
 
     }
-    return ans;
+    ans = ans.split(`,`);
+    return ans.map((a)=><div>{a}</div>);
 }
 
 export const instructor = (loc) => {
@@ -117,15 +122,16 @@ export const instructor = (loc) => {
         for (let j = 0; j < loc[i].instructors.length; j++) {
             ans += `${loc[i].instructors[j].instructor}`;
             if (j + 1 < loc[i].instructors.length) {
-                ans += `, `
+                ans += `,`
             } 
         }
         if (i + 1 < loc.length) {
-            ans += `, `
+            ans += `,`
         } 
 
     }
-    return ans;
+    ans = ans.split(`,`);
+    return ans.map((a)=><div>{a}</div>);
 }
 
 const yyyyqToQyy = (yyyyq) => {
