@@ -5,15 +5,15 @@ import { yyyyqToQyy, _location } from "main/utils/quarterUtilities.js";
 export default function CoursesWithSectionsTable({ courses }) {
 
     const columns = [
-        {
-            Header: 'Quarter',
-            accessor: (row, _rowIndex) => yyyyqToQyy(row.quarter),
-            id: 'quarter',
-        },
         // {
-        //     Header: 'Course ID',
-        //     accessor: 'courseId',
-        // }
+        //     Header: 'Quarter',
+        //     accessor: (row, _rowIndex) => yyyyqToQyy(row.quarter),
+        //     id: 'quarter',
+        // },
+        {
+            Header: 'Course ID',
+            accessor: 'enrollCode',
+        }
         //,
         // {
         //     Header: 'Location',
