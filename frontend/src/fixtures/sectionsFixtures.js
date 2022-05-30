@@ -4,9 +4,7 @@ const sectionsFixtures = {
         "courseId": "CHEM 1B",
         "location": "Chem 1179",
         "enroll": "291/354",
-        "days": "M",
-        "start": "15:00",
-        "end": "15:50",
+        "time": "15:00--15:50 M W F",
         "instructor": "PRICE S P"
     },
     twoSections: [
@@ -15,9 +13,7 @@ const sectionsFixtures = {
             "courseId": "CHEM 1B",
             "location": "Chem 1179",
             "enroll": "291/354",
-            "days": "M",
-            "start": "15:00",
-            "end": "15:50",
+            "time": "15:00--15:50 M W F",
             "instructor": "PRICE S P"
         },
         {
@@ -25,9 +21,7 @@ const sectionsFixtures = {
             "courseId": "CHEM 1C",
             "location": "Chem 1179",
             "enroll": "259/260",
-            "days": "M W F",
-            "start": "10:00",
-            "end": "10:50",
+            "time": "15:00--15:50 M W F",
             "instructor": "JOSEPH C A"
         }
     ]
