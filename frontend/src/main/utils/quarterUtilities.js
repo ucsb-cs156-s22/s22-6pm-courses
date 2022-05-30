@@ -23,7 +23,7 @@ export const location = (loc) => {
     let ans = [];
     for (let i = 1; i < loc.length; i++) {
         for (let j = 0; j < loc[i].timeLocations.length; j++) {
-            ans.insert(`<div>${loc[i].timeLocations[j].building} ${loc[i].timeLocations[j].room}</div>`);
+            ans.insert(<div>`${loc[i].timeLocations[j].building} ${loc[i].timeLocations[j].room}`</div>);
             /*
             if (j + 1 < loc[i].timeLocations.length) {
                 ans += `,`
