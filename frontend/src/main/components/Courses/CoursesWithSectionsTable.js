@@ -1,6 +1,6 @@
 import React from "react";
 import OurTable from "main/components/OurTable";
-import { yyyyqToQyy, location } from "main/utils/quarterUtilities.js";
+import { yyyyqToQyy, _location } from "main/utils/quarterUtilities.js";
 
 export default function CoursesWithSectionsTable({ courses }) {
 
