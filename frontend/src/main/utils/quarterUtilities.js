@@ -77,35 +77,53 @@ export const days = (loc) => {
     return ans;
 }
 
-export const start = (start) => {
+export const start = (loc) => {
     let ans = "";
-    for (let i = 0; i < start.length; i++) {
-        ans += `${start[i].beginTime}`;
-        if (i + 1 < start.length) {
+    for (let i = 1; i < loc.length; i++) {
+        for (let j = 0; j < loc[i].timeLocations.length; j++) {
+            ans += `${loc[i].timeLocations[j].beginTime}`;
+            if (j + 1 < loc[i].timeLocations.length) {
+                ans += `, `
+            } 
+        }
+        if (i + 1 < loc.length) {
             ans += `, `
         } 
+
     }
     return ans;
 }
 
-export const end = (end) => {
+export const end = (loc) => {
     let ans = "";
-    for (let i = 0; i < end.length; i++) {
-        ans += `${end[i].endTime}`;
-        if (i + 1 < end.length) {
+    for (let i = 1; i < loc.length; i++) {
+        for (let j = 0; j < loc[i].timeLocations.length; j++) {
+            ans += `${loc[i].timeLocations[j].endTime}`;
+            if (j + 1 < loc[i].timeLocations.length) {
+                ans += `, `
+            } 
+        }
+        if (i + 1 < loc.length) {
             ans += `, `
         } 
+
     }
     return ans;
 }
 
-export const instructor = (instructor) => {
+export const instructor = (loc) => {
     let ans = "";
-    for (let i = 0; i < instructor.length; i++) {
-        ans += `${instructor[i].instructor}`;
-        if (i + 1 < instructor.length) {
+    for (let i = 1; i < loc.length; i++) {
+        for (let j = 0; j < loc[i].instructors.length; j++) {
+            ans += `${loc[i].instructors[j].instructor}`;
+            if (j + 1 < loc[i].instructors.length) {
+                ans += `, `
+            } 
+        }
+        if (i + 1 < loc.length) {
             ans += `, `
         } 
+
     }
     return ans;
 }
