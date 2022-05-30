@@ -1,7 +1,6 @@
 import React from "react";
 import OurTable from "main/components/OurTable";
-
-//import { yyyyqToQyy } from "main/utils/quarterUtilities.js";
+import { yyyyqToQyy } from "main/utils/quarterUtilities.js";
 
 export default function CoursesWithSectionsTable({ courses }) {
 
@@ -22,6 +21,10 @@ export default function CoursesWithSectionsTable({ courses }) {
         {
             Header: 'Max Students',
             accessor: 'maxEnroll',
+        },
+        {
+            Header: 'Days',
+            accessor: 'timeLocations[0].days',
         }
         
     ];
