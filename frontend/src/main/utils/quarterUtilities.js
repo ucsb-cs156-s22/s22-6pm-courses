@@ -62,6 +62,19 @@ export const maxEnroll = (loc) => {
     return ans.map((a)=><div>{a}</div>);
 }
 
+export const enroll = (loc) => {
+    let ans = "";
+    for (let i = 1; i < loc.length; i++) {
+        ans += `${loc[i].enrolledTotal}/${loc[i].maxEnroll}`;
+        if (i + 1 < loc.length) {
+            ans += `,`
+        } 
+
+    }
+    ans = ans.split(`,`);
+    return ans.map((a)=><div>{a}</div>);
+}
+
 export const days = (loc) => {
     let ans = "";
     for (let i = 1; i < loc.length; i++) {
