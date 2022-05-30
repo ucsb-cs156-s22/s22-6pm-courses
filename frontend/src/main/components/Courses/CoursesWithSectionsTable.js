@@ -37,19 +37,19 @@ export default function CoursesWithSectionsTable({ courses }) {
         },
         {
             Header: 'Start Time',
-            accessor: (row) => start(row.classSections[0].timeLocations),
+            accessor: (row) => start(row.classSections),
             id: 'start',
         },
         {
             Header: 'End Time',
-            accessor: (row) => end(row.classSections[0].timeLocations),
+            accessor: (row) => end(row.classSections),
             id: 'end',
+        },
+        {
+            Header: 'Instructor',
+            accessor: (row) => instructor(row.classSections),
+            id: 'instructor',
         }
-        // {
-        //     Header: 'Instructor',
-        //     accessor: (row) => instructor(row.classSections[0].instructors),
-        //     id: 'instructor',
-        // }
         
     ];
 
