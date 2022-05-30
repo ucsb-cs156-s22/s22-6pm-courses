@@ -16,7 +16,7 @@ export default function CoursesWithSectionsTable({ courses }) {
         },
         {
             Header: 'Total enrolled',
-            accessor: 'enrolledTotal',
+            accessor: 'classSections[0].enrolledTotal',
         },
         {
             Header: 'Max Students',
@@ -25,6 +25,18 @@ export default function CoursesWithSectionsTable({ courses }) {
         {
             Header: 'Days',
             accessor: 'timeLocations[0].days',
+        },
+        {
+            Header: 'Start Time',
+            accessor: 'timeLocations[0].beginTime',
+        },
+        {
+            Header: 'End Time',
+            accessor: 'timeLocations[0].beginTime',
+        },
+        {
+            Header: 'Instructor',
+            accessor: 'instructors[0].instructor',
         }
         
     ];
