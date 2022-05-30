@@ -20,10 +20,20 @@ export default function CoursesWithSectionsTable({ courses }) {
            // accessor: (row) => location(row.classSections[0].enrolledTotal),
             id: 'location',
         },
-        // {
-        //     Header: 'Total enrolled',
-        //     accessor: 'classSections[0].enrolledTotal',
-        // },
+        {
+            Header: 'Location2',
+            accessor: (row) => location(row.classSections[1].timeLocations),
+           // accessor: (row) => location(row.classSections[0].enrolledTotal),
+            id: 'location2',
+        },
+        {
+            Header: 'Total enrolled',
+            accessor: 'classSections[0].enrolledTotal',
+        },
+        {
+            Header: 'Total enrolled2',
+            accessor: 'classSections[1].enrolledTotal',
+        },
         {
             Header: 'Max Students',
             accessor: 'classSections[0].maxEnroll',
