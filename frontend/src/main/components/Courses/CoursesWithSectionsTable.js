@@ -1,6 +1,6 @@
 import React from "react";
 import OurTable from "main/components/OurTable";
-import { yyyyqToQyy } from "main/utils/quarterUtilities.js";
+import { yyyyqToQyy, formatLocation } from "main/utils/quarterUtilities.js";
 
 export default function CoursesWithSectionsTable({ courses }) {
 
@@ -13,6 +13,11 @@ export default function CoursesWithSectionsTable({ courses }) {
         {
             Header: 'Course ID',
             accessor: 'courseId',
+        },
+        {
+            Header: 'Location',
+            accessor: (row) => formatLocation(row.section.timeLocations),
+            id: 'location',
         },
         {
             Header: 'Total enrolled',
