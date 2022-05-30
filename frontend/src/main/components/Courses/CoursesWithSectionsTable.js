@@ -1,7 +1,7 @@
 import React from "react";
 import OurTable from "main/components/OurTable";
 //import { yyyyqToQyy, location, days, start, end, instructor } from "main/utils/quarterUtilities.js";
-import { yyyyqToQyy, location, enrollTotal, _days, _start, _end, _instructor } from "main/utils/quarterUtilities.js";
+import { yyyyqToQyy, location, enrollTotal, maxEnroll, _days, _start, _end, _instructor } from "main/utils/quarterUtilities.js";
 
 export default function CoursesWithSectionsTable({ courses }) {
 
@@ -22,19 +22,19 @@ export default function CoursesWithSectionsTable({ courses }) {
         },
         {
             Header: 'Total enrolled',
-            //accessor: 'classSections[0].enrolledTotal',
             accessor: (row) => enrollTotal(row.classSections),
             id: 'enrolled',
         },
-        // {
-        //     Header: 'Max Students',
-        //     accessor: 'classSections[0].maxEnroll',
-        // },
-        // {
-        //     Header: 'Days',
-        //     accessor: (row) => days(row.classSections[0].timeLocations),
-        //     id: 'days',
-        // },
+        {
+            Header: 'Max Students',
+            accessor: (row) => maxEnroll(row.classSections),
+            id: 'max',
+        },
+        {
+            Header: 'Days',
+            accessor: (row) => days(row.classSections),
+            id: 'days',
+        },
         // {
         //     Header: 'Start Time',
         //     accessor: (row) => start(row.classSections[0].timeLocations),
