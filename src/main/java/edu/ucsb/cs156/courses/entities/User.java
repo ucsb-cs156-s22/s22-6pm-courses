@@ -1,6 +1,6 @@
 package edu.ucsb.cs156.courses.entities;
 
-import lombok.Builder
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
