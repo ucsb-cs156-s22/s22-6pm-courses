@@ -16,7 +16,7 @@ export default function CoursesWithSectionsTable({ courses }) {
         },
         {
             Header: 'Location',
-            accessor: (row) => location(row.classSections[0].timeLocations),
+            accessor: (row) => location(row.courses.timeLocations),
             id: 'location',
         },
         {
