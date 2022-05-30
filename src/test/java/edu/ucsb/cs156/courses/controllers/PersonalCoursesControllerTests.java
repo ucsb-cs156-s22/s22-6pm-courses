@@ -147,7 +147,7 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
     }
     @WithMockUser(roles = { "USER" })
     @Test
-    public void api_courses_add_course_not_found__user_logged_in() throws Exception {
+    public void api_courses_add_course1_not_found__user_logged_in() throws Exception {
         
 
         MvcResult response = mockMvc.perform(
@@ -157,6 +157,19 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
 
         Map<String, Object> json = responseToJson(response);
         assertEquals("Course not found (enroll code:1234 quarter:20222)", json.get("message"));
+    }
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void api_courses_add_course2_not_found__user_logged_in() throws Exception {
+        
+
+        MvcResult response = mockMvc.perform(
+                post("/api/personalcourses/add?psId=1&enrollCd=123456&quarter=2022")
+                        .with(csrf()))
+                .andExpect(status().isNotFound()).andReturn();
+
+        Map<String, Object> json = responseToJson(response);
+        assertEquals("Course not found (enroll code:123456 quarter:2022)", json.get("message"));
     }
     @WithMockUser(roles = { "USER" })
     @Test
