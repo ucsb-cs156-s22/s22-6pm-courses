@@ -21,7 +21,7 @@ const qtrNumToQuarter = {
 
 export const formatLocation = (timeLocationArray) => {
     let res = "";
-    for (let index = 0; index < 10; index++) {
+    for (let index = 0; index < timeLocationArray.length; index++) {
         res += `${timeLocationArray[index].building} ${timeLocationArray[index].room}`;
         if (index + 1 < timeLocationArray.length) {
             res += `, `
