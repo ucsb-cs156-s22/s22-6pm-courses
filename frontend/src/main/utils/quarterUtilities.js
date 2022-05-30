@@ -20,14 +20,15 @@ const qtrNumToQuarter = {
 };
 
 export const location = (timeLocationArray) => {
-    let res = "";
-    for (let index = 0; index < timeLocationArray.length; index++) {
-        res += `${timeLocationArray[index].building} ${timeLocationArray[index].room}`;
-        if (index + 1 < timeLocationArray.length) {
-            res += `, `
-        } 
-    }
-    return res;
+    // let res = "";
+    // for (let index = 0; index < timeLocationArray.length; index++) {
+    //     res += `${timeLocationArray[index].building} ${timeLocationArray[index].room}`;
+    //     if (index + 1 < timeLocationArray.length) {
+    //         res += `, `
+    //     } 
+    // }
+    // return res;
+    return timeLocationArray;
 }
 
 const yyyyqToQyy = (yyyyq) => {
