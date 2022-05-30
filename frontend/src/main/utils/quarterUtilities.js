@@ -19,7 +19,7 @@ const qtrNumToQuarter = {
     '4': 'FALL'
 };
 
-export const formatLocation = (timeLocationArray) => {
+export const location = (timeLocationArray) => {
     let res = "";
     for (let index = 0; index < timeLocationArray.length; index++) {
         res += `${timeLocationArray[index].building} ${timeLocationArray[index].room}`;
