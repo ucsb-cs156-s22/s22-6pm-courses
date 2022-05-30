@@ -19,7 +19,7 @@ const qtrNumToQuarter = {
     '4': 'FALL'
 };
 
-export const location = (_loc) => {
+export const location = (loc) => {
     let ans = "";
     for (let i = 0; i < loc.length; i++) {
         for (let j = 0; j < loc[i].timeLocations.length; i++) {
