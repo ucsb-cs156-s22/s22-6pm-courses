@@ -28,7 +28,6 @@ export const location = (loc) => {
         } 
     }
     return ans;
-    //return timeLocationArray;
 }
 
 export const days = (day) => {
@@ -40,7 +39,39 @@ export const days = (day) => {
         } 
     }
     return ans;
-    //return timeLocationArray;
+}
+
+export const start = (start) => {
+    let ans = "";
+    for (let i = 0; i < start.length; i++) {
+        ans += `${start[i].beginTime}`;
+        if (i + 1 < start.length) {
+            ans += `, `
+        } 
+    }
+    return ans;
+}
+
+export const end = (end) => {
+    let ans = "";
+    for (let i = 0; i < end.length; i++) {
+        ans += `${end[i].endTime}`;
+        if (i + 1 < end.length) {
+            ans += `, `
+        } 
+    }
+    return ans;
+}
+
+export const instructor = (instructor) => {
+    let ans = "";
+    for (let i = 0; i < instructor.length; i++) {
+        ans += `${instructor[i].instructor}`;
+        if (i + 1 < instructor.length) {
+            ans += `, `
+        } 
+    }
+    return ans;
 }
 
 const yyyyqToQyy = (yyyyq) => {
