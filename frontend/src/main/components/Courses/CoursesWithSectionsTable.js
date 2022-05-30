@@ -10,10 +10,10 @@ export default function CoursesWithSectionsTable({ courses }) {
             accessor: (row, _rowIndex) => yyyyqToQyy(row.quarter),
             id: 'quarter',
         },
-        {
-            Header: 'Course ID',
-            accessor: 'courseId',
-        }
+        // {
+        //     Header: 'Course ID',
+        //     accessor: 'courseId',
+        // }
         //,
         // {
         //     Header: 'Location',
