@@ -60,7 +60,6 @@ public class PersonalCoursesController extends ApiController {
         personalcourse.setEnrollCd(enrollCd);
         personalcourse.setQuarter(quarter);
         personalcourse.setPsId(psId);        
-        //personalcourse.getPersonalSchedule().setDescription(description);;
 
         
         
