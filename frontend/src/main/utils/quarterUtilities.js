@@ -36,6 +36,18 @@ export const location = (loc) => {
     return ans;
 }
 
+export const enrollTotal = (loc) => {
+    let ans = "";
+    for (let i = 1; i < loc.length; i++) {
+        ans += `${loc[i].enrolledTotal}`;
+        if (i + 1 < loc.length) {
+            ans += `, `
+        } 
+
+    }
+    return ans;
+}
+
 export const days = (day) => {
     let ans = "";
     for (let i = 0; i < day.length; i++) {
