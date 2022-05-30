@@ -97,6 +97,8 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         String responseString = response.getResponse().getContentAsString();
         assertEquals(expectedJson, responseString);
     }
+
+
     @WithMockUser(roles = { "USER" })
     @Test
     public void api_courses__admin_logged_in__get_courses_by_personal_schedule_ID() throws Exception {
@@ -142,6 +144,19 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         String expectedJson = mapper.writeValueAsString(expectedCourse);
         String responseString = response.getResponse().getContentAsString();
         assertEquals(expectedJson, responseString);
+    }
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void api_courses_add_course_not_found__user_logged_in() throws Exception {
+        
+
+        MvcResult response = mockMvc.perform(
+                post("/api/personalcourses/add?psId=1&enrollCd=1234&quarter=20222")
+                        .with(csrf()))
+                .andExpect(status().isNotFound()).andReturn();
+
+        Map<String, Object> json = responseToJson(response);
+        assertEquals("Course not found (enroll code:1234 quarter:20222)", json.get("message"));
     }
     @WithMockUser(roles = { "USER" })
     @Test

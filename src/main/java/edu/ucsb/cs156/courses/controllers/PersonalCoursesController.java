@@ -5,6 +5,7 @@ import edu.ucsb.cs156.courses.entities.PersonalCourses;
 
 import edu.ucsb.cs156.courses.entities.User;
 import edu.ucsb.cs156.courses.errors.EntityNotFoundException;
+import edu.ucsb.cs156.courses.errors.EnrollCdInvalidException;
 import edu.ucsb.cs156.courses.models.CurrentUser;
 
 import edu.ucsb.cs156.courses.repositories.PersonalCoursesRepository;
@@ -33,14 +34,27 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.Optional;
 
+
+  
+
+
 @Api(description = "PersonalCourses")
 //CHECK
 @RequestMapping("/api/personalcourses")
-//
 @RestController
 @Slf4j
 public class PersonalCoursesController extends ApiController {
-
+    
+    //FIX (Replace with UCSB course search method)
+    static boolean STUBfunc(String enrollCd, String quarter) {
+        if(quarter.length()==5 && enrollCd.length()==6){
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+    }
     
     @Autowired
     PersonalCoursesRepository personalcoursesRepository;
@@ -71,8 +85,10 @@ public class PersonalCoursesController extends ApiController {
             @ApiParam("enrollCd") @RequestParam String enrollCd,
             @ApiParam("psID") @RequestParam long psId,
             @ApiParam("Quarter (in yyyyq)") @RequestParam String quarter) {
-        CurrentUser currentUser = getCurrentUser();
-        log.info("currentUser={}", currentUser);
+        //FIX (Replace with course search method)
+        if(!STUBfunc(enrollCd,quarter)){
+            throw new EnrollCdInvalidException(enrollCd,quarter);
+        }
 
         PersonalCourses personalcourse = new PersonalCourses();
         personalcourse.setEnrollCd(enrollCd);
