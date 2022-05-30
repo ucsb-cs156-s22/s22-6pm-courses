@@ -137,18 +137,18 @@ export const end = (loc) => {
 export const instructor = (loc) => {
     let ans = "";
     for (let i = 0; i < loc.length; i++) {
-        for (let j = 0; j < loc[i].instructors.length; j++) {
+        for (let j = 0; j < Math.min(3, loc[i].instructors.length); j++) { // display 3 instructors at most, or else won't fit in a line
             ans += `${loc[i].instructors[j].instructor}`;
-            if (j + 1 < loc[i].instructors.length) {
-                ans += `,`
+            if (j + 1 < Math.min(3, loc[i].instructors.length)) {
+                ans += `, `
             } 
         }
         if (i + 1 < loc.length) {
-            ans += `,`
+            ans += `!`
         } 
 
     }
-    ans = ans.split(`,`);
+    ans = ans.split(`!`);
     return ans.map((a)=><div>{a}</div>);
 }
 
