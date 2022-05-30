@@ -22,18 +22,16 @@ const qtrNumToQuarter = {
 export const location = (loc) => {
     let ans = "";
     for (let i = 1; i < loc.length; i++) {
+        ans += `<div>`;
         for (let j = 0; j < loc[i].timeLocations.length; j++) {
             ans += `${loc[i].timeLocations[j].building} ${loc[i].timeLocations[j].room}`;
             if (j + 1 < loc[i].timeLocations.length) {
-                ans += `,`
+                ans += `, `
             } 
         }
-        if (i + 1 < loc.length) {
-            ans += `,`
-        } 
+        ans += `</div>`;
     }
-    ans = ans.split(`,`);
-    return ans.map((a)=><div>{a}</div>);;
+    return ans;
 }
 
 export const enrollTotal = (loc) => {
