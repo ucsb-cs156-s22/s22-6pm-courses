@@ -25,11 +25,11 @@ export const location = (loc) => {
         for (let j = 0; j < loc[i].timeLocations.length; j++) {
             ans += `${loc[i].timeLocations[j].building} ${loc[i].timeLocations[j].room}`;
             if (j + 1 < loc[i].timeLocations.length) {
-                ans += `, `
+                ans += `\n `
             } 
         }
         if (i + 1 < loc.length) {
-            ans += `, `
+            ans += `\n `
         } 
 
     }
