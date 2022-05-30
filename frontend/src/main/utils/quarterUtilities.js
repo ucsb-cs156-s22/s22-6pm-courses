@@ -19,15 +19,27 @@ const qtrNumToQuarter = {
     '4': 'FALL'
 };
 
-export const location = (timeLocationArray) => {
-    let res = "";
-    for (let index = 0; index < timeLocationArray.length; index++) {
-        res += `${timeLocationArray[index].building} ${timeLocationArray[index].room}`;
-        if (index + 1 < timeLocationArray.length) {
-            res += `, `
+export const location = (loc) => {
+    let ans = "";
+    for (let i = 0; i < loc.length; i++) {
+        ans += `${loc[i].building} ${loc[i].room}`;
+        if (i + 1 < loc.length) {
+            ans += `, `
         } 
     }
-    return res;
+    return ans;
+    //return timeLocationArray;
+}
+
+export const days = (day) => {
+    let ans = "";
+    for (let i = 0; i < day.length; i++) {
+        ans += `${day[i].days}`;
+        if (i + 1 < day.length) {
+            ans += `, `
+        } 
+    }
+    return ans;
     //return timeLocationArray;
 }
 
