@@ -29,9 +29,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.json.*;
 
 import javax.validation.Valid;
 import java.util.Optional;
+import java.net.*;
+import java.io.InputStream;
+
+import java.util.Scanner;
 
 @Api(description = "PersonalCourses")
 //CHECK
@@ -61,6 +66,36 @@ public class PersonalCoursesController extends ApiController {
     ) {
         Iterable<PersonalCourses> personalcourses = personalcoursesRepository.findAllByPsId(psId);
         
+        return personalcourses;
+    }
+
+    @ApiOperation(value = "List sections in a personal schedule")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/getSectionsBypsId")
+    public Iterable<PersonalCourses> getSectionsByPersonalScheduleID (
+        @ApiParam("personal schedule id") @RequestParam Long psId
+    ) {
+        Iterable<PersonalCourses> personalcourses = personalcoursesRepository.findAllByPsId(psId);
+        for(PersonalCourses pc: personalcourses){
+            System.out.println("https://api.ucsb.edu/academics/curriculums/v3/classes/" + pc.getQuarter() + "/" + pc.getEnrollCd());
+            try {
+                URL url = new URL("https://api.ucsb.edu/academics/curriculums/v3/classes/" + pc.getQuarter() + "/" + pc.getEnrollCd());
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setRequestProperty("accept", "application/json");
+                con.setRequestProperty("ucsb-api-version", "3.0");
+                con.setRequestProperty("ucsb-api-key", "vb8mlvnaJeqYiAGXP1qa5INS4noghlAR");
+                con.setRequestMethod("GET");
+                InputStream in = con.getInputStream();
+                Scanner scanner = new Scanner(in);
+                String responseBody = scanner.useDelimiter("\\A").next();
+                JSONObject jsonObject = new JSONObject(responseBody);
+                System.out.println(jsonObject.getJSONArray("classSections"));
+                // prints out section info for the classes given a personal schedule
+                // todo: format section info according to team 1's specs
+            } catch (Exception ex) {
+                System.out.println("Exception: " + ex);
+            }
+        }
         return personalcourses;
     }
     
