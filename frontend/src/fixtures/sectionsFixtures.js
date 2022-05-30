@@ -1,33 +1,39 @@
 const sectionsFixtures = {
     oneSection: {
-        "classSections.": 1,
-        "name": "TestName",
-        "description": "TestDescription",
-        "quarter": "W08"
+        "quarter": "S22",
+        "courseId": "CHEM 1B",
+        "location": "Chem 1179",
+        "enroll": "291/354",
+        "days": "M",
+        "start": "15:00",
+        "end": "15:50",
+        "instructor": "PRICE S P"
     },
     twoSections: [
         {
-            "id": 1,
-            "name": "TestName1",
-            "description": "TestDescription1",
-            "quarter": "S08"
+            "quarter": "S22",
+            "courseId": "CHEM 1B",
+            "location": "Chem 1179",
+            "enroll": "291/354",
+            "days": "M",
+            "start": "15:00",
+            "end": "15:50",
+            "instructor": "PRICE S P"
         },
         {
-            "id": 2,
-            "name": "TestName2",
-            "description": "TestDescription2",
-            "quarter": "W09"
-        },
-        {
-            "id": 3,
-            "name": "TestName3",
-            "description": "TestDescription3",
-            "quarter": "S12"
+            "quarter": "S22",
+            "courseId": "CHEM 1C",
+            "location": "Chem 1179",
+            "enroll": "259/260",
+            "days": "M W F",
+            "start": "10:00",
+            "end": "10:50",
+            "instructor": "JOSEPH C A"
         }
     ]
 };
 
 
-export { personalSchedulesFixtures };
+export { sectionsFixtures };
 
 
