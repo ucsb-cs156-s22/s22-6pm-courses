@@ -7,13 +7,21 @@ export default function CoursesWithSectionsTable({ courses }) {
 
     const columns = [
         {
-            Header: 'Course ID',
-            accessor: 'courseId',
-
+            Header: 'Quarter',
+            accessor: (row, _rowIndex) => yyyyqToQyy(row.quarter),
+            id: 'quarter',
         },
         {
             Header: 'Course ID',
             accessor: 'courseId',
+        },
+        {
+            Header: 'Total enrolled',
+            accessor: 'enrolledTotal',
+        },
+        {
+            Header: 'Max Students',
+            accessor: 'maxEnroll',
         }
         
     ];
