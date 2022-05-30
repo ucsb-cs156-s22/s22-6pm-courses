@@ -31,19 +31,9 @@ export default function CoursesWithSectionsTable({ courses }) {
             id: 'max',
         },
         {
-            Header: 'Days',
-            accessor: (row) => days(row.classSections),
-            id: 'days',
-        },
-        {
-            Header: 'Start Time',
-            accessor: (row) => start(row.classSections),
-            id: 'start',
-        },
-        {
-            Header: 'End Time',
-            accessor: (row) => end(row.classSections),
-            id: 'end',
+            Header: 'Time',
+            accessor: (row) => time(row.classSections),
+            id: 'time',
         },
         {
             Header: 'Instructor',
