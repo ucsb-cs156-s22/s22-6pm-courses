@@ -47,7 +47,7 @@ public class PersonalCoursesController extends ApiController {
     
     //FIX (Replace with UCSB course search method)
     static boolean STUBfunc(String enrollCd, String quarter) {
-        if(quarter.length()==5 && enrollCd.length()==6){
+        if(quarter.length()==5 && enrollCd.length()==5){
             return true;
         }
         else{

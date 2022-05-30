@@ -76,9 +76,9 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
 
 
 
-        PersonalCourses p1 = PersonalCourses.builder().psId(1).enrollCd("123456").quarter("20222").id(0L).build();
-        PersonalCourses p2 = PersonalCourses.builder().psId(2).enrollCd("789123").quarter("20222").id(1L).build();
-        PersonalCourses p3 = PersonalCourses.builder().psId(3).enrollCd("654321").quarter("20222").id(2L).build();
+        PersonalCourses p1 = PersonalCourses.builder().psId(1).enrollCd("12345").quarter("20222").id(0L).build();
+        PersonalCourses p2 = PersonalCourses.builder().psId(2).enrollCd("78912").quarter("20222").id(1L).build();
+        PersonalCourses p3 = PersonalCourses.builder().psId(3).enrollCd("65432").quarter("20222").id(2L).build();
        
 
         ArrayList<PersonalCourses> expectedCourses = new ArrayList<>();
@@ -104,9 +104,9 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
     public void api_courses__admin_logged_in__get_courses_by_personal_schedule_ID() throws Exception {
 
 
-        PersonalCourses p1 = PersonalCourses.builder().psId(1).enrollCd("123456").quarter("20222").id(0L).build();
-        PersonalCourses p2 = PersonalCourses.builder().psId(1).enrollCd("789123").quarter("20222").id(1L).build();
-        PersonalCourses p3 = PersonalCourses.builder().psId(2).enrollCd("654321").quarter("20222").id(2L).build();
+        PersonalCourses p1 = PersonalCourses.builder().psId(1).enrollCd("12345").quarter("20222").id(0L).build();
+        PersonalCourses p2 = PersonalCourses.builder().psId(1).enrollCd("78912").quarter("20222").id(1L).build();
+        PersonalCourses p3 = PersonalCourses.builder().psId(2).enrollCd("65432").quarter("20222").id(2L).build();
 
         ArrayList<PersonalCourses> expectedCourses = new ArrayList<>();
         expectedCourses.addAll(Arrays.asList(p1, p2, p3));
@@ -129,13 +129,13 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
     @Test
     public void api_courses_add__user_logged_in() throws Exception {
         
-        PersonalCourses expectedCourse = PersonalCourses.builder().psId(1).enrollCd("123456").quarter("20222").id(0L).build();
+        PersonalCourses expectedCourse = PersonalCourses.builder().psId(1).enrollCd("12345").quarter("20222").id(0L).build();
 
         when(personalcoursesRepository.save(eq(expectedCourse))).thenReturn(expectedCourse);
 
         
         MvcResult response = mockMvc.perform(
-                post("/api/personalcourses/add?psId=1&enrollCd=123456&quarter=20222")
+                post("/api/personalcourses/add?psId=1&enrollCd=12345&quarter=20222")
                         .with(csrf()))
                 .andExpect(status().isOk()).andReturn();
 
@@ -145,6 +145,7 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         String responseString = response.getResponse().getContentAsString();
         assertEquals(expectedJson, responseString);
     }
+    //For STUB method
     @WithMockUser(roles = { "USER" })
     @Test
     public void api_courses_add_course1_not_found__user_logged_in() throws Exception {
@@ -158,18 +159,19 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         Map<String, Object> json = responseToJson(response);
         assertEquals("Course not found (enroll code:1234 quarter:20222)", json.get("message"));
     }
+    //For STUB method
     @WithMockUser(roles = { "USER" })
     @Test
     public void api_courses_add_course2_not_found__user_logged_in() throws Exception {
         
 
         MvcResult response = mockMvc.perform(
-                post("/api/personalcourses/add?psId=1&enrollCd=123456&quarter=2022")
+                post("/api/personalcourses/add?psId=1&enrollCd=12345&quarter=2022")
                         .with(csrf()))
                 .andExpect(status().isNotFound()).andReturn();
 
         Map<String, Object> json = responseToJson(response);
-        assertEquals("Course not found (enroll code:123456 quarter:2022)", json.get("message"));
+        assertEquals("Course not found (enroll code:12345 quarter:2022)", json.get("message"));
     }
     @WithMockUser(roles = { "USER" })
     @Test
@@ -177,7 +179,7 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         // arrange
 
         
-        PersonalCourses pc1 = PersonalCourses.builder().psId(1).enrollCd("123456").quarter("20222").id(15L).build();
+        PersonalCourses pc1 = PersonalCourses.builder().psId(1).enrollCd("12345").quarter("20222").id(15L).build();
         when(personalcoursesRepository.findById(eq(15L))).thenReturn(Optional.of(pc1));
 
         // act
@@ -198,7 +200,7 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
     public void api_courses__user_logged_in__delete_course_that_does_not_exist() throws Exception {
         // arrange
 
-        PersonalCourses pc1 = PersonalCourses.builder().psId(1).enrollCd("123456").quarter("20222").id(1L).build();
+        PersonalCourses pc1 = PersonalCourses.builder().psId(1).enrollCd("12345").quarter("20222").id(1L).build();
         when(personalcoursesRepository.findById(eq(14L))).thenReturn(Optional.empty());
 
         // act
