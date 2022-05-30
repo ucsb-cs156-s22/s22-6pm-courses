@@ -20,16 +20,21 @@ const qtrNumToQuarter = {
 };
 
 export const location = (loc) => {
-    let ans = "";
+    let ans = [];
     for (let i = 1; i < loc.length; i++) {
-        ans += `<div>`;
         for (let j = 0; j < loc[i].timeLocations.length; j++) {
-            ans += `${loc[i].timeLocations[j].building} ${loc[i].timeLocations[j].room}`;
+            ans.insert(`<div>${loc[i].timeLocations[j].building} ${loc[i].timeLocations[j].room}</div>`);
+            /*
             if (j + 1 < loc[i].timeLocations.length) {
-                ans += `, `
+                ans += `,`
             } 
+            */
         }
-        ans += `</div>`;
+        /*
+        if (i + 1 < loc.length) {
+            ans += `,`
+        }
+        */
     }
     return ans;
 }
