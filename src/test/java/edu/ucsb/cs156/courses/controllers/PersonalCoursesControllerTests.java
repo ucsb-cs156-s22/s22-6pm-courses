@@ -4,8 +4,10 @@ import edu.ucsb.cs156.courses.repositories.UserRepository;
 import edu.ucsb.cs156.courses.testconfig.TestConfig;
 import edu.ucsb.cs156.courses.ControllerTestCase;
 import edu.ucsb.cs156.courses.entities.PersonalCourses;
+import edu.ucsb.cs156.courses.entities.PersonalSchedule;
 import edu.ucsb.cs156.courses.entities.User;
 import edu.ucsb.cs156.courses.repositories.PersonalCoursesRepository;
+import edu.ucsb.cs156.courses.repositories.PersonalScheduleRepository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -30,12 +32,16 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@WebMvcTest(controllers = PersonalCoursesController.class)
+@WebMvcTest(controllers = {PersonalCoursesController.class, PersonalSchedulesController.class})
 @Import(TestConfig.class)
 public class PersonalCoursesControllerTests extends ControllerTestCase {
 
     @MockBean
     PersonalCoursesRepository personalcoursesRepository;
+
+    @MockBean
+    PersonalScheduleRepository personalscheduleRepository;
+
 
     @MockBean
     UserRepository userRepository;
@@ -65,14 +71,21 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
     }
     
     @Test
-    public void api_schedules_add__logged_out__returns_403() throws Exception {
+    public void api_courses_add__logged_out__returns_403() throws Exception {
         mockMvc.perform(post("/api/personalcourses/add"))
                 .andExpect(status().is(403));
     }
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void api_courses_add__admin__returns_403() throws Exception {
+        mockMvc.perform(post("/api/personalcourses/admin/add"))
+                .andExpect(status().is(403));
+    }
+
 
     @WithMockUser(roles = { "USER" })
     @Test
-    public void api_schedules_admin_all__admin_logged_in__returns_all_schedules() throws Exception {
+    public void api_courses_admin_all__admin_logged_in__returns_all_courses() throws Exception {
 
 
 
@@ -106,7 +119,7 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
 
         PersonalCourses p1 = PersonalCourses.builder().psId(1).enrollCd("12345").quarter("20222").id(0L).build();
         PersonalCourses p2 = PersonalCourses.builder().psId(1).enrollCd("78912").quarter("20222").id(1L).build();
-        PersonalCourses p3 = PersonalCourses.builder().psId(2).enrollCd("65432").quarter("20222").id(2L).build();
+        PersonalCourses p3 = PersonalCourses.builder().psId(1).enrollCd("65432").quarter("20222").id(2L).build();
 
         ArrayList<PersonalCourses> expectedCourses = new ArrayList<>();
         expectedCourses.addAll(Arrays.asList(p1, p2, p3));
@@ -125,17 +138,25 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         assertEquals(expectedJson, responseString);
     }
     
+    // Valid PS ID
     @WithMockUser(roles = { "USER" })
     @Test
-    public void api_courses_add__user_logged_in() throws Exception {
+    public void api_courses_add_success__user_logged_in() throws Exception {
+        User u = currentUserService.getCurrentUser().getUser();
         
-        PersonalCourses expectedCourse = PersonalCourses.builder().psId(1).enrollCd("12345").quarter("20222").id(0L).build();
+        PersonalSchedule myPersonalschedule = PersonalSchedule.builder().name("Name 1").description("Description 1").quarter("20221").user(u).id(1L)
+                .build();
+        
+        
+        
+        PersonalCourses expectedCourse = PersonalCourses.builder().psId(1).enrollCd("1000").quarter("20222").id(0L).build();
+
+        when(personalscheduleRepository.findByIdAndUser(eq(1L),eq(u))).thenReturn(Optional.of(myPersonalschedule));
 
         when(personalcoursesRepository.save(eq(expectedCourse))).thenReturn(expectedCourse);
 
-        
         MvcResult response = mockMvc.perform(
-                post("/api/personalcourses/add?psId=1&enrollCd=12345&quarter=20222")
+                post("/api/personalcourses/add?psId=1&enrollCd=1000&quarter=20222")
                         .with(csrf()))
                 .andExpect(status().isOk()).andReturn();
 
@@ -145,6 +166,78 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         String responseString = response.getResponse().getContentAsString();
         assertEquals(expectedJson, responseString);
     }
+
+    // Invalid PS ID
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void api_courses_add_fail__user_logged_in() throws Exception {
+        User u = currentUserService.getCurrentUser().getUser();
+        User otherUser = User.builder().id(999L).build();
+        PersonalSchedule myPersonalschedule = PersonalSchedule.builder().name("Name 1").description("Description 1").quarter("20221").user(u).id(1L)
+                .build();
+        PersonalSchedule otherUsersPersonalschedule = PersonalSchedule.builder().name("Name 1").description("Description 1").quarter("20221").user(otherUser).id(2L)
+                .build();
+        personalscheduleRepository.save(myPersonalschedule);
+        personalscheduleRepository.save(otherUsersPersonalschedule);
+        
+        
+        MvcResult response = mockMvc.perform(
+                post("/api/personalcourses/add?psId=2&enrollCd=12345&quarter=20222")
+                        .with(csrf()))
+                .andExpect(status().isNotFound()).andReturn();
+
+        Map<String, Object> json = responseToJson(response);
+        assertEquals("Invalid personal schedule ID 2", json.get("message"));
+    }
+    // Invalid PS ID for Admin
+    @WithMockUser(roles = { "ADMIN", "USER" })
+    @Test
+    public void api_courses_add_fail__admin_logged_in() throws Exception {
+        User u = currentUserService.getCurrentUser().getUser();
+        User otherUser = User.builder().id(999L).build();
+        PersonalSchedule myPersonalschedule = PersonalSchedule.builder().name("Name 1").description("Description 1").quarter("20221").user(u).id(1L)
+                .build();
+        PersonalSchedule otherUsersPersonalschedule = PersonalSchedule.builder().name("Name 1").description("Description 1").quarter("20221").user(otherUser).id(2L)
+                .build();
+        personalscheduleRepository.save(myPersonalschedule);
+        personalscheduleRepository.save(otherUsersPersonalschedule);
+        
+        
+        MvcResult response = mockMvc.perform(
+                post("/api/personalcourses/admin/add?psId=3&enrollCd=12345&quarter=20222")
+                        .with(csrf()))
+                .andExpect(status().isNotFound()).andReturn();
+
+        Map<String, Object> json = responseToJson(response);
+        assertEquals("Invalid personal schedule ID 3", json.get("message"));
+    }
+    // valid PS ID for ADMIN
+    @WithMockUser(roles = { "ADMIN", "USER" })
+    @Test
+    public void api_courses_add_success__admin_logged_in() throws Exception {
+        User u = currentUserService.getCurrentUser().getUser();
+        
+        PersonalSchedule myPersonalschedule = PersonalSchedule.builder().name("Name 1").description("Description 1").quarter("20221").user(u).id(1L)
+                .build();
+        
+        PersonalCourses expectedCourse = PersonalCourses.builder().psId(1).enrollCd("12345").quarter("20222").id(0L).build();
+
+        when(personalscheduleRepository.findById(eq(1L))).thenReturn(Optional.of(myPersonalschedule));
+
+        when(personalcoursesRepository.save(eq(expectedCourse))).thenReturn(expectedCourse);
+
+        MvcResult response = mockMvc.perform(
+                post("/api/personalcourses/admin/add?psId=1&enrollCd=12345&quarter=20222")
+                        .with(csrf()))
+                .andExpect(status().isOk()).andReturn();
+
+        
+        verify(personalcoursesRepository, times(1)).save(expectedCourse);
+        String expectedJson = mapper.writeValueAsString(expectedCourse);
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedJson, responseString);
+    }
+
     //For invalid course enrollCd
     @WithMockUser(roles = { "USER" })
     @Test
@@ -173,34 +266,51 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         Map<String, Object> json = responseToJson(response);
         assertEquals("Invalid EnrollCd 123456 (EnrollCd should be numeric and no more than five digits)", json.get("message"));
     }
+    //For invalid course enrollCd ADMIN
+    @WithMockUser(roles = { "ADMIN","USER" })
+    @Test
+    public void api_courses_add_Invalid_course_enroll_code2__admin_logged_in() throws Exception {
+        MvcResult response = mockMvc.perform(
+                post("/api/personalcourses/admin/add?psId=1&enrollCd=123456&quarter=20222")
+                        .with(csrf()))
+                .andExpect(status().isNotFound()).andReturn();
+
+        
+        Map<String, Object> json = responseToJson(response);
+        assertEquals("Invalid EnrollCd 123456 (EnrollCd should be numeric and no more than five digits)", json.get("message"));
+    }
+
+    
     //For STUB method
     @WithMockUser(roles = { "USER" })
     @Test
-    public void api_courses_add_course1_not_found__user_logged_in() throws Exception {
-        
-
+    public void api_courses_add_STUB_return_false__user_logged_in() throws Exception {
+        User u = currentUserService.getCurrentUser().getUser();
+        when(personalscheduleRepository.findByIdAndUser(eq(1L),eq(u))).thenReturn(Optional.of(new PersonalSchedule()));
         MvcResult response = mockMvc.perform(
-                post("/api/personalcourses/add?psId=1&enrollCd=1234&quarter=20222")
+                post("/api/personalcourses/add?psId=1&enrollCd=234&quarter=20222")
                         .with(csrf()))
                 .andExpect(status().isNotFound()).andReturn();
 
         Map<String, Object> json = responseToJson(response);
-        assertEquals("Course not found (enroll code:1234 quarter:20222)", json.get("message"));
+        assertEquals("Course not found (enroll code:234 quarter:20222)", json.get("message"));
     }
-    //For STUB method
-    @WithMockUser(roles = { "USER" })
+    //For STUB method ADMIN
+    @WithMockUser(roles = { "ADMIN","USER" })
     @Test
-    public void api_courses_add_course2_not_found__user_logged_in() throws Exception {
+    public void api_courses_add_STUB_return_false__admin_logged_in() throws Exception {
         
+        when(personalscheduleRepository.findById(eq(1L))).thenReturn(Optional.of(new PersonalSchedule()));
 
         MvcResult response = mockMvc.perform(
-                post("/api/personalcourses/add?psId=1&enrollCd=12345&quarter=2022")
+                post("/api/personalcourses/admin/add?psId=1&enrollCd=234&quarter=2022")
                         .with(csrf()))
                 .andExpect(status().isNotFound()).andReturn();
 
         Map<String, Object> json = responseToJson(response);
-        assertEquals("Course not found (enroll code:12345 quarter:2022)", json.get("message"));
+        assertEquals("Course not found (enroll code:234 quarter:2022)", json.get("message"));
     }
+    
     @WithMockUser(roles = { "USER" })
     @Test
     public void api_courses__user_logged_in__delete_course() throws Exception {

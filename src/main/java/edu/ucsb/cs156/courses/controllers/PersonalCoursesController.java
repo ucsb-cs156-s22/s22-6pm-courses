@@ -7,9 +7,11 @@ import edu.ucsb.cs156.courses.entities.User;
 import edu.ucsb.cs156.courses.errors.EntityNotFoundException;
 import edu.ucsb.cs156.courses.errors.CourseNotFoundException;
 import edu.ucsb.cs156.courses.errors.InvalidEnrollCdException;
+import edu.ucsb.cs156.courses.errors.InvalidPsIdException;
 import edu.ucsb.cs156.courses.models.CurrentUser;
 
 import edu.ucsb.cs156.courses.repositories.PersonalCoursesRepository;
+import edu.ucsb.cs156.courses.repositories.PersonalScheduleRepository;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -48,7 +50,7 @@ public class PersonalCoursesController extends ApiController {
     
     //FIX (Replace with UCSB course search method)
     static boolean STUBfunc(String enrollCd, String quarter) {
-        if(quarter.length()==5 && enrollCd.length()==5){
+        if(Integer.parseInt(enrollCd)>=1000){
             return true;
         }
         else{
@@ -71,9 +73,26 @@ public class PersonalCoursesController extends ApiController {
         
     }
 
+
+/*
+    static boolean validPsId(long psId) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("ucsb-api-version", "1.0");
+        headers.set("ucsb-api-key", this.apiKey);
+
+        HttpEntity<String> entity = new HttpEntity<>("body", headers);
+        ResponseEntity<String> re = restTemplate.exchange("/api/personalschedules?id=13", HttpMethod.GET, entity, String.class);
+        contentType = re.getHeaders().getContentType();
+    }
+*/
+
     
     @Autowired
     PersonalCoursesRepository personalcoursesRepository;
+    @Autowired
+    PersonalScheduleRepository personalscheduleRepository;
     
     @ApiOperation(value = "List all personal courses")
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -94,6 +113,37 @@ public class PersonalCoursesController extends ApiController {
         return personalcourses;
     }
     
+    @ApiOperation(value = "Add a new personal course for admin")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/admin/add")
+    public PersonalCourses addCourseforAdmin(
+            @ApiParam("enrollCd") @RequestParam String enrollCd,
+            @ApiParam("psID") @RequestParam long psId,
+            @ApiParam("Quarter (in yyyyq)") @RequestParam String quarter) {
+        
+        
+        if(!validEnrollCd(enrollCd)){
+            throw new InvalidEnrollCdException(enrollCd);
+        }
+         
+        if(!personalscheduleRepository.findById(psId).isPresent()){
+            throw new InvalidPsIdException(psId);
+        }
+
+        //FIX (Replace with course search method)
+        if(!STUBfunc(enrollCd,quarter)){
+            throw new CourseNotFoundException(enrollCd,quarter);
+        }
+
+        PersonalCourses personalcourse = new PersonalCourses();
+        personalcourse.setEnrollCd(enrollCd);
+        personalcourse.setQuarter(quarter);
+        personalcourse.setPsId(psId);
+        PersonalCourses savedPersonalCourse = personalcoursesRepository.save(personalcourse);
+        return savedPersonalCourse;
+    }
+    
+    
     @ApiOperation(value = "Add a new personal course")
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/add")
@@ -102,9 +152,15 @@ public class PersonalCoursesController extends ApiController {
             @ApiParam("psID") @RequestParam long psId,
             @ApiParam("Quarter (in yyyyq)") @RequestParam String quarter) {
         
+        
         if(!validEnrollCd(enrollCd)){
             throw new InvalidEnrollCdException(enrollCd);
         }
+               
+        if(!personalscheduleRepository.findByIdAndUser(psId,getCurrentUser().getUser()).isPresent()){
+            throw new InvalidPsIdException(psId);
+        }
+
         //FIX (Replace with course search method)
         if(!STUBfunc(enrollCd,quarter)){
             throw new CourseNotFoundException(enrollCd,quarter);
