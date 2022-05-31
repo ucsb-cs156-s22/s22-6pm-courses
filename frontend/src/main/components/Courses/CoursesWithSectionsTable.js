@@ -1,6 +1,6 @@
 import React from "react";
 import OurTable from "main/components/OurTable";
-import { location, enroll, time, instructor } from "main/utils/quarterUtilities.js";
+import { location, enroll, time, instructor } from "main/utils/CoursesWithSectionsUtilities";
 
 export default function CoursesWithSectionsTable({ courses }) {
 
