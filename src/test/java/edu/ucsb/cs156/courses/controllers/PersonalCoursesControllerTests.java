@@ -144,7 +144,7 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
     public void api_courses_add_success__user_logged_in() throws Exception {
         User u = currentUserService.getCurrentUser().getUser();
         
-        PersonalSchedule myPersonalschedule = PersonalSchedule.builder().name("Name 1").description("Description 1").quarter("20222").user(u).id(1L)
+        PersonalSchedule myPersonalschedule = PersonalSchedule.builder().name("Name 1").description("Description 1").quarter("20221").user(u).id(1L)
                 .build();
         
         
@@ -152,7 +152,6 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         PersonalCourses expectedCourse = PersonalCourses.builder().psId(1).enrollCd("1000").quarter("20222").id(0L).build();
 
         when(personalscheduleRepository.findByIdAndUser(eq(1L),eq(u))).thenReturn(Optional.of(myPersonalschedule));
-        when(personalscheduleRepository.findById(eq(1L))).thenReturn(Optional.of(myPersonalschedule));
 
         when(personalcoursesRepository.save(eq(expectedCourse))).thenReturn(expectedCourse);
 
@@ -218,7 +217,7 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
     public void api_courses_add_success__admin_logged_in() throws Exception {
         User u = currentUserService.getCurrentUser().getUser();
         
-        PersonalSchedule myPersonalschedule = PersonalSchedule.builder().name("Name 1").description("Description 1").quarter("20222").user(u).id(1L)
+        PersonalSchedule myPersonalschedule = PersonalSchedule.builder().name("Name 1").description("Description 1").quarter("20221").user(u).id(1L)
                 .build();
         
         PersonalCourses expectedCourse = PersonalCourses.builder().psId(1).enrollCd("12345").quarter("20222").id(0L).build();
@@ -280,84 +279,6 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         Map<String, Object> json = responseToJson(response);
         assertEquals("Invalid EnrollCd 123456 (EnrollCd should be numeric and no more than five digits)", json.get("message"));
     }
-    // valid Quarter for ADMIN
-    @WithMockUser(roles = { "ADMIN", "USER" })
-    @Test
-    public void api_courses_add_success_valid_quarter__admin_logged_in() throws Exception {
-        User u = currentUserService.getCurrentUser().getUser();
-        
-        PersonalSchedule myPersonalschedule = PersonalSchedule.builder().name("Name 1").description("Description 1").quarter("20221").user(u).id(1L)
-                .build();
-        
-        PersonalCourses expectedCourse = PersonalCourses.builder().psId(1).enrollCd("12345").quarter("20221").id(0L).build();
-
-        when(personalscheduleRepository.findById(eq(1L))).thenReturn(Optional.of(myPersonalschedule));
-
-        when(personalcoursesRepository.save(eq(expectedCourse))).thenReturn(expectedCourse);
-
-        MvcResult response = mockMvc.perform(
-                post("/api/personalcourses/admin/add?psId=1&enrollCd=12345&quarter=20221")
-                        .with(csrf()))
-                .andExpect(status().isOk()).andReturn();
-
-        
-        verify(personalcoursesRepository, times(1)).save(expectedCourse);
-        String expectedJson = mapper.writeValueAsString(expectedCourse);
-        String responseString = response.getResponse().getContentAsString();
-        assertEquals(expectedJson, responseString);
-    }
-
-    // Invalid Quarter for ADMIN
-    @WithMockUser(roles = { "ADMIN", "USER" })
-    @Test
-    public void api_courses_add_fail_invalid_quarter__admin_logged_in() throws Exception {
-        User u = currentUserService.getCurrentUser().getUser();
-        
-        PersonalSchedule myPersonalschedule = PersonalSchedule.builder().name("Name 1").description("Description 1").quarter("20221").user(u).id(1L)
-                .build();
-        
-        PersonalCourses expectedCourse = PersonalCourses.builder().psId(1).enrollCd("12345").quarter("20221").id(0L).build();
-
-        when(personalscheduleRepository.findById(eq(1L))).thenReturn(Optional.of(myPersonalschedule));
-
-        
-
-        MvcResult response = mockMvc.perform(
-                post("/api/personalcourses/admin/add?psId=1&enrollCd=12345&quarter=2022")
-                        .with(csrf()))
-                .andExpect(status().isNotFound()).andReturn();
-
-        
-        Map<String, Object> json = responseToJson(response);
-        assertEquals("Invalid quarter 2022 (Quarter has to match the one in personal schedule id 1)", json.get("message"));
-    }
-
-    // Invalid Quarter
-    @WithMockUser(roles = { "USER" })
-    @Test
-    public void api_courses_add_fail_invalid_quarter__user_logged_in() throws Exception {
-        User u = currentUserService.getCurrentUser().getUser();
-        
-        PersonalSchedule myPersonalschedule = PersonalSchedule.builder().name("Name 1").description("Description 1").quarter("20221").user(u).id(1L)
-                .build();
-        
-        PersonalCourses expectedCourse = PersonalCourses.builder().psId(1).enrollCd("12345").quarter("20221").id(0L).build();
-        when(personalscheduleRepository.findByIdAndUser(eq(1L),eq(u))).thenReturn(Optional.of(myPersonalschedule));
-        when(personalscheduleRepository.findById(eq(1L))).thenReturn(Optional.of(myPersonalschedule));
-
-        
-
-        MvcResult response = mockMvc.perform(
-                post("/api/personalcourses/add?psId=1&enrollCd=12345&quarter=2022")
-                        .with(csrf()))
-                .andExpect(status().isNotFound()).andReturn();
-
-        
-        Map<String, Object> json = responseToJson(response);
-        assertEquals("Invalid quarter 2022 (Quarter has to match the one in personal schedule id 1)", json.get("message"));
-    }
-
-
 
     
     //For STUB method
@@ -365,40 +286,29 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
     @Test
     public void api_courses_add_STUB_return_false__user_logged_in() throws Exception {
         User u = currentUserService.getCurrentUser().getUser();
-        
-        PersonalSchedule myPersonalschedule = PersonalSchedule.builder().name("Name 1").description("Description 1").quarter("20222").user(u).id(1L)
-                .build();
-        
-        when(personalscheduleRepository.findByIdAndUser(eq(1L),eq(u))).thenReturn(Optional.of(myPersonalschedule));
-        when(personalscheduleRepository.findById(eq(1L))).thenReturn(Optional.of(myPersonalschedule));
-
+        when(personalscheduleRepository.findByIdAndUser(eq(1L),eq(u))).thenReturn(Optional.of(new PersonalSchedule()));
         MvcResult response = mockMvc.perform(
                 post("/api/personalcourses/add?psId=1&enrollCd=234&quarter=20222")
                         .with(csrf()))
                 .andExpect(status().isNotFound()).andReturn();
 
         Map<String, Object> json = responseToJson(response);
-        assertEquals("STUB (make sure enrollCd is greater than 1000) STUB Course not found (enroll code:234 quarter:20222)", json.get("message"));
+        assertEquals("Course not found (enroll code:234 quarter:20222)", json.get("message"));
     }
     //For STUB method ADMIN
     @WithMockUser(roles = { "ADMIN","USER" })
     @Test
     public void api_courses_add_STUB_return_false__admin_logged_in() throws Exception {
         
-        User u = currentUserService.getCurrentUser().getUser();
-        
-        PersonalSchedule myPersonalschedule = PersonalSchedule.builder().name("Name 1").description("Description 1").quarter("20222").user(u).id(1L)
-                .build();
-        
-        when(personalscheduleRepository.findById(eq(1L))).thenReturn(Optional.of(myPersonalschedule));
+        when(personalscheduleRepository.findById(eq(1L))).thenReturn(Optional.of(new PersonalSchedule()));
 
         MvcResult response = mockMvc.perform(
-                post("/api/personalcourses/admin/add?psId=1&enrollCd=234&quarter=20222")
+                post("/api/personalcourses/admin/add?psId=1&enrollCd=234&quarter=2022")
                         .with(csrf()))
                 .andExpect(status().isNotFound()).andReturn();
 
         Map<String, Object> json = responseToJson(response);
-        assertEquals("STUB (make sure enrollCd is greater than 1000) STUB Course not found (enroll code:234 quarter:20222)", json.get("message"));
+        assertEquals("Course not found (enroll code:234 quarter:2022)", json.get("message"));
     }
     
     @WithMockUser(roles = { "USER" })
