@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.Optional;
+import java.util.ArrayList;
 
 @Api(description = "PersonalCourses")
 //CHECK
@@ -69,6 +70,21 @@ public class PersonalCoursesController extends ApiController {
         personalcourse.setPsId(psId);
         PersonalCourses savedPersonalCourse = personalcoursesRepository.save(personalcourse);
         return savedPersonalCourse;
+    }
+
+    @ApiOperation(value = "List all enroll cd's of the sections in a personal schedule")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/all/enrollCd")
+    public Iterable<String> allEnrollCds(
+          @ApiParam("psID") @RequestParam long psId
+    ){
+      Iterable<PersonalCourses> personalcourses = personalcoursesRepository.findAllByPsId(psId);
+      ArrayList<String> enrollCds = new ArrayList<String>();
+
+      for (PersonalCourses p: personalcourses){
+        enrollCds.add(p.getEnrollCd());
+      }
+      return enrollCds;
     }
     
 }

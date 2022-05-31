@@ -51,6 +51,7 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         mockMvc.perform(get("/api/personalcourses/all"))
                 .andExpect(status().isOk());
     }
+
     
     @Test
     public void api_schedules_post__logged_out__returns_403() throws Exception {
@@ -86,6 +87,31 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         assertEquals(expectedJson, responseString);
     }
     
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void api_courses_get_enrollcd__user_logged_in() throws Exception {
+        
+        PersonalCourses p1 = PersonalCourses.builder().psId(1).enrollCd("123456").quarter("20222").id(0L).build();
+        ArrayList<PersonalCourses> expectedCourses = new ArrayList<>();
+        expectedCourses.add(p1);
+
+        ArrayList<String> expectedEnrollCds = new ArrayList<String>();
+        expectedEnrollCds.add("123456");
+
+        when(personalcoursesRepository.findAllByPsId((long) 1)).thenReturn(expectedCourses);
+
+        MvcResult response = mockMvc.perform(
+                get("/api/personalcourses/all/enrollCd?psId=1")
+                        .with(csrf()))
+                .andExpect(status().isOk()).andReturn();
+
+        
+        verify(personalcoursesRepository, times(1)).findAllByPsId((long) 1);
+        String expectedJson = mapper.writeValueAsString(expectedEnrollCds);
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedJson, responseString);
+    }
+
     @WithMockUser(roles = { "USER" })
     @Test
     public void api_courses_add__user_logged_in() throws Exception {
