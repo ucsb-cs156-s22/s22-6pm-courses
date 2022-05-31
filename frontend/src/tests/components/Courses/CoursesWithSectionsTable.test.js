@@ -25,7 +25,7 @@ describe("CourseTable tests", () => {
   });
 
   test("Has the expected column headers and content", () => {
-    const { getByText, getByTestId } = render(
+    render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
           <CoursesWithSectionsTable courses={sectionsFixtures.sections} />
@@ -38,12 +38,12 @@ describe("CourseTable tests", () => {
     const testId = "CoursesWithSectionsTable";
 
     expectedHeaders.forEach((headerText) => {
-        const header = getByText(headerText);
+        const header = screen.getByText(headerText);
         expect(header).toBeInTheDocument();
       });
   
       expectedFields.forEach((field) => {
-        const header = getByTestId(`${testId}-cell-row-0-col-${field}`);
+        const header = screen.getByTestId(`${testId}-cell-row-0-col-${field}`);
         expect(header).toBeInTheDocument();
       });
     expect(screen.getByTestId(`${testId}-cell-row-0-col-courseId`)).toHaveTextContent("CMPSC 5A");
