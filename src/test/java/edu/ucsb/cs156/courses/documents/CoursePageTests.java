@@ -50,6 +50,13 @@ public class CoursePageTests {
     }
 
     @Test
+    public void nullClasses() throws Exception {
+        CoursePage cp = CoursePage.fromJSON("{}");
+        List<ConvertedSection> convertedSections = cp.convertedSections();
+        assertEquals(0, convertedSections.size());
+    }
+
+    @Test
     public void throwsExceptionOnBadJSON() throws Exception {
         CoursePage cp = CoursePage.fromJSON("this is not valid JSON");
         assertNull(cp);

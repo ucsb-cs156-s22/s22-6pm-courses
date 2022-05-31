@@ -57,20 +57,22 @@ public class CoursePage {
 
         List<ConvertedSection> result = new ArrayList<ConvertedSection>();
 
-        for (Course c : this.getClasses()) {
-            for (Section section : c.getClassSections()) {
-                CourseInfo courseInfo = CourseInfo.builder()
-                        .quarter(c.getQuarter())
-                        .courseId(c.getCourseId())
-                        .title(c.getTitle())
-                        .description(c.getDescription())
-                        .build();
-                ConvertedSection cs = ConvertedSection.builder()
-                        .courseInfo(courseInfo)
-                        .section(section)
-                        .build();
-                result.add(cs);
+        if (this.getClasses() != null) {
+            for (Course c : this.getClasses()) {
+                for (Section section : c.getClassSections()) {
+                    CourseInfo courseInfo = CourseInfo.builder()
+                            .quarter(c.getQuarter())
+                            .courseId(c.getCourseId())
+                            .title(c.getTitle())
+                            .description(c.getDescription())
+                            .build();
+                    ConvertedSection cs = ConvertedSection.builder()
+                            .courseInfo(courseInfo)
+                            .section(section)
+                            .build();
+                    result.add(cs);
 
+                }
             }
         }
         return result;
