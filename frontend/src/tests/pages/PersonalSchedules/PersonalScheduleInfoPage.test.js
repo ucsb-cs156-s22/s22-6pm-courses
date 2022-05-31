@@ -30,6 +30,14 @@ jest.mock('react-router-dom', () => {
     };
 });
 
+beforeEach(() => {
+    jest.spyOn(console, 'error')
+    console.error.mockImplementation(() => null);
+  });
+
+afterEach(() => {
+    console.error.mockRestore()
+})
 describe("PersonalScheduleInfoPage tests", () => {
 
 
@@ -98,9 +106,6 @@ describe("PersonalScheduleInfoPage tests", () => {
     });
 
     test("returns 404 when regular user tries to get info page of invalid id", () => {
-        jest.spyOn(console, 'error')
-        console.error.mockImplementation(() => null);
-
         setupUserOnly();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/personalschedules?id=5").reply(404);
@@ -113,14 +118,9 @@ describe("PersonalScheduleInfoPage tests", () => {
             </QueryClientProvider>
         );
 
-        console.error.mockRestore()
-
     });
 
     test("returns 404 when admin tries to get info page of invalid id", () => {
-        jest.spyOn(console, 'error')
-        console.error.mockImplementation(() => null);
-
         setupAdminUser();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/personalschedules?id=5").reply(404);
@@ -132,8 +132,5 @@ describe("PersonalScheduleInfoPage tests", () => {
                 </MemoryRouter>
             </QueryClientProvider>
         );
-
-        console.error.mockRestore()
-
     });
 });
