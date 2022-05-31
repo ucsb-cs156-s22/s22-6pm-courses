@@ -22,12 +22,7 @@ const qtrNumToQuarter = {
 export const location = (loc) => {
     let ans = "";
     for (let i = 0; i < loc.length; i++) {
-        for (let j = 0; j < loc[i].timeLocations.length; j++) {
-            ans += `${loc[i].timeLocations[j].building} ${loc[i].timeLocations[j].room}`;
-            if (j + 1 < loc[i].timeLocations.length) {
-                ans += `,`;
-            } 
-        }
+        ans += `${loc[i].timeLocations[0].building} ${loc[i].timeLocations[0].room}`;
         if (i + 1 < loc.length) {
             ans += `,`;
         }
@@ -36,40 +31,10 @@ export const location = (loc) => {
     return ans.map((a)=><div>{a}</div>);
 }
 
-export const enrollTotal = (loc) => {
-    let ans = "";
-    for (let i = 0; i < loc.length; i++) {
-        ans += `${loc[i].enrolledTotal}`;
-        if (i + 1 < loc.length) {
-            ans += `,`
-        }
-    }
-    ans = ans.split(`,`);
-    return ans.map((a)=><div>{a}</div>);
-}
-
-export const maxEnroll = (loc) => {
-    let ans = "";
-    for (let i = 0; i < loc.length; i++) {
-        ans += `${loc[i].maxEnroll}`;
-        if (i + 1 < loc.length) {
-            ans += `,`
-        } 
-
-    }
-    ans = ans.split(`,`);
-    return ans.map((a)=><div>{a}</div>);
-}
-
 export const time = (loc) => {
     let ans = "";
     for (let i = 0; i < loc.length; i++) {
-        for (let j = 0; j < loc[i].timeLocations.length; j++) {
-            ans += `${loc[i].timeLocations[j].beginTime}--${loc[i].timeLocations[j].endTime}  ${loc[i].timeLocations[j].days}`;
-            if (j + 1 < loc[i].timeLocations.length) {
-                ans += `,`
-            } 
-        }
+        ans += `${loc[i].timeLocations[0].beginTime}--${loc[i].timeLocations[0].endTime}  ${loc[i].timeLocations[0].days}`;
         if (i + 1 < loc.length) {
             ans += `,`
         }
@@ -85,60 +50,6 @@ export const enroll = (loc) => {
         if (i + 1 < loc.length) {
             ans += `,`
         }
-    }
-    ans = ans.split(`,`);
-    return ans.map((a)=><div>{a}</div>);
-}
-
-export const days = (loc) => {
-    let ans = "";
-    for (let i = 1; i < loc.length; i++) {
-        for (let j = 0; j < loc[i].timeLocations.length; j++) {
-            ans += `${loc[i].timeLocations[j].days}`;
-            if (j + 1 < loc[i].timeLocations.length) {
-                ans += `,`
-            } 
-        }
-        if (i + 1 < loc.length) {
-            ans += `,`
-        } 
-
-    }
-    ans = ans.split(`,`);
-    return ans.map((a)=><div>{a}</div>);
-}
-
-export const start = (loc) => {
-    let ans = "";
-    for (let i = 1; i < loc.length; i++) {
-        for (let j = 0; j < loc[i].timeLocations.length; j++) {
-            ans += `${loc[i].timeLocations[j].beginTime}`;
-            if (j + 1 < loc[i].timeLocations.length) {
-                ans += `,`
-            } 
-        }
-        if (i + 1 < loc.length) {
-            ans += `,`
-        } 
-
-    }
-    ans = ans.split(`,`);
-    return ans.map((a)=><div>{a}</div>);
-}
-
-export const end = (loc) => {
-    let ans = "";
-    for (let i = 1; i < loc.length; i++) {
-        for (let j = 0; j < loc[i].timeLocations.length; j++) {
-            ans += `${loc[i].timeLocations[j].endTime}`;
-            if (j + 1 < loc[i].timeLocations.length) {
-                ans += `,`
-            } 
-        }
-        if (i + 1 < loc.length) {
-            ans += `,`
-        } 
-
     }
     ans = ans.split(`,`);
     return ans.map((a)=><div>{a}</div>);
