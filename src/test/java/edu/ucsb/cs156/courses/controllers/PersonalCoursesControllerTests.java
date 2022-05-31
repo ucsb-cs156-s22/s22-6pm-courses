@@ -145,6 +145,34 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         String responseString = response.getResponse().getContentAsString();
         assertEquals(expectedJson, responseString);
     }
+    //For invalid course enrollCd
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void api_courses_add_Invalid_course_enroll_code1__user_logged_in() throws Exception {
+        
+        MvcResult response = mockMvc.perform(
+                post("/api/personalcourses/add?psId=1&enrollCd=abc&quarter=20222")
+                        .with(csrf()))
+                .andExpect(status().isNotFound()).andReturn();
+
+        
+        Map<String, Object> json = responseToJson(response);
+        assertEquals("Invalid EnrollCd abc (EnrollCd should be numeric and no more than five digits)", json.get("message"));
+    }
+    //For invalid course enrollCd
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void api_courses_add_Invalid_course_enroll_code2__user_logged_in() throws Exception {
+        
+        MvcResult response = mockMvc.perform(
+                post("/api/personalcourses/add?psId=1&enrollCd=123456&quarter=20222")
+                        .with(csrf()))
+                .andExpect(status().isNotFound()).andReturn();
+
+        
+        Map<String, Object> json = responseToJson(response);
+        assertEquals("Invalid EnrollCd 123456 (EnrollCd should be numeric and no more than five digits)", json.get("message"));
+    }
     //For STUB method
     @WithMockUser(roles = { "USER" })
     @Test

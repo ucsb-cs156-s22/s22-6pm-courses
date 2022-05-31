@@ -5,7 +5,8 @@ import edu.ucsb.cs156.courses.entities.PersonalCourses;
 
 import edu.ucsb.cs156.courses.entities.User;
 import edu.ucsb.cs156.courses.errors.EntityNotFoundException;
-import edu.ucsb.cs156.courses.errors.EnrollCdInvalidException;
+import edu.ucsb.cs156.courses.errors.CourseNotFoundException;
+import edu.ucsb.cs156.courses.errors.InvalidEnrollCdException;
 import edu.ucsb.cs156.courses.models.CurrentUser;
 
 import edu.ucsb.cs156.courses.repositories.PersonalCoursesRepository;
@@ -56,6 +57,21 @@ public class PersonalCoursesController extends ApiController {
         
     }
     
+    static boolean validEnrollCd(String enrollCd) {
+        if(enrollCd.length()<=5){
+            try{Integer.parseInt(enrollCd);}
+            catch(NumberFormatException e){
+                return false;
+            }
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+    }
+
+    
     @Autowired
     PersonalCoursesRepository personalcoursesRepository;
     
@@ -85,9 +101,13 @@ public class PersonalCoursesController extends ApiController {
             @ApiParam("enrollCd") @RequestParam String enrollCd,
             @ApiParam("psID") @RequestParam long psId,
             @ApiParam("Quarter (in yyyyq)") @RequestParam String quarter) {
+        
+        if(!validEnrollCd(enrollCd)){
+            throw new InvalidEnrollCdException(enrollCd);
+        }
         //FIX (Replace with course search method)
         if(!STUBfunc(enrollCd,quarter)){
-            throw new EnrollCdInvalidException(enrollCd,quarter);
+            throw new CourseNotFoundException(enrollCd,quarter);
         }
 
         PersonalCourses personalcourse = new PersonalCourses();
