@@ -39,6 +39,18 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
 
     @MockBean
     UserRepository userRepository;
+    @Test
+    public void api_schedules_all__logged_out__returns_403() throws Exception {
+        mockMvc.perform(get("/api/personalcourses/all"))
+                .andExpect(status().is(403));
+    }
+    
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void api_schedules_all__user_logged_in__returns_200() throws Exception {
+        mockMvc.perform(get("/api/personalcourses/all"))
+                .andExpect(status().isOk());
+    }
     
     @Test
     public void api_schedules_post__logged_out__returns_403() throws Exception {
@@ -46,6 +58,33 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
                 .andExpect(status().is(403));
     }
 
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void api_schedules_admin_all__admin_logged_in__returns_all_schedules() throws Exception {
+
+
+
+        PersonalCourses p1 = PersonalCourses.builder().psId(1).enrollCd("123456").quarter("20222").id(0L).build();
+        PersonalCourses p2 = PersonalCourses.builder().psId(2).enrollCd("789123").quarter("20222").id(1L).build();
+        PersonalCourses p3 = PersonalCourses.builder().psId(3).enrollCd("654321").quarter("20222").id(2L).build();
+       
+
+        ArrayList<PersonalCourses> expectedCourses = new ArrayList<>();
+        expectedCourses.addAll(Arrays.asList(p1, p2, p3));
+
+        when(personalcoursesRepository.findAll()).thenReturn(expectedCourses);
+
+        
+        MvcResult response = mockMvc.perform(get("/api/personalcourses/all"))
+                .andExpect(status().isOk()).andReturn();
+
+        
+
+        verify(personalcoursesRepository, times(1)).findAll();
+        String expectedJson = mapper.writeValueAsString(expectedCourses);
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedJson, responseString);
+    }
     
     @WithMockUser(roles = { "USER" })
     @Test
