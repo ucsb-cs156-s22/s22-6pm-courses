@@ -11,6 +11,7 @@ import "bootstrap/dist/css/bootstrap.css";
 
 import PersonalSchedulesIndexPage from "main/pages/PersonalSchedules/PersonalSchedulesIndexPage";
 import PersonalSchedulesCreatePage from "main/pages/PersonalSchedules/PersonalSchedulesCreatePage";
+import PersonalScheduleInfoPage from "main/pages/PersonalSchedules/PersonalScheduleInfoPage";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
             <>
               <Route exact path="/personalschedules/list" element={<PersonalSchedulesIndexPage />} />
               <Route exact path="/personalschedules/create" element={<PersonalSchedulesCreatePage />} />
+              <Route path="/personalschedules/:scheduleID" element={<PersonalScheduleInfoPage />} />
             </>
           )
         }
