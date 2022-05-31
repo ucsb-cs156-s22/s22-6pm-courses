@@ -182,4 +182,73 @@ public class UCSBCurriculumServiceTests {
         assertEquals(expected, convertedSections);
     }
 
+
+    @Test
+    public void test_getSectionJSON_success() throws Exception {
+        String expectedResult = "[{ quarter: \"20224\", classSections: [{ enrollCode: \"08185\" }]}]";
+
+        String quarter = "20224";
+        String enrollCode = "08185";
+
+        String params = String.format(
+            "?quarter=%s&enrollCode=%s", enrollCode, quarter);
+        String expectedURL = UCSBCurriculumService.ENDPOINT + params;
+
+        this.mockRestServiceServer.expect(requestTo(expectedURL))
+                .andExpect(header("Accept", MediaType.APPLICATION_JSON.toString()))
+                .andExpect(header("Content-Type", MediaType.APPLICATION_JSON.toString()))
+                .andExpect(header("ucsb-api-version", "1.0"))
+                .andExpect(header("ucsb-api-key", apiKey))
+                .andRespond(withSuccess(expectedResult, MediaType.APPLICATION_JSON));
+
+        String result = ucs.getSectionJSON(enrollCode, quarter);
+
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    public void test_getSectionJSON_exception() throws Exception {
+        String expectedResult = "{\"error\": \"401: Unauthorized\"}";
+
+        String quarter = "20224";
+        String enrollCode = "08185";
+
+        String params = String.format(
+            "?quarter=%s&enrollCode=%s", enrollCode, quarter);
+        String expectedURL = UCSBCurriculumService.ENDPOINT + params;
+        
+        this.mockRestServiceServer.expect(requestTo(expectedURL))
+                .andExpect(header("Accept", MediaType.APPLICATION_JSON.toString()))
+                .andExpect(header("Content-Type", MediaType.APPLICATION_JSON.toString()))
+                .andExpect(header("ucsb-api-version", "1.0"))
+                .andExpect(header("ucsb-api-key", apiKey))
+                .andRespond(withUnauthorizedRequest());
+
+        String result = ucs.getSectionJSON(enrollCode, quarter);
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    public void test_getSectionJSON_DNE() throws Exception {
+
+        String expectedResult = "{\"error\": \"404 (Not Found): Enroll code does not exist!\"}";
+        String quarter = "20224";
+        String enrollCode = "00000";
+
+        String params = String.format(
+            "?quarter=%s&enrollCode=%s", enrollCode, quarter);
+        String expectedURL = UCSBCurriculumService.ENDPOINT + params;
+
+        this.mockRestServiceServer.expect(requestTo(expectedURL))
+                .andExpect(header("Accept", MediaType.APPLICATION_JSON.toString()))
+                .andExpect(header("Content-Type", MediaType.APPLICATION_JSON.toString()))
+                .andExpect(header("ucsb-api-version", "1.0"))
+                .andExpect(header("ucsb-api-key", apiKey))
+                .andRespond(withSuccess("null", MediaType.APPLICATION_JSON));
+
+        String result = ucs.getSectionJSON(enrollCode, quarter);
+        assertEquals(expectedResult, result);
+    }
+
 }
+

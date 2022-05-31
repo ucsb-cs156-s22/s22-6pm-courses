@@ -156,6 +156,9 @@ public class UCSBCurriculumService {
         } catch (HttpClientErrorException e) {
             retVal = "{\"error\": \"401: Unauthorized\"}";
         }
+        if(retVal.equals("null")){
+            retVal = "{\"error\": \"404 (Not Found): Enroll code does not exist!\"}";
+        }
         logger.info("json: {} contentType: {} statusCode: {}",retVal,contentType,statusCode);
         return retVal;
     }
