@@ -4,6 +4,7 @@ import edu.ucsb.cs156.courses.errors.CourseNotFoundException;
 import edu.ucsb.cs156.courses.errors.EntityNotFoundException;
 import edu.ucsb.cs156.courses.errors.InvalidEnrollCdException;
 import edu.ucsb.cs156.courses.errors.InvalidPsIdException;
+import edu.ucsb.cs156.courses.errors.InvalidQuarterException;
 import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,7 +30,7 @@ public abstract class ApiController {
     return Map.of("message", message);
   }
 
-  @ExceptionHandler({ EntityNotFoundException.class, CourseNotFoundException.class,InvalidEnrollCdException.class,InvalidPsIdException.class })
+  @ExceptionHandler({ EntityNotFoundException.class, CourseNotFoundException.class,InvalidEnrollCdException.class,InvalidPsIdException.class,InvalidQuarterException.class })
   @ResponseStatus(HttpStatus.NOT_FOUND)
   public Object handleGenericException(Throwable e) {
     return Map.of(

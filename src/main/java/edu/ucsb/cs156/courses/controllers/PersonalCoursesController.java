@@ -2,12 +2,13 @@ package edu.ucsb.cs156.courses.controllers;
 
 
 import edu.ucsb.cs156.courses.entities.PersonalCourses;
-
+import edu.ucsb.cs156.courses.entities.PersonalSchedule;
 import edu.ucsb.cs156.courses.entities.User;
 import edu.ucsb.cs156.courses.errors.EntityNotFoundException;
 import edu.ucsb.cs156.courses.errors.CourseNotFoundException;
 import edu.ucsb.cs156.courses.errors.InvalidEnrollCdException;
 import edu.ucsb.cs156.courses.errors.InvalidPsIdException;
+import edu.ucsb.cs156.courses.errors.InvalidQuarterException;
 import edu.ucsb.cs156.courses.models.CurrentUser;
 
 import edu.ucsb.cs156.courses.repositories.PersonalCoursesRepository;
@@ -73,6 +74,16 @@ public class PersonalCoursesController extends ApiController {
         
     }
 
+    boolean validQuarter(long psId, String quarter) {
+        Optional<PersonalSchedule> x = personalscheduleRepository.findById(psId);
+        if(!x.get().getQuarter().equals(quarter)){
+            return false;
+        }
+        else{
+            return true;
+        }
+        
+    }
 
 
 
@@ -118,6 +129,10 @@ public class PersonalCoursesController extends ApiController {
             throw new InvalidPsIdException(psId);
         }
 
+        if(!validQuarter(psId,quarter)){
+            throw new InvalidQuarterException(psId,quarter);
+        }
+
         //FIX (Replace with course search method)
         if(!STUBfunc(enrollCd,quarter)){
             throw new CourseNotFoundException(enrollCd,quarter);
@@ -147,6 +162,10 @@ public class PersonalCoursesController extends ApiController {
                
         if(!personalscheduleRepository.findByIdAndUser(psId,getCurrentUser().getUser()).isPresent()){
             throw new InvalidPsIdException(psId);
+        }
+        
+        if(!validQuarter(psId,quarter)){
+            throw new InvalidQuarterException(psId,quarter);
         }
 
         //FIX (Replace with course search method)
