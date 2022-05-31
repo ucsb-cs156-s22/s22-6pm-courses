@@ -12,17 +12,19 @@ export default function PersonalScheduleInfoPage() {
     
     const { data: personalSchedule, error: _error, status: _status } =
         useBackend(
-            // Stryker disable next-line all : don't test internal caching of React Query
+            // Stryker disable all : don't make sense to mutation test here
             ["/api/personalschedules", `${scheduleID}` ],
             { method: "GET", url: `/api/personalschedules?id=${scheduleID}` },
             []
+            // Stryker enable all
         );
 
     return (
         <BasicLayout>
             <div className="pt-2">
                 <h1>PersonalScheduleInfo</h1>
-                {(personalSchedule !== []) && <PersonalSchedulesTable personalSchedules={[personalSchedule]} currentUser={currentUser} />}
+                { // Stryker disable next-line all: we only want to check against empty array
+                (personalSchedule !== []) && <PersonalSchedulesTable personalSchedules={[personalSchedule]} currentUser={currentUser} />}
             </div>
         </BasicLayout>
     )
