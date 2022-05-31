@@ -104,7 +104,7 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
 
         PersonalCourses p1 = PersonalCourses.builder().psId(1).enrollCd("123456").quarter("20222").id(0L).build();
         PersonalCourses p2 = PersonalCourses.builder().psId(1).enrollCd("789123").quarter("20222").id(1L).build();
-        PersonalCourses p3 = PersonalCourses.builder().psId(2).enrollCd("654321").quarter("20222").id(2L).build();
+        PersonalCourses p3 = PersonalCourses.builder().psId(1).enrollCd("654321").quarter("20222").id(2L).build();
 
         ArrayList<PersonalCourses> expectedCourses = new ArrayList<>();
         expectedCourses.addAll(Arrays.asList(p1, p2, p3));
