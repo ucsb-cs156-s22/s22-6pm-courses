@@ -20,6 +20,17 @@ jest.mock('react-toastify', () => {
     };
 });
 
+jest.mock('react-router-dom', () => {
+    const originalModule = jest.requireActual('react-router-dom'); // use actual for all non-hook parts
+    return {
+        __esModule: true,
+        ...originalModule,
+        useParams: () => ({
+            scheduleID: 1
+        })
+    };
+});
+
 describe("PersonalScheduleInfoPage tests", () => {
 
 
@@ -42,12 +53,10 @@ describe("PersonalScheduleInfoPage tests", () => {
     };
     
     test("renders without crashing for regular user", async() => {
-
-        console.log(personalSchedulesFixtures.onePersonalSchedule);
         
         setupUserOnly();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/personalschedules/1").reply(200, personalSchedulesFixtures.onePersonalSchedule);
+        axiosMock.onGet("/api/personalschedules?id=1").reply(200, personalSchedulesFixtures.onePersonalSchedule);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -58,18 +67,18 @@ describe("PersonalScheduleInfoPage tests", () => {
         );
         
         await waitFor(() => {
-            expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1);
+            expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(3);
         });
-        expect(await screen.findByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(1);
-        expect(screen.getByTestId(`${testId}-cell-row-1-col-name`)).toHaveTextContent("TestName");
-
-
+        
+        expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(1);
+        expect(screen.getByTestId(`${testId}-cell-row-0-col-name`)).toHaveTextContent("TestName");
+        expect(screen.getByTestId(`${testId}-cell-row-0-col-description`)).toHaveTextContent("TestDescription");
     });
 
-    test("renders without crashing for admin user", () => {
+    test("renders without crashing for admin user", async() => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/personalschedules/1").reply(200, personalSchedulesFixtures.onePersonalSchedule);
+        axiosMock.onGet("/api/personalschedules?id=1").reply(200, personalSchedulesFixtures.onePersonalSchedule);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -79,6 +88,13 @@ describe("PersonalScheduleInfoPage tests", () => {
             </QueryClientProvider>
         );
 
+        await waitFor(() => {
+            expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(3);
+        });
+        
+        expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(1);
+        expect(screen.getByTestId(`${testId}-cell-row-0-col-name`)).toHaveTextContent("TestName");
+        expect(screen.getByTestId(`${testId}-cell-row-0-col-description`)).toHaveTextContent("TestDescription");
 
     });
 
@@ -88,7 +104,7 @@ describe("PersonalScheduleInfoPage tests", () => {
 
         setupUserOnly();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/personalschedules/5").reply(404);
+        axiosMock.onGet("/api/personalschedules?id=5").reply(404);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -108,7 +124,7 @@ describe("PersonalScheduleInfoPage tests", () => {
 
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/personalschedules/5").reply(404);
+        axiosMock.onGet("/api/personalschedules?id=5").reply(404);
 
         render(
             <QueryClientProvider client={queryClient}>
