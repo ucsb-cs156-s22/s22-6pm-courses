@@ -13,6 +13,10 @@ import PersonalSchedulesIndexPage from "main/pages/PersonalSchedules/PersonalSch
 import PersonalSchedulesCreatePage from "main/pages/PersonalSchedules/PersonalSchedulesCreatePage";
 
 import SectionSearchIndexPage from "main/pages/SectionSearch/SectionSearchIndexPage";
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8b37b349813e06cb65d5a3dc7371444b086bd5fa
 
 function App() {
 
@@ -47,6 +51,16 @@ function App() {
             </>
           )
         }
+<<<<<<< HEAD
+=======
+        {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/sectionsearch/list" element={<SectionSearchIndexPage />} />
+            </>
+          )
+        }
+>>>>>>> 8b37b349813e06cb65d5a3dc7371444b086bd5fa
       </Routes>
     </BrowserRouter>
   );

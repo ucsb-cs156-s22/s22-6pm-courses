@@ -1,7 +1,6 @@
 import React from "react";
 import OurTable from "main/components/OurTable";
-
-//import { yyyyqToQyy } from "main/utils/quarterUtilities.js";
+import { location, enroll, time, instructor, section } from "main/utils/CoursesWithSectionsUtilities";
 
 export default function CoursesWithSectionsTable({ courses }) {
 
@@ -9,21 +8,33 @@ export default function CoursesWithSectionsTable({ courses }) {
         {
             Header: 'Course ID',
             accessor: 'courseId',
-
         },
         {
-            Header: 'Section code',
-            accessor: data => {
-                let temp = "sss";
-                let output = [];
-                _.map(data.classSections, section => {
-                    output.push(section.enrollCode);
-                });
-                return temp;
-                //return output.join(', ');
-            },
+            Header: 'Location',
+            accessor: (row) => location(row.classSections),
+            id: 'location',
         },
-        
+        {
+            Header: 'Section',
+            accessor: (row) => section(row.classSections),
+            id: 'section',
+        },
+        {
+            Header: 'Enrollment',
+            accessor: (row) => enroll(row.classSections),
+            id: 'enrollment',
+        },
+        {
+            Header: 'Time',
+            accessor: (row) => time(row.classSections),
+            id: 'time',
+        },
+        {
+            Header: 'Instructor',
+            accessor: (row) => instructor(row.classSections),
+            id: 'instructor',
+        }
+
     ];
 
     return <OurTable
@@ -31,4 +42,4 @@ export default function CoursesWithSectionsTable({ courses }) {
         columns={columns}
         testid={"CoursesWithSectionsTable"}
     />;
-};
+}; 
