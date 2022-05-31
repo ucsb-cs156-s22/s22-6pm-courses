@@ -1,15 +1,10 @@
 import React from "react";
 import OurTable from "main/components/OurTable";
-import { yyyyqToQyy, location, enroll, time, instructor } from "main/utils/quarterUtilities.js";
+import { location, enroll, time, instructor } from "main/utils/CoursesWithSectionsUtilities";
 
 export default function CoursesWithSectionsTable({ courses }) {
 
     const columns = [
-        {
-            Header: 'Quarter',
-            accessor: (row, _rowIndex) => yyyyqToQyy(row.quarter),
-            id: 'quarter',
-        },
         {
             Header: 'Course ID',
             accessor: 'courseId',
@@ -34,7 +29,7 @@ export default function CoursesWithSectionsTable({ courses }) {
             accessor: (row) => instructor(row.classSections),
             id: 'instructor',
         }
-        
+
     ];
 
     return <OurTable
@@ -42,4 +37,4 @@ export default function CoursesWithSectionsTable({ courses }) {
         columns={columns}
         testid={"CoursesWithSectionsTable"}
     />;
-};
+}; 
