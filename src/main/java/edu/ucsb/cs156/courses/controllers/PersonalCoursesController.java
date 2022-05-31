@@ -74,19 +74,7 @@ public class PersonalCoursesController extends ApiController {
     }
 
 
-/*
-    static boolean validPsId(long psId) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("ucsb-api-version", "1.0");
-        headers.set("ucsb-api-key", this.apiKey);
 
-        HttpEntity<String> entity = new HttpEntity<>("body", headers);
-        ResponseEntity<String> re = restTemplate.exchange("/api/personalschedules?id=13", HttpMethod.GET, entity, String.class);
-        contentType = re.getHeaders().getContentType();
-    }
-*/
 
     
     @Autowired
