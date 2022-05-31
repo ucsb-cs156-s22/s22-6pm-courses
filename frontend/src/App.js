@@ -37,7 +37,7 @@ function App() {
             <>
               <Route exact path="/personalschedules/list" element={<PersonalSchedulesIndexPage />} />
               <Route exact path="/personalschedules/create" element={<PersonalSchedulesCreatePage />} />
-              <Route path="/personalschedules/:scheduleID" element={<PersonalScheduleInfoPage />} />
+              <Route exact path="/personalschedules/:scheduleID" element={<PersonalScheduleInfoPage />} />
             </>
           )
         }
