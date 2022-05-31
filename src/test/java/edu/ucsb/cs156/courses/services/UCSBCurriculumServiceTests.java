@@ -191,7 +191,7 @@ public class UCSBCurriculumServiceTests {
         String enrollCode = "08185";
 
         String params = String.format(
-            "?quarter=%s&enrollCode=%s", enrollCode, quarter);
+            "?quarter=%s&enrollCode=%s", quarter, enrollCode);
         String expectedURL = UCSBCurriculumService.ENDPOINT + params;
 
         this.mockRestServiceServer.expect(requestTo(expectedURL))
@@ -201,7 +201,7 @@ public class UCSBCurriculumServiceTests {
                 .andExpect(header("ucsb-api-key", apiKey))
                 .andRespond(withSuccess(expectedResult, MediaType.APPLICATION_JSON));
 
-        String result = ucs.getSectionJSON(enrollCode, quarter);
+        String result = ucs.getSectionJSON(quarter, enrollCode);
 
         assertEquals(expectedResult, result);
     }
@@ -214,9 +214,9 @@ public class UCSBCurriculumServiceTests {
         String enrollCode = "08185";
 
         String params = String.format(
-            "?quarter=%s&enrollCode=%s", enrollCode, quarter);
+            "?quarter=%s&enrollCode=%s", quarter, enrollCode);
         String expectedURL = UCSBCurriculumService.ENDPOINT + params;
-        
+
         this.mockRestServiceServer.expect(requestTo(expectedURL))
                 .andExpect(header("Accept", MediaType.APPLICATION_JSON.toString()))
                 .andExpect(header("Content-Type", MediaType.APPLICATION_JSON.toString()))
@@ -224,7 +224,7 @@ public class UCSBCurriculumServiceTests {
                 .andExpect(header("ucsb-api-key", apiKey))
                 .andRespond(withUnauthorizedRequest());
 
-        String result = ucs.getSectionJSON(enrollCode, quarter);
+        String result = ucs.getSectionJSON(quarter, enrollCode);
         assertEquals(expectedResult, result);
     }
 
@@ -236,7 +236,7 @@ public class UCSBCurriculumServiceTests {
         String enrollCode = "00000";
 
         String params = String.format(
-            "?quarter=%s&enrollCode=%s", enrollCode, quarter);
+            "?quarter=%s&enrollCode=%s", quarter, enrollCode);
         String expectedURL = UCSBCurriculumService.ENDPOINT + params;
 
         this.mockRestServiceServer.expect(requestTo(expectedURL))
@@ -246,7 +246,7 @@ public class UCSBCurriculumServiceTests {
                 .andExpect(header("ucsb-api-key", apiKey))
                 .andRespond(withSuccess("null", MediaType.APPLICATION_JSON));
 
-        String result = ucs.getSectionJSON(enrollCode, quarter);
+        String result = ucs.getSectionJSON(quarter, enrollCode);
         assertEquals(expectedResult, result);
     }
 
