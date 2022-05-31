@@ -55,9 +55,30 @@ const instructor = (loc) => {
     return ans.map((a)=><div>{a}</div>);
 }
 
+const section = (loc) => {
+    let ans = "";
+    for (let i = 0; i < loc.length; i++) {
+        let sectionNumber = `${loc[i].section}`;
+        if(sectionNumber.substring(sectionNumber.length - 2) === '00'){
+            sectionNumber = 'LECTURE'
+        }
+        else{
+            sectionNumber = 'SECTION'
+        }
+        ans += sectionNumber;
+        if (i + 1 < loc.length) {
+            ans += ','
+        }
+    }
+
+    ans = ans.split(',');
+    return ans.map((a)=><div>{a}</div>);
+}
+
 export {
     location,
     time,
     enroll,
-    instructor
+    instructor,
+    section
 };
