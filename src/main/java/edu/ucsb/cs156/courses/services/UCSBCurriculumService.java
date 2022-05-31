@@ -103,4 +103,37 @@ public class UCSBCurriculumService  {
         return retVal;
     }
     
+    public static final String ENDPOINT = "https://api.ucsb.edu/academics/curriculums/v3/classsection";
+
+    //{quarter}/{enrollcode}
+    public String getSection(String quarter, String enrollCode) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("ucsb-api-version", "1.0");
+        headers.set("ucsb-api-key", this.apiKey);
+
+        HttpEntity<String> entity = new HttpEntity<>("body", headers);
+
+        String params = String.format(
+                "?quarter=%s&enrollCode=%s", quarter, enrollCode);
+        String url = ENDPOINT + params;
+
+        logger.info("url=" + url);
+
+        String retVal = "";
+        MediaType contentType=null;
+        HttpStatus statusCode=null;
+        try {
+            ResponseEntity<String> re = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+            contentType = re.getHeaders().getContentType();
+            statusCode = re.getStatusCode();
+            retVal = re.getBody();
+        } catch (HttpClientErrorException e) {
+            retVal = "{\"error\": \"401: Unauthorized\"}";
+        }
+        logger.info("json: {} contentType: {} statusCode: {}",retVal,contentType,statusCode);
+        return retVal;
+    }
 }
