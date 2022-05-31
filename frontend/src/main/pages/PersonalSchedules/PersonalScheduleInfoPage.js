@@ -22,7 +22,7 @@ export default function PersonalScheduleInfoPage() {
         <BasicLayout>
             <div className="pt-2">
                 <h1>PersonalScheduleInfo</h1>
-                <PersonalSchedulesTable personalSchedules={personalSchedule ? [personalSchedule] : []} currentUser={currentUser} />
+                {(personalSchedule != []) && <PersonalSchedulesTable personalSchedules={[personalSchedule]} currentUser={currentUser} />}
             </div>
         </BasicLayout>
     )

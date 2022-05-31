@@ -8,7 +8,7 @@ import mockConsole from "jest-mock-console";
 import PersonalScheduleInfoPage from "main/pages/PersonalSchedules/PersonalScheduleInfoPage";
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-import { personalScheduleFixtures } from "fixtures/personalScheduleFixtures";
+import { personalSchedulesFixtures } from "fixtures/personalSchedulesFixtures";
 
 const mockToast = jest.fn();
 jest.mock('react-toastify', () => {
@@ -21,6 +21,7 @@ jest.mock('react-toastify', () => {
 });
 
 describe("PersonalScheduleInfoPage tests", () => {
+
 
     const axiosMock = new AxiosMockAdapter(axios);
 
@@ -40,10 +41,13 @@ describe("PersonalScheduleInfoPage tests", () => {
         axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
     };
     
-    test("renders without crashing for regular user", () => {
+    test("renders without crashing for regular user", async() => {
+
+        console.log(personalSchedulesFixtures.onePersonalSchedule);
+        
         setupUserOnly();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/personalschedules/1").reply(200, personalScheduleFixtures.onePersonalSchedules);
+        axiosMock.onGet("/api/personalschedules/1").reply(200, personalSchedulesFixtures.onePersonalSchedule);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -52,6 +56,12 @@ describe("PersonalScheduleInfoPage tests", () => {
                 </MemoryRouter>
             </QueryClientProvider>
         );
+        
+        await waitFor(() => {
+            expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1);
+        });
+        expect(await screen.findByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(1);
+        expect(screen.getByTestId(`${testId}-cell-row-1-col-name`)).toHaveTextContent("TestName");
 
 
     });
@@ -59,7 +69,7 @@ describe("PersonalScheduleInfoPage tests", () => {
     test("renders without crashing for admin user", () => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/personalschedules/1").reply(200, null);
+        axiosMock.onGet("/api/personalschedules/1").reply(200, personalSchedulesFixtures.onePersonalSchedule);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -78,7 +88,7 @@ describe("PersonalScheduleInfoPage tests", () => {
 
         setupUserOnly();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/personalschedules/5").reply(404, personalScheduleFixtures.onePersonalSchedules);
+        axiosMock.onGet("/api/personalschedules/5").reply(404);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -98,7 +108,7 @@ describe("PersonalScheduleInfoPage tests", () => {
 
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/personalschedules/5").reply(404, personalScheduleFixtures.onePersonalSchedules);
+        axiosMock.onGet("/api/personalschedules/5").reply(404);
 
         render(
             <QueryClientProvider client={queryClient}>
