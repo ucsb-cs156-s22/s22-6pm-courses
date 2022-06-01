@@ -1,4 +1,4 @@
-import React from "react";
+import React, {_Component} from "react";
 import OurTable from "main/components/OurTable";
 import { location, enroll, time, instructor, section } from "main/utils/CoursesWithSectionsUtilities";
 
@@ -10,7 +10,15 @@ export default function CoursesWithSectionsTable({ courses }) {
             accessor: 'courseId',
         },
         {
-            Header: 'Section',
+            Header: 'Title',
+            accessor: 'title',
+        },
+        {
+            Header: 'Units',
+            accessor: 'unitsFixed',
+        },
+        {
+            Header: 'Enroll Code',
             accessor: (row) => section(row.classSections),
             id: 'section',
         },
@@ -25,7 +33,7 @@ export default function CoursesWithSectionsTable({ courses }) {
             id: 'enrollment',
         },
         {
-            Header: 'Time',
+            Header: 'Time and Date',
             accessor: (row) => time(row.classSections),
             id: 'time',
         },
