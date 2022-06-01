@@ -45,9 +45,7 @@ public class PersonalSchedulesController extends ApiController {
 
     @Autowired
     PersonalScheduleRepository personalscheduleRepository;
-    @Autowired
     PersonalCoursesRepository personalcoursesRepository;
-     @Autowired
     UCSBCurriculumService ucsbCurriculumService;
 
     @ApiOperation(value = "List all personal schedules")
@@ -172,28 +170,5 @@ public class PersonalSchedulesController extends ApiController {
         personalscheduleRepository.save(personalschedule);
 
         return personalschedule;
-    }
-
-    // @ApiOperation(value = "Get the sections in a personal schedule")
-    // @PreAuthorize("hasRole('ROLE_USER')")
-    // @GetMapping("/sections")
-    // public Iterable<PersonalCourses> getSectionByPsId(
-    //         @ApiParam("psId") @RequestParam Long psId) {
-    //     Iterable<PersonalCourses> personalcourses = personalcoursesRepository.findAllByPsId(psId);
-    //     return personalcourses;
-    // }
-
-    @ApiOperation(value = "List sections in a personal schedule")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    @GetMapping("/sections")
-    public Iterable<ConvertedSection> getSectionsByPersonalScheduleID (
-          @ApiParam("personal schedule id") @RequestParam Long psId) throws JsonProcessingException {
-        ArrayList<ConvertedSection> convertedSections = new ArrayList<ConvertedSection>();
-        Iterable<PersonalCourses> personalcourses = personalcoursesRepository.findAllByPsId(psId);
-        for (PersonalCourses pc: personalcourses) {
-          List<ConvertedSection> convertedSection = ucsbCurriculumService.getConvertedSectionsByQuarterAndEnroll(pc.getQuarter(), pc.getEnrollCd());
-          convertedSections.addAll(convertedSection);
-        }
-        return convertedSections;
     }
 }

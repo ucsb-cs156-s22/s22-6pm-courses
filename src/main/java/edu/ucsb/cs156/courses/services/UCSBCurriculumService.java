@@ -132,11 +132,11 @@ public class UCSBCurriculumService {
     }
 
 
-    public List<ConvertedSection> getConvertedSectionsByQuarterAndEnroll(String quarter, String enrollCd)
+    public List<CourseInfo> getConvertedSectionsByQuarterAndEnroll(String quarter, String enrollCd)
             throws JsonProcessingException {
         String json = getJSONbyQuarterAndEnroll(quarter, enrollCd);
         CoursePage coursePage = objectMapper.readValue(json, CoursePage.class);
-        List<ConvertedSection> result = coursePage.convertedSections();       
+        List<CourseInfo> result = coursePage.convertedSectionsInfo();       
         return result;
     }
 
