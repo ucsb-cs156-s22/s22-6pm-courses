@@ -126,7 +126,7 @@ public class UCSBCurriculumService {
         return retVal;
     }
     
-    public static final String ENDPOINT = "https://api.ucsb.edu/academics/curriculums/v3/classsection";
+    public static final String ENDPOINT = "https://api.ucsb.edu/academics/curriculums/v1/classsection";
 
     //{quarter}/{enrollcode}
     public String getSectionJSON(String quarter, String enrollCode) {
@@ -153,6 +153,7 @@ public class UCSBCurriculumService {
             contentType = re.getHeaders().getContentType();
             statusCode = re.getStatusCode();
             retVal = re.getBody();
+           
         } catch (HttpClientErrorException e) {
             retVal = "{\"error\": \"401: Unauthorized\"}";
         }
