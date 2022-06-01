@@ -64,11 +64,11 @@ describe("Section Search Index Page tests", () => {
     userEvent.selectOptions(selectQuarter, "20222");
     const selectSubject = screen.getByLabelText("Subject Area");
 
-    expect(await screen.findByLabelText("Subject Area")).toHaveTextContent("ANTH");
+    expect(await screen.findByLabelText("Subject Area")).toHaveTextContent("CMPSC");
 
-    userEvent.selectOptions(selectSubject, "ANTH");
+    userEvent.selectOptions(selectSubject, "CMPSC");
     const selectLevel = screen.getByLabelText("Course Level");
-    userEvent.selectOptions(selectLevel, "G");
+    userEvent.selectOptions(selectLevel, "U");
 
     const submitButton = screen.getByText("Submit");
     expect(submitButton).toBeInTheDocument();
@@ -84,10 +84,11 @@ describe("Section Search Index Page tests", () => {
 
     expect(axiosMock.history.get[0].params).toEqual({
       qtr: "20222",
-      dept: "ANTH",
-      level: "G",
+      dept: "CMPSC",
+      level: "U",
     });
 
-    expect(screen.getByText("CMPSC     5A ")).toBeInTheDocument();
+    console.log(SectionSearchIndexPage);
+    expect(screen.getByText("CMPSC")).toBeInTheDocument();
   });
 });
