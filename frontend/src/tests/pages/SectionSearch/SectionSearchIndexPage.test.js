@@ -7,7 +7,7 @@ import AxiosMockAdapter from "axios-mock-adapter";
 import userEvent from "@testing-library/user-event";
 
 import SectionSearchIndexPage from "main/pages/SectionSearch/SectionSearchIndexPage";
-import { sectionsFixtures } from "fixtures/sectionsFixtures";
+import { newsectionFixtures } from "fixtures/newsectionFixtures";
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { allTheSubjects } from "fixtures/subjectFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
@@ -50,7 +50,7 @@ describe("Section Search Index Page tests", () => {
     axiosMock.onGet("/api/UCSBSubjects/all").reply(200, allTheSubjects);
     axiosMock
       .onGet("/api/public/basicsearch")
-      .reply(200, { classes: sectionsFixtures.oneSection });
+      .reply(200, { classes: newsectionFixtures.oneSection });
 
     render(
       <QueryClientProvider client={queryClient}>
