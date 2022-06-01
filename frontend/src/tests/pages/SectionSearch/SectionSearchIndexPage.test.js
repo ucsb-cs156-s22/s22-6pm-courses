@@ -1,4 +1,3 @@
-
 import { render, screen, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
@@ -64,11 +63,11 @@ describe("Section Search Index Page tests", () => {
     userEvent.selectOptions(selectQuarter, "20222");
     const selectSubject = screen.getByLabelText("Subject Area");
 
-    expect(await screen.findByLabelText("Subject Area")).toHaveTextContent("CMPSC");
+    expect(await screen.findByLabelText("Subject Area")).toHaveTextContent("ANTH");
 
-    userEvent.selectOptions(selectSubject, "CMPSC");
+    userEvent.selectOptions(selectSubject, "ANTH");
     const selectLevel = screen.getByLabelText("Course Level");
-    userEvent.selectOptions(selectLevel, "U");
+    userEvent.selectOptions(selectLevel, "G");
 
     const submitButton = screen.getByText("Submit");
     expect(submitButton).toBeInTheDocument();
@@ -84,11 +83,10 @@ describe("Section Search Index Page tests", () => {
 
     expect(axiosMock.history.get[0].params).toEqual({
       qtr: "20222",
-      dept: "CMPSC",
-      level: "U",
+      dept: "ANTH",
+      level: "G",
     });
 
-    console.log(SectionSearchIndexPage);
-    expect(screen.getByText("CMPSC")).toBeInTheDocument();
+    expect(screen.getByText("CMPSC     5A ")).toBeInTheDocument();
   });
 });
