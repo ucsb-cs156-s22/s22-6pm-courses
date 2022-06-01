@@ -14,7 +14,6 @@ import PersonalSchedulesCreatePage from "main/pages/PersonalSchedules/PersonalSc
 
 import SectionSearchIndexPage from "main/pages/SectionSearch/SectionSearchIndexPage";
 
-
 function App() {
 
   const { data: currentUser } = useCurrentUser();
@@ -48,13 +47,7 @@ function App() {
             </>
           )
         }
-        {
-          hasRole(currentUser, "ROLE_USER") && (
-            <>
-              <Route exact path="/sectionsearch/list" element={<SectionSearchIndexPage />} />
-            </>
-          )
-        }
+
       </Routes>
     </BrowserRouter>
   );
