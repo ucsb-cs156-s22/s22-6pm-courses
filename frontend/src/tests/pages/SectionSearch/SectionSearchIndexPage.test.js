@@ -88,6 +88,6 @@ describe("Section Search Index Page tests", () => {
       level: "G",
     });
 
-    expect(screen.getByTestId(`${"CoursesWithSectionsTable"}-cell-row-0-col-courseId`)).toHaveTextContent("CMPSC 5A");
+    expect(screen.getByTestId(`${"CoursesWithSectionsTable"}-cell-row-0-col-0`)).toHaveTextContent("CMPSC 5A");
   });
 });
