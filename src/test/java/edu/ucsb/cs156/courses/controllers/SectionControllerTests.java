@@ -8,7 +8,7 @@ import edu.ucsb.cs156.courses.documents.ConvertedSection;
 import edu.ucsb.cs156.courses.documents.CoursePage;
 import edu.ucsb.cs156.courses.documents.CourseInfo;
 import edu.ucsb.cs156.courses.documents.CoursePageFixtures;
-
+import edu.ucsb.cs156.courses.ControllerTestCase;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -35,7 +36,7 @@ import java.util.ArrayList;
 
 @WebMvcTest(value = SectionController.class)
 @Import(SecurityConfig.class)
-public class SectionControllerTests {
+public class SectionControllerTests extends ControllerTestCase {
     private final Logger logger = LoggerFactory.getLogger(SectionControllerTests.class);
     private ObjectMapper mapper = new ObjectMapper();
 
@@ -53,9 +54,9 @@ public class SectionControllerTests {
 
     @WithMockUser(roles = { "USER" })
     @Test
-    public void api_sections_admin__user_logged_in__returns_403() throws Exception {
-        mockMvc.perform(get("/api/sections/getsections?psid=3"))
-                .andExpect(status().is(403));
+    public void api_sections_admin__user_logged_in__returns_200() throws Exception {
+        mockMvc.perform(get("/api/sections/getsections?psId=3"))
+                .andExpect(status().is(200));
     }
 
 
@@ -65,9 +66,12 @@ public class SectionControllerTests {
         
         CoursePage cp = CoursePage.fromJSON(CoursePageFixtures.COURSE_PAGE_JSON_MATH3B);
         List<CourseInfo> convertedSections = cp.convertedSectionsInfo();
+        List<CourseInfo> empty = new ArrayList<CourseInfo>();
+        assertNotEquals(empty, convertedSections);
         ObjectMapper objectMapper = new ObjectMapper();
         String expectedResult = objectMapper.writeValueAsString(convertedSections);
-        String urlTemplate = "/api/sections/getsections?psid=%s";
+
+        String urlTemplate = "/api/sections/getsections?psId=%s";
         String url = String.format(urlTemplate, "3");
         when(ucsbCurriculumService.getConvertedSectionsByQuarterAndEnroll(any(String.class), any(String.class)))
                 .thenReturn(convertedSections);

@@ -52,15 +52,17 @@ public class SectionController extends ApiController {
 
     @ApiOperation(value = "List sections in a personal schedule")
     @PreAuthorize("hasRole('ROLE_USER')")
-    @GetMapping("/getsections")
+    @GetMapping(value = "/getsections", produces = "application/json")
     public Iterable<CourseInfo> getSectionsByPersonalScheduleID (
           @ApiParam("personal schedule id") @RequestParam Long psId) throws JsonProcessingException {
+
         ArrayList<CourseInfo> convertedSections = new ArrayList<CourseInfo>();
         Iterable<PersonalCourses> personalcourses = personalcoursesRepository.findAllByPsId(psId);
         for (PersonalCourses pc: personalcourses) {
-          List<CourseInfo> convertedSection = ucsbCurriculumService.getConvertedSectionsByQuarterAndEnroll(pc.getQuarter(), pc.getEnrollCd());
-          convertedSections.addAll(convertedSection);
+            List<CourseInfo> convertedSection = ucsbCurriculumService.getConvertedSectionsByQuarterAndEnroll(pc.getQuarter(), pc.getEnrollCd());
+            convertedSections.addAll(convertedSection);
         }
+
         return convertedSections;
     }
 }
