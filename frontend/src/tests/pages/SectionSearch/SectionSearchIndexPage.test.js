@@ -49,7 +49,7 @@ describe("Section Search Index Page tests", () => {
     axiosMock.onGet("/api/UCSBSubjects/all").reply(200, allTheSubjects);
     axiosMock
       .onGet("/api/public/sectionsearch")
-      .reply(200, { classes: newsectionFixtures.oneSection });
+      .reply(200, { newsectionFixtures.oneSection });
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -87,6 +87,6 @@ describe("Section Search Index Page tests", () => {
       level: "G",
     });
 
-    expect(screen.getByText("CMPSC     5A ")).toBeInTheDocument();
+    expect(screen.getByTestId(`${"CoursesWithSectionsTable"}-cell-row-0-col-0`)).toHaveTextContent("CMPSC 5A");
   });
 });
