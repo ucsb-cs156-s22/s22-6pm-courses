@@ -86,6 +86,6 @@ describe("Section Search Index Page tests", () => {
       level: "G",
     });
 
-    expect(screen.getByText("CMPSC 5A")).toBeInTheDocument();
+    expect(screen.getByText("CMPSC     5A ")).toBeInTheDocument();
   });
 });
