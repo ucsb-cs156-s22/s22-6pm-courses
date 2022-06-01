@@ -1,5 +1,7 @@
 package edu.ucsb.cs156.courses.controllers;
 
+import java.util.List;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.ucsb.cs156.courses.repositories.UserRepository;
 import edu.ucsb.cs156.courses.services.UCSBCurriculumService;
+import edu.ucsb.cs156.courses.documents.ConvertedSection;
 
 @RestController
 @RequestMapping("/api/public")
@@ -37,5 +40,13 @@ public class UCSBCurriculumController {
         String body = ucsbCurriculumService.getJSON(dept, qtr, level);
         
         return ResponseEntity.ok().body(body);
+    } 
+    @GetMapping(value = "/sectionsearch", produces = "application/json")
+    public List<ConvertedSection> sectionsearch(@RequestParam String qtr, @RequestParam String dept,
+            @RequestParam String level) throws JsonProcessingException {
+
+        List<ConvertedSection> sections = ucsbCurriculumService.getConvertedSections(dept, qtr, level);
+        
+        return sections;
     }      
 }
