@@ -49,7 +49,7 @@ describe("Section Search Index Page tests", () => {
     axiosMock.onGet("/api/UCSBSubjects/all").reply(200, allTheSubjects);
     axiosMock
       .onGet("/api/public/sectionsearch")
-      .reply(200, { newsectionFixtures.oneSection });
+      .reply(200, newsectionFixtures.oneSection);
 
     render(
       <QueryClientProvider client={queryClient}>
