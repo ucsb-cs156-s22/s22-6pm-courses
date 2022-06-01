@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import BasicCourseSearchForm from "main/components/BasicCourseSearch/BasicCourseSearchForm";
@@ -43,3 +44,19 @@ export default function SectionSearchIndexPage() {
     </BasicLayout>
   );
 }
+=======
+import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
+
+export default function SectionSearchIndexPage() {
+  return (
+    <BasicLayout>
+      <div className="pt-2">
+        <h1>UCSB Course Section Search Placeholder</h1>
+        <p>
+          This is where the index page will go
+        </p>
+      </div>
+    </BasicLayout>
+  )
+} 
+
