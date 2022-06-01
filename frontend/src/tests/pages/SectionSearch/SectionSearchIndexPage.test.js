@@ -49,7 +49,7 @@ describe("Section Search Index Page tests", () => {
   test("calls UCSB Curriculum api correctly with 1 course response", async () => {
     axiosMock.onGet("/api/UCSBSubjects/all").reply(200, allTheSubjects);
     axiosMock
-      .onGet("/api/public/basicsearch")
+      .onGet("/api/public/sectionsearch")
       .reply(200, { classes: newsectionFixtures.oneSection });
 
     render(
