@@ -185,13 +185,14 @@ public class UCSBCurriculumServiceTests {
 
     @Test
     public void test_getSectionJSON_success() throws Exception {
-        String expectedResult = "[{ quarter: \"20224\", classSections: [{ enrollCode: \"08185\" }]}]";
+        String expectedResult = "[{\"quarter\": \"20224\", \"classSections\": [{\"enrollCode\": \"08185\"}]}]";
+
 
         String quarter = "20224";
         String enrollCode = "08185";
 
         String params = String.format(
-            "?quarter=%s&enrollCode=%s", quarter, enrollCode);
+            "/%s/%s", quarter, enrollCode);
         String expectedURL = UCSBCurriculumService.ENDPOINT + params;
 
         this.mockRestServiceServer.expect(requestTo(expectedURL))
@@ -202,7 +203,7 @@ public class UCSBCurriculumServiceTests {
                 .andRespond(withSuccess(expectedResult, MediaType.APPLICATION_JSON));
 
         String result = ucs.getSectionJSON(quarter, enrollCode);
-
+        
         assertEquals(expectedResult, result);
     }
 
@@ -214,7 +215,7 @@ public class UCSBCurriculumServiceTests {
         String enrollCode = "08185";
 
         String params = String.format(
-            "?quarter=%s&enrollCode=%s", quarter, enrollCode);
+            "/%s/%s", quarter, enrollCode);
         String expectedURL = UCSBCurriculumService.ENDPOINT + params;
 
         this.mockRestServiceServer.expect(requestTo(expectedURL))
@@ -236,7 +237,7 @@ public class UCSBCurriculumServiceTests {
         String enrollCode = "00000";
 
         String params = String.format(
-            "?quarter=%s&enrollCode=%s", quarter, enrollCode);
+            "/%s/%s", quarter, enrollCode);
         String expectedURL = UCSBCurriculumService.ENDPOINT + params;
 
         this.mockRestServiceServer.expect(requestTo(expectedURL))

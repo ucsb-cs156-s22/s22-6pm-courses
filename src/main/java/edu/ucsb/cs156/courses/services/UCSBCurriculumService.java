@@ -1,5 +1,7 @@
 package edu.ucsb.cs156.courses.services;
 
+
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -128,7 +130,7 @@ public class UCSBCurriculumService {
     
     public static final String ENDPOINT = "https://api.ucsb.edu/academics/curriculums/v1/classsection";
 
-    //{quarter}/{enrollcode}
+
     public String getSectionJSON(String quarter, String enrollCode) {
 
         HttpHeaders headers = new HttpHeaders();
@@ -140,7 +142,7 @@ public class UCSBCurriculumService {
         HttpEntity<String> entity = new HttpEntity<>("body", headers);
 
         String params = String.format(
-                "?quarter=%s&enrollCode=%s", quarter, enrollCode);
+            "/%s/%s", quarter, enrollCode);
         String url = ENDPOINT + params;
 
         logger.info("url=" + url);
@@ -160,6 +162,7 @@ public class UCSBCurriculumService {
         if(retVal.equals("null")){
             retVal = "{\"error\": \"404 (Not Found): Enroll code does not exist!\"}";
         }
+
         logger.info("json: {} contentType: {} statusCode: {}",retVal,contentType,statusCode);
         return retVal;
     }
