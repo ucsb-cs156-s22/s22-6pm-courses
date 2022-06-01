@@ -12,7 +12,7 @@ export default function SectionSearchIndexPage() {
   const [courseJSON, setCourseJSON] = useState([]);
 
   const objectToAxiosParams = (query) => ({
-    url: "/api/public/basicsearch",
+    url: "/api/public/sectionsearch",
     params: {
       qtr: query.quarter,
       dept: query.subject,
@@ -21,7 +21,7 @@ export default function SectionSearchIndexPage() {
   });
 
   const onSuccess = (courses) => {
-    setCourseJSON(courses.classes);
+    setCourseJSON(courses);
   };
 
   const mutation = useBackendMutation(
