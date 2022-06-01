@@ -13,8 +13,6 @@ import PersonalSchedulesIndexPage from "main/pages/PersonalSchedules/PersonalSch
 import PersonalSchedulesCreatePage from "main/pages/PersonalSchedules/PersonalSchedulesCreatePage";
 
 import SectionSearchIndexPage from "main/pages/SectionSearch/SectionSearchIndexPage";
-
-
 function App() {
 
   const { data: currentUser } = useCurrentUser();
@@ -48,6 +46,7 @@ function App() {
             </>
           )
         }
+
         {
           hasRole(currentUser, "ROLE_USER") && (
             <>
@@ -55,6 +54,7 @@ function App() {
             </>
           )
         }
+
       </Routes>
     </BrowserRouter>
   );

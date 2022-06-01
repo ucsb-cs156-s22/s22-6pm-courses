@@ -1,3 +1,4 @@
+
 import { render, screen, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
@@ -88,3 +89,4 @@ describe("Section Search Index Page tests", () => {
     expect(screen.getByText("CMPSC 5A")).toBeInTheDocument();
   });
 });
+
