@@ -80,6 +80,8 @@ describe("Section Search Index Page tests", () => {
       expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1);
     });
 
+    expect(axiosMock.history.get[0].url).toEqual("/api/public/sectionsearch");
+
     expect(axiosMock.history.get[0].params).toEqual({
       qtr: "20222",
       dept: "ANTH",
