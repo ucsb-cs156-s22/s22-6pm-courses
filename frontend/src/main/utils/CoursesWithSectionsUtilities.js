@@ -59,11 +59,12 @@ const section = (loc) => {
     let ans = "";
     for (let i = 0; i < loc.length; i++) {
         let sectionNumber = `${loc[i].section}`;
+        let enrollNum = `${loc[i].enrollCode}`;
         if(sectionNumber.substring(sectionNumber.length - 2) === '00'){
             sectionNumber = 'LECTURE'
         }
         else{
-            sectionNumber = 'SECTION'
+            sectionNumber = enrollNum
         }
         ans += sectionNumber;
         if (i + 1 < loc.length) {
@@ -74,6 +75,8 @@ const section = (loc) => {
     ans = ans.split(',');
     return ans.map((a)=><div>{a}</div>);
 }
+
+
 
 export {
     location,
