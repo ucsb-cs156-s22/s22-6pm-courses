@@ -1,6 +1,7 @@
 package edu.ucsb.cs156.courses.controllers;
 
 import edu.ucsb.cs156.courses.repositories.UserRepository;
+import edu.ucsb.cs156.courses.services.UCSBCurriculumService;
 import edu.ucsb.cs156.courses.testconfig.TestConfig;
 import edu.ucsb.cs156.courses.ControllerTestCase;
 import edu.ucsb.cs156.courses.entities.PersonalCourses;
@@ -41,7 +42,8 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
 
     @MockBean
     PersonalScheduleRepository personalscheduleRepository;
-
+    @MockBean
+    UCSBCurriculumService ucsbCurriculumService;
 
     @MockBean
     UserRepository userRepository;
@@ -153,6 +155,7 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
 
         when(personalscheduleRepository.findByIdAndUser(eq(1L),eq(u))).thenReturn(Optional.of(myPersonalschedule));
         when(personalscheduleRepository.findById(eq(1L))).thenReturn(Optional.of(myPersonalschedule));
+        when(ucsbCurriculumService.getSectionJSON(eq("20222"), eq("1000"))).thenReturn("json: {} contentType: {} statusCode: {}");
 
         when(personalcoursesRepository.save(eq(expectedCourse))).thenReturn(expectedCourse);
 
@@ -224,6 +227,7 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         PersonalCourses expectedCourse = PersonalCourses.builder().psId(1).enrollCd("12345").quarter("20222").id(0L).build();
 
         when(personalscheduleRepository.findById(eq(1L))).thenReturn(Optional.of(myPersonalschedule));
+        when(ucsbCurriculumService.getSectionJSON(eq("20222"), eq("12345"))).thenReturn("json: {} contentType: {} statusCode: {}");
 
         when(personalcoursesRepository.save(eq(expectedCourse))).thenReturn(expectedCourse);
 
@@ -292,6 +296,7 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         PersonalCourses expectedCourse = PersonalCourses.builder().psId(1).enrollCd("12345").quarter("20221").id(0L).build();
 
         when(personalscheduleRepository.findById(eq(1L))).thenReturn(Optional.of(myPersonalschedule));
+        when(ucsbCurriculumService.getSectionJSON(eq("20221"), eq("12345"))).thenReturn("json: {} contentType: {} statusCode: {}");
 
         when(personalcoursesRepository.save(eq(expectedCourse))).thenReturn(expectedCourse);
 
@@ -360,10 +365,10 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
 
 
     
-    //For STUB method
+    //For course not found method
     @WithMockUser(roles = { "USER" })
     @Test
-    public void api_courses_add_STUB_return_false__user_logged_in() throws Exception {
+    public void api_courses_add_course_not_found__user_logged_in() throws Exception {
         User u = currentUserService.getCurrentUser().getUser();
         
         PersonalSchedule myPersonalschedule = PersonalSchedule.builder().name("Name 1").description("Description 1").quarter("20222").user(u).id(1L)
@@ -371,19 +376,19 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         
         when(personalscheduleRepository.findByIdAndUser(eq(1L),eq(u))).thenReturn(Optional.of(myPersonalschedule));
         when(personalscheduleRepository.findById(eq(1L))).thenReturn(Optional.of(myPersonalschedule));
-
+        when(ucsbCurriculumService.getSectionJSON(eq("20222"), eq("234"))).thenReturn("{\"error\": \"404 (Not Found): Enroll code does not exist!\"}");
         MvcResult response = mockMvc.perform(
                 post("/api/personalcourses/add?psId=1&enrollCd=234&quarter=20222")
                         .with(csrf()))
                 .andExpect(status().isNotFound()).andReturn();
 
         Map<String, Object> json = responseToJson(response);
-        assertEquals("STUB (make sure enrollCd is greater than 1000) STUB Course not found (enroll code:234 quarter:20222)", json.get("message"));
+        assertEquals("Course not found (enroll code:234 quarter:20222)", json.get("message"));
     }
-    //For STUB method ADMIN
+    //For course not found  ADMIN
     @WithMockUser(roles = { "ADMIN","USER" })
     @Test
-    public void api_courses_add_STUB_return_false__admin_logged_in() throws Exception {
+    public void api_courses_add_course_not_found__admin_logged_in() throws Exception {
         
         User u = currentUserService.getCurrentUser().getUser();
         
@@ -391,6 +396,7 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
                 .build();
         
         when(personalscheduleRepository.findById(eq(1L))).thenReturn(Optional.of(myPersonalschedule));
+        when(ucsbCurriculumService.getSectionJSON(eq("20222"), eq("234"))).thenReturn("{\"error\": \"404 (Not Found): Enroll code does not exist!\"}");
 
         MvcResult response = mockMvc.perform(
                 post("/api/personalcourses/admin/add?psId=1&enrollCd=234&quarter=20222")
@@ -398,7 +404,7 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
                 .andExpect(status().isNotFound()).andReturn();
 
         Map<String, Object> json = responseToJson(response);
-        assertEquals("STUB (make sure enrollCd is greater than 1000) STUB Course not found (enroll code:234 quarter:20222)", json.get("message"));
+        assertEquals("Course not found (enroll code:234 quarter:20222)", json.get("message"));
     }
     
     @WithMockUser(roles = { "USER" })

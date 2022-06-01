@@ -13,7 +13,7 @@ import edu.ucsb.cs156.courses.models.CurrentUser;
 
 import edu.ucsb.cs156.courses.repositories.PersonalCoursesRepository;
 import edu.ucsb.cs156.courses.repositories.PersonalScheduleRepository;
-
+import edu.ucsb.cs156.courses.services.UCSBCurriculumService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -48,17 +48,10 @@ import java.util.Optional;
 @RestController
 @Slf4j
 public class PersonalCoursesController extends ApiController {
+    @Autowired
+    public UCSBCurriculumService ucsbCurriculumService;
+
     
-    //FIX (Replace with UCSB course search method)
-    static boolean STUBfunc(String enrollCd, String quarter) {
-        if(Integer.parseInt(enrollCd)>=1000){
-            return true;
-        }
-        else{
-            return false;
-        }
-        
-    }
     
     static boolean validEnrollCd(String enrollCd) {
         if(enrollCd.length()<=5){
@@ -133,8 +126,7 @@ public class PersonalCoursesController extends ApiController {
             throw new InvalidQuarterException(psId,quarter);
         }
 
-        //FIX (Replace with course search method)
-        if(!STUBfunc(enrollCd,quarter)){
+        if(ucsbCurriculumService.getSectionJSON(quarter, enrollCd).contains("error")){
             throw new CourseNotFoundException(enrollCd,quarter);
         }
 
@@ -168,8 +160,8 @@ public class PersonalCoursesController extends ApiController {
             throw new InvalidQuarterException(psId,quarter);
         }
 
-        //FIX (Replace with course search method)
-        if(!STUBfunc(enrollCd,quarter)){
+        
+        if(ucsbCurriculumService.getSectionJSON(quarter, enrollCd).contains("error")){
             throw new CourseNotFoundException(enrollCd,quarter);
         }
 
