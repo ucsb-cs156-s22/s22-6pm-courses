@@ -66,7 +66,7 @@ const title = (loc) => {
         let classTitle = `${loc.courseInfo.title}`;
         let sectionNumber = `${loc.section.section}`;
         if(sectionNumber.substring(sectionNumber.length - 2) === '00'){
-            classTitle = classTitle;
+          
         }
         else{
             classTitle = '';
@@ -84,7 +84,6 @@ const courseID = (loc) => {
         let courseId = `${loc.courseInfo.courseId}`;
         let sectionNumber = `${loc.section.section}`;
         if(sectionNumber.substring(sectionNumber.length - 2) === '00'){
-            courseId = courseId;
         }
         else{
             courseId = '';
