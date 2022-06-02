@@ -40,6 +40,18 @@
                 {
                   "instructor": "SOLIS S W",
                   "functionCode": "Teaching and in charge"
+                },
+                {
+                  "instructor": "NOBODY",
+                  "functionCode": "test test test test"
+                },
+                {
+                  "instructor": "ANYBODY",
+                  "functionCode": "tttt eeee ssss tttt"
+                },
+                {
+                  "instructor": "SOMEBODY",
+                  "functionCode": "^W^"
                 }
               ]
             }
