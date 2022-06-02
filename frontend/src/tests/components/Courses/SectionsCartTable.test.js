@@ -1,8 +1,9 @@
 import { render, screen } from "@testing-library/react";
-import { newsectionFixtures } from "fixtures/newsectionFixtures";
+import { sectionsCartFixtures } from "fixtures/sectionsCartFixtures";
 import SectionsCartTable from "main/components/Courses/SectionsCartTable";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
+import { currentUserFixtures } from "fixtures/currentUserFixtures";
 
 const mockedNavigate = jest.fn();
 
@@ -11,48 +12,82 @@ jest.mock('react-router-dom', () => ({
     useNavigate: () => mockedNavigate
 }));
 
-describe("CourseTable tests", () => {
+describe("SectionsCartTable tests", () => {
   const queryClient = new QueryClient();
 
-  test("renders without crashing for empty table", () => {
+
+  test("renders without crashing for empty table with user not logged in", () => {
+    const currentUser = null;
+
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <SectionsCartTable courses={[]} />
+          <SectionsCartTable aSection={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
+
+    );
+  });
+  test("renders without crashing for empty table for ordinary user", () => {
+    const currentUser = currentUserFixtures.userOnly;
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <SectionsCartTable aSection={[]} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
+
     );
   });
 
-  test("Has the expected column headers and content", () => {
+  test("renders without crashing for empty table for admin", () => {
+    const currentUser = currentUserFixtures.adminUser;
+
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <SectionsCartTable courses={newsectionFixtures.oneSection} />
+          <SectionsCartTable aSection={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
+
+    );
+  });
+
+  test("Has the expected column headers and content for adminUser", () => {
+    const currentUser = currentUserFixtures.adminUser;
+    
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <SectionsCartTable aSection={sectionsCartFixtures.threeSections} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
+
     );
 
-    const expectedHeaders = ["Course ID", "Title", "Enroll Code", "Location", "Enrollment", "Time and Date", "Instructor"];
-    const expectedFields = ["courseId", "title", "section", "location", "enrollment", "time", "instructor"];
+    const expectedHeaders = ['ID', 'Course ID', 'Title','Enroll Code', 'Location', 'Enrollment', 'Time and Date', 'Instructor'];
+    const expectedFields = ['id', 'courseId', 'title', 'section', 'location', 'enrollment', 'time', 'instructor'];
     const testId = "SectionsCartTable";
 
     expectedHeaders.forEach((headerText) => {
-        const header = screen.getByText(headerText);
-        expect(header).toBeInTheDocument();
-      });
+      const header = screen.getByText(headerText);
+      expect(header).toBeInTheDocument();
+    });
 
-      expectedFields.forEach((field) => {
-        const header = screen.getByTestId(`${testId}-cell-row-0-col-${field}`);
-        expect(header).toBeInTheDocument();
-      });
+    expectedFields.forEach((field) => {
+      const header = screen.getByTestId(`${testId}-cell-row-0-col-${field}`);
+      expect(header).toBeInTheDocument();
+    });
+
     expect(screen.getByTestId(`${testId}-cell-row-0-col-courseId`)).toHaveTextContent("CMPSC 5A");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("INTRO DATA SCI 1");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-section`)).toHaveTextContent("LECTURE");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-location`)).toHaveTextContent("ELLSN 2617");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-enrollment`)).toHaveTextContent("85/90");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-time`)).toHaveTextContent("17:00--18:15 T R");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-instructor`)).toHaveTextContent("SOLIS S W");
-  });
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-courseId`)).toHaveTextContent("CMPSC 5B");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
 
+    const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
+    expect(deleteButton).toBeInTheDocument();
+    expect(deleteButton).toHaveClass("btn-danger");
+
+  });
 });
