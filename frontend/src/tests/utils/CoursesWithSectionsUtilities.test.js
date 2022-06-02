@@ -30,12 +30,6 @@ describe("courseSections conversion tests", () => {
     expect(res[0].props.children).toBe("85/90");
   });
 
-  test("instructor correctly converts", () => {
-    let res = instructor(newsectionFixtures.sections[0].section);
-    expect(res.length).toBe(1);
-    expect(res[0].props.children).toBe("SOLIS S W");
-  });
-
   test("section correctly converts", () => {
     let res = section(newsectionFixtures.sections[0].section);
     expect(res.length).toBe(1);
@@ -54,7 +48,7 @@ describe("courseSections conversion tests", () => {
     expect(res[0].props.children).toBe("CMPSC     5A ");
   });
   test("instructor correctly converts", () => {
-    let res = instructor(newsectionFixtures.sections[1].section);
+    let res = instructor(newsectionFixtures.sections[0].section);
     expect(res.length).toBe(1);
     expect(res[0].props.children).toBe("SOLIS S W, NOBODY, ANYBODY");
   });
