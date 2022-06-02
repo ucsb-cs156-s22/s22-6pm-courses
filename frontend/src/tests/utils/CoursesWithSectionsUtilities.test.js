@@ -62,7 +62,7 @@ describe("courseSections conversion tests", () => {
   test("section correctly converts", () => {
     let res = section(newsectionFixtures.sections[1].section);
     expect(res.length).toBe(1);
-    expect(res[0].props.children).toBe("59168");
+    expect(res[0].props.children).toBe("59618");
   });
 
   test("Title correctly converts", () => {
