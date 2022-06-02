@@ -2,6 +2,7 @@ package edu.ucsb.cs156.courses.controllers;
 
 import edu.ucsb.cs156.courses.config.SecurityConfig;
 import edu.ucsb.cs156.courses.services.UCSBCurriculumService;
+import edu.ucsb.cs156.courses.entities.PersonalCourses;
 import edu.ucsb.cs156.courses.repositories.UserRepository;
 import edu.ucsb.cs156.courses.repositories.PersonalCoursesRepository;
 import edu.ucsb.cs156.courses.documents.ConvertedSection;
@@ -33,6 +34,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @WebMvcTest(value = SectionController.class)
 @Import(SecurityConfig.class)
@@ -74,7 +76,15 @@ public class SectionControllerTests extends ControllerTestCase {
         String urlTemplate = "/api/sections/getsections?psId=%s";
         String url = String.format(urlTemplate, "3");
         when(ucsbCurriculumService.getConvertedSectionsByQuarterAndEnroll(any(String.class), any(String.class)))
-                .thenReturn(convertedSections);
+            .thenReturn(convertedSections);
+        // when(personalcoursesRepository.findAllByPsId(any(Long.class))).thenReturn(convertedSections);
+
+
+        PersonalCourses p3 = PersonalCourses.builder().psId(3).enrollCd("07864").quarter("20222").id(0L).build();
+        ArrayList<PersonalCourses> expectedCourses = new ArrayList<>();
+        expectedCourses.addAll(Arrays.asList(p3));
+        when(personalcoursesRepository.findAllByPsId(any(Long.class))).thenReturn(expectedCourses);
+
 
         MvcResult response = mockMvc.perform(get(url).contentType("application/json")).andExpect(status().isOk())
                 .andReturn();
