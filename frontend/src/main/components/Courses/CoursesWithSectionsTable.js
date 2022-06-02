@@ -2,14 +2,14 @@ import React, {_Component} from "react";
 import { useBackendMutation } from "main/utils/useBackend";
 import OurTable, { ButtonColumn } from "main/components/OurTable";
 import { courseID, title, location, enroll, time, instructor, section } from "main/utils/CoursesWithSectionsUtilities";
-import { cellToAxiosParamsAdd, onAddSuccess } from "main/utils/CoursesWithSectionsMoreUtils"
+import { cellToAxiosParamsAdd, onSomeSuccess } from "main/utils/CoursesWithSectionsMoreUtils"
 
 export default function CoursesWithSectionsTable({ courses }) {
 
     // Stryker disable all : hard to test for query caching
     const addMutation = useBackendMutation(
         cellToAxiosParamsAdd,
-        { onSuccess: onAddSuccess },
+        { onSuccess: onSomeSuccess },
         ["/api/sectionscart/all"]
     );
     // Stryker enable all 
