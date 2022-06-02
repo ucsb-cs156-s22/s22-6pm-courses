@@ -53,5 +53,28 @@ describe("courseSections conversion tests", () => {
     expect(res.length).toBe(1);
     expect(res[0].props.children).toBe("CMPSC     5A ");
   });
+  test("instructor correctly converts", () => {
+    let res = instructor(newsectionFixtures.sections[1].section);
+    expect(res.length).toBe(1);
+    expect(res[0].props.children).toBe("SOLIS S W, NOBODY, ANYBODY");
+  });
+
+  test("section correctly converts", () => {
+    let res = section(newsectionFixtures.sections[1].section);
+    expect(res.length).toBe(1);
+    expect(res[0].props.children).toBe("59168");
+  });
+
+  test("Title correctly converts", () => {
+    let res = title(newsectionFixtures.sections[1]);
+    expect(res.length).toBe(1);
+    expect(res[0].props.children).toBe("");
+  });
+
+  test("CourseId correctly converts", () => {
+    let res = courseID(newsectionFixtures.sections[1]);
+    expect(res.length).toBe(1);
+    expect(res[0].props.children).toBe("");
+  });
 
 });
