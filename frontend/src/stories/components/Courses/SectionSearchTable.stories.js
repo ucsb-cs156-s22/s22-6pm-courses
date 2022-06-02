@@ -1,7 +1,7 @@
 import React from 'react';
 
 import CoursesWithSectionsTable from 'main/components/Courses/CoursesWithSectionsTable';
-import {sectionsFixtures} from 'fixtures/sectionsFixtures';
+import {newsectionFixtures} from 'fixtures/newsectionFixutres';
 
 export default {
     title: 'components/Courses/CoursesWithSectionsTable',
@@ -21,10 +21,10 @@ Empty.args = {
 
 export const oneSection = Template.bind({});
 oneSection.args = {
-    courses: sectionsFixtures.oneSection
+    courses: newsectionFixtures.oneSection
 };
 
 export const manySections = Template.bind({});
 manySections.args = {
-    courses: sectionsFixtures.sections
+    courses: newsectionFixtures.sections
 };
