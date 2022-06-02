@@ -48,7 +48,7 @@ describe("courseSections conversion tests", () => {
     expect(res[0].props.children).toBe("CMPSC     5A ");
   });
   test("instructor correctly converts", () => {
-    let res = instructor(newsectionFixtures.sections[0].section);
+    let res = instructor(newsectionFixtures.oneSection[0].section);
     expect(res.length).toBe(1);
     expect(res[0].props.children).toBe("SOLIS S W, NOBODY, ANYBODY");
   });
