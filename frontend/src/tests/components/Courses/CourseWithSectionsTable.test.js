@@ -33,7 +33,7 @@ describe("CourseTable tests", () => {
       </QueryClientProvider>
     );
 
-    const expectedHeaders = ["Course ID", "Title", "Enroll Code", "Location", "Enrollment", "Time", "Instructor"];
+    const expectedHeaders = ["Course ID", "Title", "Enroll Code", "Location", "Enrollment", "Time and Date", "Instructor"];
     const expectedFields = ["courseInfo.courseId", "courseInfo.title", "section", "location", "enrollment", "time", "instructor"];
     const testId = "CoursesWithSectionsTable";
 
