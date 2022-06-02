@@ -48,8 +48,8 @@ describe("Section Search Index Page tests", () => {
   test("calls UCSB Curriculum api correctly with 1 course response", async () => {
     axiosMock.onGet("/api/UCSBSubjects/all").reply(200, allTheSubjects);
     axiosMock
-      .onGet("/api/public/basicsearch")
-      .reply(200, { classes: newsectionFixtures.oneSection });
+      .onGet("/api/public/sectionsearch")
+      .reply(200, newsectionFixtures.oneSection);
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -79,12 +79,14 @@ describe("Section Search Index Page tests", () => {
       expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1);
     });
 
+    expect(axiosMock.history.get[0].url).toEqual("/api/public/sectionsearch");
+
     expect(axiosMock.history.get[0].params).toEqual({
       qtr: "20222",
       dept: "ANTH",
       level: "G",
     });
 
-    expect(screen.getByText("CMPSC 5A")).toBeInTheDocument();
+    expect(screen.getByText("LECTURE")).toBeInTheDocument();
   });
 });
