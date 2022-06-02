@@ -2,7 +2,6 @@ import { useState } from "react";
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import BasicCourseSearchForm from "main/components/BasicCourseSearch/BasicCourseSearchForm";
 import BasicCourseTable from "main/components/Courses/BasicCourseTable";
-//import CoursesWithSectionsTable from "main/components/Courses/CoursesWithSectionsTable";
 import { useBackendMutation } from "main/utils/useBackend";
 
 export default function HomePage() {
