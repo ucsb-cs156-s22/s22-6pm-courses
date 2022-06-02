@@ -303,7 +303,7 @@ public void test_getFinalJSON_exception() throws Exception {
             .andExpect(header("ucsb-api-key", apiKey))
             .andRespond(withUnauthorizedRequest());
 
-    String result = ucs.getSectionJSON(quarter, enrollCode);
+    String result = ucs.getFinalJSON(quarter, enrollCode);
     assertEquals(expectedResult, result);
 }
 
