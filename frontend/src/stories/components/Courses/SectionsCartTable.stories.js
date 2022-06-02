@@ -1,7 +1,7 @@
 import React from 'react';
 
 import SectionsCartTable from 'main/components/Courses/SectionsCartTable';
-import {newsectionFixtures} from 'fixtures/newsectionFixtures';
+import { sectionsCartFixtures } from 'fixtures/sectionsCartFixtures';
 
 export default {
     title: 'components/Courses/SectionsCartTable',
@@ -16,15 +16,15 @@ const Template = (args) => {
 
 export const Empty = Template.bind({});
 Empty.args = {
-    courses: []
+    aSection: []
 };
 
 export const oneSection = Template.bind({});
 oneSection.args = {
-    courses: newsectionFixtures.oneSection
+    aSection: sectionsCartFixtures.oneSection
 };
 
-export const manySections = Template.bind({});
-manySections.args = {
-    courses: newsectionFixtures.sections
+export const threeSections = Template.bind({});
+threeSections.args = {
+    aSection: sectionsCartFixtures.threeSections
 };
