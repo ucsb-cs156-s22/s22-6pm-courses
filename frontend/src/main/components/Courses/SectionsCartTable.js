@@ -1,9 +1,10 @@
 import React, {_Component} from "react";
 import { useBackendMutation } from "main/utils/useBackend";
 import OurTable, { ButtonColumn } from "main/components/OurTable";
-import { cellToAxiosParamsDelete, onSomeSuccess } from "main/utils/CoursesWithSectionsMoreUtils"
+import { cellToAxiosParamsDelete, onSomeSuccess } from "main/utils/CoursesWithSectionsMoreUtils";
+import { hasRole } from "main/utils/currentUser";
 
-export default function SectionsCartTable({ aSection }) {
+export default function SectionsCartTable({ aSection, currentUser }) {
 
     // Stryker disable all : hard to test for query caching
     const deleteMutation = useBackendMutation(
@@ -54,10 +55,12 @@ export default function SectionsCartTable({ aSection }) {
 
     const testid = "SectionsCartTable";
 
-    const columnsToDisplay = [
+    const columnsIfAdmin = [
         ...columns,
         ButtonColumn("Delete", "danger", deleteCallback, testid)
     ];
+
+    const columnsToDisplay = hasRole(currentUser, "ROLE_ADMIN") ? columnsIfAdmin : columns;
 
     return <OurTable
         data={aSection}

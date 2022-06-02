@@ -2,9 +2,10 @@ import React, {_Component} from "react";
 import { useBackendMutation } from "main/utils/useBackend";
 import OurTable, { ButtonColumn } from "main/components/OurTable";
 import { courseID, title, location, enroll, time, instructor, section } from "main/utils/CoursesWithSectionsUtilities";
-import { cellToAxiosParamsAdd, onSomeSuccess } from "main/utils/CoursesWithSectionsMoreUtils"
+import { cellToAxiosParamsAdd, onSomeSuccess } from "main/utils/CoursesWithSectionsMoreUtils";
+import { hasRole } from "main/utils/currentUser";
 
-export default function CoursesWithSectionsTable({ courses }) {
+export default function CoursesWithSectionsTable({ courses, currentUser }) {
 
     // Stryker disable all : hard to test for query caching
     const addMutation = useBackendMutation(
@@ -63,9 +64,11 @@ export default function CoursesWithSectionsTable({ courses }) {
         ButtonColumn("Add to cart", "primary", addCallback, testid)
     ];
 
+    const columnsToDisplay = hasRole(currentUser, "ROLE_ADMIN") ? columnsIfAdmin : columns;
+
     return <OurTable
         data={courses}
-        columns={columnsIfAdmin}
+        columns={columnsToDisplay}
         testid={"CoursesWithSectionsTable"}
     />;
 }; 
