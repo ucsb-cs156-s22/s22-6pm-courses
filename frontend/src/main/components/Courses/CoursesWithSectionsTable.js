@@ -60,7 +60,6 @@ export default function CoursesWithSectionsTable({ courses }) {
 
     const columnsIfAdmin = [
         ...columns,
-        // ButtonColumn("Edit", "primary", editCallback, testid),
         ButtonColumn("Add to cart", "primary", addCallback, testid)
     ];
 
