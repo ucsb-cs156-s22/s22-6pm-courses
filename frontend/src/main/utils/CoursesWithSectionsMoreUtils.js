@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-export function onAddSuccess(message) {
+export function onSomeSuccess(message) {
     console.log(message);
     toast(message);
 }
@@ -16,6 +16,16 @@ export function cellToAxiosParamsAdd(cell) {
             enrollment: cell.row.values.enrollment[0].props.children,
             time: cell.row.values.time[0].props.children,
             instructor: cell.row.values.instructor[0].props.children
+        }
+    }
+}
+
+export function cellToAxiosParamsDelete(cell) {
+    return {
+        url: "/api/sectionscart",
+        method: "DELETE",
+        params: {
+            id: cell.row.values.id
         }
     }
 }
