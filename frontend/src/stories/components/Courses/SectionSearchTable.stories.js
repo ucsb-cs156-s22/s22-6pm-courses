@@ -1,7 +1,7 @@
 import React from 'react';
 
 import CoursesWithSectionsTable from 'main/components/Courses/CoursesWithSectionsTable';
-import {newsectionFixtures} from 'fixtures/newsectionFixutres';
+import {newsectionFixtures} from 'fixtures/newsectionFixtures';
 
 export default {
     title: 'components/Courses/CoursesWithSectionsTable',
