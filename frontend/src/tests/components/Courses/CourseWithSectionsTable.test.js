@@ -46,7 +46,8 @@ describe("CourseTable tests", () => {
         const header = screen.getByTestId(`${testId}-cell-row-0-col-${field}`);
         expect(header).toBeInTheDocument();
       });
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-courseInfo.courseId`)).toHaveTextContent("CMPSC 5A");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-courseId`)).toHaveTextContent("CMPSC 5A");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("INTRO DATA SCI 1");
     expect(screen.getByTestId(`${testId}-cell-row-0-col-section`)).toHaveTextContent("LECTURE");
     expect(screen.getByTestId(`${testId}-cell-row-0-col-location`)).toHaveTextContent("ELLSN 2617");
     expect(screen.getByTestId(`${testId}-cell-row-0-col-enrollment`)).toHaveTextContent("85/90");
