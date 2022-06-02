@@ -52,7 +52,7 @@ describe("CourseTable tests", () => {
     expect(screen.getByTestId(`${testId}-cell-row-0-col-location`)).toHaveTextContent("ELLSN 2617");
     expect(screen.getByTestId(`${testId}-cell-row-0-col-enrollment`)).toHaveTextContent("85/90");
     expect(screen.getByTestId(`${testId}-cell-row-0-col-time`)).toHaveTextContent("17:00--18:15 T R");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-instructor`)).toHaveTextContent("SOLIS S W, NOBODY, ANYBODY");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-instructor`)).toHaveTextContent("SOLIS S W");
   });
 
 });
