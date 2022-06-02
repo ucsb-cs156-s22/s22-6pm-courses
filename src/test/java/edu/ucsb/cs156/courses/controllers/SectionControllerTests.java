@@ -77,7 +77,6 @@ public class SectionControllerTests extends ControllerTestCase {
         String url = String.format(urlTemplate, "3");
         when(ucsbCurriculumService.getConvertedSectionsByQuarterAndEnroll(any(String.class), any(String.class)))
             .thenReturn(convertedSections);
-        // when(personalcoursesRepository.findAllByPsId(any(Long.class))).thenReturn(convertedSections);
 
 
         PersonalCourses p3 = PersonalCourses.builder().psId(3).enrollCd("07864").quarter("20222").id(0L).build();

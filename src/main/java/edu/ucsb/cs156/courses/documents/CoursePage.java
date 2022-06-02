@@ -14,9 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Data
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @Slf4j
 public class CoursePage {
     private int pageNumber;
@@ -94,11 +92,8 @@ public class CoursePage {
                         .unitsFixed(c.getUnitsFixed())
                         .unitsVariableHigh(c.getUnitsVariableHigh())
                         .unitsVariableLow(c.getUnitsVariableLow())
-                        // .delayedSectioning(c.getDelayedSectioning())
-                        // .inProgressCourse(c.getInProgressCourse())
                         .gradingOption(c.getGradingOption())
                         .instructionType(c.getInstructionType())
-                        // .onLineCourse(c.getOnLineCourse())
                         .deptCode(c.getDeptCode())
                         .generalEducation(c.getGeneralEducation())
                         .classSections(c.getClassSections())
