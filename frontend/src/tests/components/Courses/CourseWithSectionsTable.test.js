@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { newsectionFixtures } from "fixtures/newsectionFixtures";
 import CoursesWithSectionsTable from "main/components/Courses/CoursesWithSectionsTable";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -10,6 +10,13 @@ const mockedNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useNavigate: () => mockedNavigate
+}));
+
+const mockedMutate = jest.fn();
+
+jest.mock('main/utils/useBackend', () => ({
+    ...jest.requireActual('main/utils/useBackend'),
+    useBackendMutation: () => ({mutate: mockedMutate})
 }));
 
 describe("CourseTable tests", () => {
@@ -126,5 +133,29 @@ describe("CourseTable tests", () => {
 
     const addButton = screen.queryByTestId(`${testId}-cell-row-0-col-Add to cart-button`);
     expect(addButton).toBeNull()
+  });
+
+  test("Add button calls add callback for admin user", async () => {
+
+    const currentUser = currentUserFixtures.adminUser;
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <CoursesWithSectionsTable courses={newsectionFixtures.oneSection} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
+    );
+
+    const testId = "CoursesWithSectionsTable";
+
+    expect(await screen.findByTestId(`${testId}-cell-row-0-col-Add to cart-button`)).toHaveTextContent("Add to cart");
+
+    const addButton = screen.getByTestId(`${testId}-cell-row-0-col-Add to cart-button`);
+    expect(addButton).toBeInTheDocument();
+    
+    fireEvent.click(addButton);
+
+    await waitFor(() => expect(mockedMutate).toHaveBeenCalledTimes(1));
   });
 });
