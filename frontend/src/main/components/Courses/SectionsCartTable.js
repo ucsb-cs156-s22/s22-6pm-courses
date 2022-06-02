@@ -1,51 +1,67 @@
 import React, {_Component} from "react";
-import OurTable from "main/components/OurTable";
-import { courseID, title, location, enroll, time, instructor, section } from "main/utils/CoursesWithSectionsUtilities";
+import { useBackendMutation } from "main/utils/useBackend";
+import OurTable, { ButtonColumn } from "main/components/OurTable";
+import { cellToAxiosParamsDelete, onSomeSuccess } from "main/utils/CoursesWithSectionsMoreUtils"
 
-export default function SectionsCartTable({ courses }) {
+export default function SectionsCartTable({ aSection }) {
+
+    // Stryker disable all : hard to test for query caching
+    const deleteMutation = useBackendMutation(
+        cellToAxiosParamsDelete,
+        { onSuccess: onSomeSuccess },
+        ["/api/sectionscart/all"]
+    );
+    // Stryker enable all 
+
+    // Stryker disable next-line all : TODO try to make a good test for this
+    const deleteCallback = async (cell) => { deleteMutation.mutate(cell); }
 
     const columns = [
         {
+            Header: 'ID',
+            accessor: 'id'
+        },
+        {
             Header: 'Course ID',
-            accessor: (row) => courseID(row),
-            id: 'courseId',
+            accessor: 'courseId',
         },
         {
             Header: 'Title',
-            accessor: (row) => title(row),
-            id: 'title',
+            accessor: 'title',
         },
         {
             Header: 'Enroll Code',
-            accessor: (row) => section(row.section),
-            id: 'section',
+            accessor: 'section',
         },
         {
             Header: 'Location',
-            accessor: (row) => location(row.section),
-            id: 'location',
+            accessor: 'location',
         },
         {
             Header: 'Enrollment',
-            accessor: (row) => enroll(row.section),
-            id: 'enrollment',
+            accessor: 'enrollment',
         },
         {
             Header: 'Time and Date',
-            accessor: (row) => time(row.section),
-            id: 'time',
+            accessor: 'time',
         },
         {
             Header: 'Instructor',
-            accessor: (row) => instructor(row.section),
-            id: 'instructor',
+            accessor: 'instructor',
         }
 
     ];
 
+    const testid = "SectionsCartTable";
+
+    const columnsToDisplay = [
+        ...columns,
+        ButtonColumn("Delete", "danger", deleteCallback, testid)
+    ];
+
     return <OurTable
-        data={courses}
-        columns={columns}
-        testid={"SectionsCartTable"}
+        data={aSection}
+        columns={columnsToDisplay}
+        testid={testid}
     />;
 }; 
