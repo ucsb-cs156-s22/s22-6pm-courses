@@ -53,19 +53,19 @@ describe("courseSections conversion tests", () => {
     expect(res[0].props.children).toBe("SOLIS S W, NOBODY, ANYBODY");
   });
 
-  test("section correctly converts", () => {
+  test("section for section correctly converts", () => {
     let res = section(newsectionFixtures.sections[1].section);
     expect(res.length).toBe(1);
     expect(res[0].props.children).toBe("59618");
   });
 
-  test("Title correctly converts", () => {
+  test("Title for section correctly converts", () => {
     let res = title(newsectionFixtures.sections[1]);
     expect(res.length).toBe(1);
     expect(res[0].props.children).toBe("");
   });
 
-  test("CourseId correctly converts", () => {
+  test("CourseId for section correctly converts", () => {
     let res = courseID(newsectionFixtures.sections[1]);
     expect(res.length).toBe(1);
     expect(res[0].props.children).toBe("");
