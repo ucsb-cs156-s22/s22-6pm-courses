@@ -63,7 +63,6 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         mockMvc.perform(get("/api/personalcourses/getBypsId?psId=1"))
                 .andExpect(status().isOk());
     }
-    
     @Test
     public void api_schedules_add__logged_out__returns_403() throws Exception {
         mockMvc.perform(post("/api/personalcourses/add"))
@@ -97,8 +96,7 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         String responseString = response.getResponse().getContentAsString();
         assertEquals(expectedJson, responseString);
     }
-
-
+  
     @WithMockUser(roles = { "USER" })
     @Test
     public void api_courses__admin_logged_in__get_courses_by_personal_schedule_ID() throws Exception {
@@ -145,6 +143,7 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         String responseString = response.getResponse().getContentAsString();
         assertEquals(expectedJson, responseString);
     }
+
     //For STUB method
     @WithMockUser(roles = { "USER" })
     @Test
@@ -173,13 +172,13 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         Map<String, Object> json = responseToJson(response);
         assertEquals("Course not found (enroll code:12345 quarter:2022)", json.get("message"));
     }
+
     @WithMockUser(roles = { "USER" })
     @Test
     public void api_courses__user_logged_in__delete_course() throws Exception {
         // arrange
-
-        
-        PersonalCourses pc1 = PersonalCourses.builder().psId(1).enrollCd("12345").quarter("20222").id(15L).build();
+        PersonalCourses pc1 = PersonalCourses.builder().psId(1).enrollCd("123456").quarter("20222").id(15L).build();
+  
         when(personalcoursesRepository.findById(eq(15L))).thenReturn(Optional.of(pc1));
 
         // act
@@ -199,8 +198,8 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
     @Test
     public void api_courses__user_logged_in__delete_course_that_does_not_exist() throws Exception {
         // arrange
-
-        PersonalCourses pc1 = PersonalCourses.builder().psId(1).enrollCd("12345").quarter("20222").id(1L).build();
+        PersonalCourses pc1 = PersonalCourses.builder().psId(1).enrollCd("123456").quarter("20222").id(1L).build();
+      
         when(personalcoursesRepository.findById(eq(14L))).thenReturn(Optional.empty());
 
         // act
