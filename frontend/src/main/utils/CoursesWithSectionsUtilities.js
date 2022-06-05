@@ -54,7 +54,6 @@ const instructor = (loc) => {
     ans = ans.split(`!`);
     return ans.map((a)=><div>{a}</div>);
 }
-
 const section = (loc) => {
     let ans = "";
     for (let i = 0; i < loc.length; i++) {

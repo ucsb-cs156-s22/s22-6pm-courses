@@ -43,3 +43,4 @@ export default function CoursesWithSectionsTable({ courses }) {
         testid={"CoursesWithSectionsTable"}
     />;
 }; 
+
