@@ -20,7 +20,6 @@ import lombok.Builder;
 public class PersonalCourses {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  // public String getEnrollCd(){return enrollCd;}
   private long id;
   private long psId;
   private String enrollCd;
