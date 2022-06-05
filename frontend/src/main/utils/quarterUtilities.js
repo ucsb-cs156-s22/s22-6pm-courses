@@ -19,6 +19,7 @@ const qtrNumToQuarter = {
     '4': 'FALL'
 };
 
+
 const yyyyqToQyy = (yyyyq) => {
     return `${shortQuarters[parseInt(yyyyq.charAt(4)) - 1]}${yyyyq.substring(2, 4)}`;
 }
