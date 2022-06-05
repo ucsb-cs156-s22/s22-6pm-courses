@@ -3,6 +3,7 @@ import { newsectionFixtures } from "fixtures/newsectionFixtures";
 import CoursesWithSectionsTable from "main/components/Courses/CoursesWithSectionsTable";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
+import { currentUserFixtures } from "fixtures/currentUserFixtures";
 
 const mockedNavigate = jest.fn();
 
