@@ -26,6 +26,8 @@ describe("BasicCourseSearchForm tests", () => {
     axiosMock
       .onGet("/api/systemInfo")
       .reply(200, systemInfoFixtures.showingNeither);
+    jest.spyOn(console, 'error')
+    console.error.mockImplementation(() => null);
   });
   const queryClient = new QueryClient();
   const addToast = jest.fn();
@@ -33,6 +35,12 @@ describe("BasicCourseSearchForm tests", () => {
     toast.mockReturnValue({
       addToast: addToast,
     });
+    jest.spyOn(console, 'error')
+    console.error.mockImplementation(() => null);
+  });
+
+  afterEach(() => {
+    console.error.mockRestore()
   });
 
   test("renders without crashing", () => {

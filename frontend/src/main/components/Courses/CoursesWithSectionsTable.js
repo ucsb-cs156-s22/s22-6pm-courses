@@ -34,7 +34,6 @@ export default function CoursesWithSectionsTable({ courses }) {
             accessor: (row) => instructor(row.classSections),
             id: 'instructor',
         }
-
     ];
 
     return <OurTable
