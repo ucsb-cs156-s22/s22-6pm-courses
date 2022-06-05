@@ -46,8 +46,6 @@ export default function CoursesWithSectionsTable({ courses }) {
     return <OurTable
         data={courses}
         columns={columns}
-        testid={"CoursesWithSectionsTable"}
-
-        
+        testid={"CoursesWithSectionsTable"}       
     />;
 }; 
