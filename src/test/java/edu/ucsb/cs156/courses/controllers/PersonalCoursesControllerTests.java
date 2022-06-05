@@ -40,21 +40,33 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
     @MockBean
     UserRepository userRepository;
     @Test
-    public void api_schedules_all__logged_out__returns_403() throws Exception {
+    public void api_courses_all__logged_out__returns_403() throws Exception {
         mockMvc.perform(get("/api/personalcourses/all"))
                 .andExpect(status().is(403));
     }
     
     @WithMockUser(roles = { "USER" })
     @Test
-    public void api_schedules_all__user_logged_in__returns_200() throws Exception {
+    public void api_courses_all__user_logged_in__returns_200() throws Exception {
         mockMvc.perform(get("/api/personalcourses/all"))
+                .andExpect(status().isOk());
+    }
+    @Test
+    public void api_courses_getBypsID__logged_out__returns_403() throws Exception {
+        mockMvc.perform(get("/api/personalcourses/getBypsId?psId=1"))
+                .andExpect(status().is(403));
+    }
+    
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void api_courses_getBypsID__user_logged_in__returns_200() throws Exception {
+        mockMvc.perform(get("/api/personalcourses/getBypsId?psId=1"))
                 .andExpect(status().isOk());
     }
     
     @Test
-    public void api_schedules_post__logged_out__returns_403() throws Exception {
-        mockMvc.perform(post("/api/personalcourses/post"))
+    public void api_schedules_add__logged_out__returns_403() throws Exception {
+        mockMvc.perform(post("/api/personalcourses/add"))
                 .andExpect(status().is(403));
     }
 
@@ -85,6 +97,31 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         String responseString = response.getResponse().getContentAsString();
         assertEquals(expectedJson, responseString);
     }
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void api_courses__admin_logged_in__get_courses_by_personal_schedule_ID() throws Exception {
+
+
+        PersonalCourses p1 = PersonalCourses.builder().psId(1).enrollCd("123456").quarter("20222").id(0L).build();
+        PersonalCourses p2 = PersonalCourses.builder().psId(1).enrollCd("789123").quarter("20222").id(1L).build();
+        PersonalCourses p3 = PersonalCourses.builder().psId(1).enrollCd("654321").quarter("20222").id(2L).build();
+
+        ArrayList<PersonalCourses> expectedCourses = new ArrayList<>();
+        expectedCourses.addAll(Arrays.asList(p1, p2, p3));
+
+
+        when(personalcoursesRepository.findAllByPsId(1L)).thenReturn(expectedCourses);
+
+
+        MvcResult response = mockMvc.perform(get("/api/personalcourses/getBypsId?psId=1"))
+                .andExpect(status().isOk()).andReturn();
+
+
+        verify(personalcoursesRepository, times(1)).findAllByPsId(1L);
+        String expectedJson = mapper.writeValueAsString(expectedCourses);
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedJson, responseString);
+    }
     
     @WithMockUser(roles = { "USER" })
     @Test
@@ -106,6 +143,46 @@ public class PersonalCoursesControllerTests extends ControllerTestCase {
         String responseString = response.getResponse().getContentAsString();
         assertEquals(expectedJson, responseString);
     }
-    
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void api_courses__user_logged_in__delete_course() throws Exception {
+        // arrange
+
+        
+        PersonalCourses pc1 = PersonalCourses.builder().psId(1).enrollCd("123456").quarter("20222").id(15L).build();
+        when(personalcoursesRepository.findById(eq(15L))).thenReturn(Optional.of(pc1));
+
+        // act
+        MvcResult response = mockMvc.perform(
+                delete("/api/personalcourses/delete?id=15")
+                        .with(csrf()))
+                .andExpect(status().isOk()).andReturn();
+
+        // assert
+        verify(personalcoursesRepository, times(1)).findById(15L);
+        verify(personalcoursesRepository, times(1)).delete(pc1);
+        Map<String, Object> json = responseToJson(response);
+        assertEquals("Personal Course with id 15 deleted", json.get("message"));
+    }
+
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void api_courses__user_logged_in__delete_course_that_does_not_exist() throws Exception {
+        // arrange
+
+        PersonalCourses pc1 = PersonalCourses.builder().psId(1).enrollCd("123456").quarter("20222").id(1L).build();
+        when(personalcoursesRepository.findById(eq(14L))).thenReturn(Optional.empty());
+
+        // act
+        MvcResult response = mockMvc.perform(
+                delete("/api/personalcourses/delete?id=14")
+                        .with(csrf()))
+                .andExpect(status().isNotFound()).andReturn();
+
+        // assert
+        verify(personalcoursesRepository, times(1)).findById(14L);
+        Map<String, Object> json = responseToJson(response);
+        assertEquals("PersonalCourses with id 14 not found", json.get("message"));
+    }
 
 }
