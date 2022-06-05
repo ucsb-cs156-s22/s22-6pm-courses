@@ -79,4 +79,28 @@ public class UCSBCurriculumControllerTests {
 
         assertEquals(expectedResult, responseString);
     }
+    @Test
+    public void test_final() throws Exception {
+
+        String expectedResult = """ 
+                {
+                "hasFinals": true,
+                "comments": "",
+                "examDay": "T",
+                "examDate": "20220607",
+                "beginTime": "16:00",
+                "endTime": "19:00"
+                } """;
+        
+        String urlTemplate = "/api/public/finalsearch?quarter=%s&enrollCode=%s";
+        String url = String.format(urlTemplate, "20222", "08250");
+        when(ucsbCurriculumService.getFinalJSON(any(String.class), any(String.class)))
+                .thenReturn(expectedResult);
+
+        MvcResult response = mockMvc.perform(get(url).contentType("application/json")).andExpect(status().isOk())
+                .andReturn();
+        String responseString = response.getResponse().getContentAsString();
+
+        assertEquals(expectedResult, responseString);
+    }
 }

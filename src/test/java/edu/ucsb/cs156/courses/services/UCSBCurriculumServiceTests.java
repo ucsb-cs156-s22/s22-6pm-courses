@@ -270,7 +270,7 @@ public void test_FinalJSON_success() throws Exception {
     String enrollCode = "08250";
 
     String params = String.format(
-        "/?quarter=%s&enrollCode=%s", quarter, enrollCode);
+        "?quarter=%s&enrollCode=%s", quarter, enrollCode);
     String expectedURL = UCSBCurriculumService.FINAL_ENDPOINT + params;
 
     this.mockRestServiceServer.expect(requestTo(expectedURL))
@@ -293,7 +293,7 @@ public void test_getFinalJSON_exception() throws Exception {
     String enrollCode = "08185";
 
     String params = String.format(
-            "/?quarter=%s&enrollCode=%s", quarter, enrollCode);
+            "?quarter=%s&enrollCode=%s", quarter, enrollCode);
     String expectedURL = UCSBCurriculumService.FINAL_ENDPOINT + params;
 
     this.mockRestServiceServer.expect(requestTo(expectedURL))
@@ -315,7 +315,7 @@ public void test_FinalJSON_DNE() throws Exception {
     String enrollCode = "00000";
 
     String params = String.format(
-        "/?quarter=%s&enrollCode=%s", quarter, enrollCode);
+        "?quarter=%s&enrollCode=%s", quarter, enrollCode);
     String expectedURL = UCSBCurriculumService.FINAL_ENDPOINT + params;
 
     this.mockRestServiceServer.expect(requestTo(expectedURL))

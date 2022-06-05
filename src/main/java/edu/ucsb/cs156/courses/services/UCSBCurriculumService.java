@@ -180,7 +180,7 @@ public class UCSBCurriculumService {
         HttpEntity<String> entity = new HttpEntity<>("body", headers);
 
         String params = String.format(
-            "/?quarter=%s&enrollCode=%s", quarter, enrollCode);
+            "?quarter=%s&enrollCode=%s", quarter, enrollCode);
         String url = FINAL_ENDPOINT + params;
 
         logger.info("url=" + url);
@@ -193,14 +193,13 @@ public class UCSBCurriculumService {
             contentType = re.getHeaders().getContentType();
             statusCode = re.getStatusCode();
             retVal = re.getBody();
-           
         } catch (HttpClientErrorException e) {
             retVal = "{\"error\": \"401: Unauthorized\"}";
         }
-        if(retVal.equals("null")){
+        if (retVal.contains("null")){
             retVal = "{\"error\": \"404 (Not Found): Enroll code does not exist!\"}";
         }
-
+        
         logger.info("json: {} contentType: {} statusCode: {}",retVal,contentType,statusCode);
         return retVal;
     }
