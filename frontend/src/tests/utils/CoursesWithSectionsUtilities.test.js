@@ -10,6 +10,7 @@ import {
 
 import { newsectionFixtures } from "fixtures/newsectionFixtures";
 
+
 describe("courseSections conversion tests", () => {
 
   test("location correctly converts", () => {
@@ -72,3 +73,4 @@ describe("courseSections conversion tests", () => {
   });
 
 });
+
