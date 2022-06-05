@@ -25,10 +25,13 @@ describe("CourseTable tests", () => {
   });
 
   test("Has the expected column headers and content", () => {
+      
+    const currentUser = currentUserFixtures.adminUser;
+      
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <CoursesWithSectionsTable courses={newsectionFixtures.oneSection} />
+          <CoursesWithSectionsTable courses={newsectionFixtures.oneSection} currentUser={currentUser}/>
         </MemoryRouter>
       </QueryClientProvider>
     );
