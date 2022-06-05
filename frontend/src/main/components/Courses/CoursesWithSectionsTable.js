@@ -2,6 +2,7 @@ import React from "react";
 import OurTable from "main/components/OurTable";
 import { location, enroll, time, instructor, section } from "main/utils/CoursesWithSectionsUtilities";
 
+
 export default function CoursesWithSectionsTable({ courses }) {
 
     const columns = [
@@ -34,7 +35,6 @@ export default function CoursesWithSectionsTable({ courses }) {
             accessor: (row) => instructor(row.section),
             id: 'instructor',
         }
-
     ];
 
     return <OurTable

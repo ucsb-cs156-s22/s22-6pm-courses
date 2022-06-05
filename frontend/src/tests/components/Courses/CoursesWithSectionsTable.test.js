@@ -42,6 +42,7 @@ describe("CourseTable tests", () => {
         expect(header).toBeInTheDocument();
       });
 
+
       expectedFields.forEach((field) => {
         const header = screen.getByTestId(`${testId}-cell-row-0-col-${field}`);
         expect(header).toBeInTheDocument();
