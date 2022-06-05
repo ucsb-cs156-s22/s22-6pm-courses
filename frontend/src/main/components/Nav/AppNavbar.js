@@ -59,7 +59,15 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
               }
             </Nav>
 
-
+            <Nav className="mr-auto">
+              {
+                hasRole(currentUser, "ROLE_USER") && (
+                  <NavDropdown title="Section Search" id="appnavbar-sectionsearch-dropdown" data-testid="appnavbar-sectionsearch-dropdown" >
+                  <NavDropdown.Item as={Link} to="/sectionsearch/list" data-testid="appnavbar-sectionsearch-list">List Section Search</NavDropdown.Item>
+                  </NavDropdown>
+                )
+              }
+            </Nav>
 
             
             <Nav className="mr-auto">
@@ -89,6 +97,8 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                 )
               }
             </Nav>
+            
+            
           </Navbar.Collapse>
         </Container >
       </Navbar >

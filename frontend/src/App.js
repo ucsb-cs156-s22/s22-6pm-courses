@@ -13,6 +13,7 @@ import PersonalSchedulesIndexPage from "main/pages/PersonalSchedules/PersonalSch
 import PersonalSchedulesCreatePage from "main/pages/PersonalSchedules/PersonalSchedulesCreatePage";
 import PersonalScheduleInfoPage from "main/pages/PersonalSchedules/PersonalScheduleInfoPage";
 
+import SectionSearchIndexPage from "main/pages/SectionSearch/SectionSearchIndexPage";
 
 function App() {
 
@@ -38,6 +39,13 @@ function App() {
               <Route exact path="/personalschedules/list" element={<PersonalSchedulesIndexPage />} />
               <Route exact path="/personalschedules/create" element={<PersonalSchedulesCreatePage />} />
               <Route exact path="/personalschedules/:scheduleID" element={<PersonalScheduleInfoPage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/sectionsearch/list" element={<SectionSearchIndexPage />} />
             </>
           )
         }
