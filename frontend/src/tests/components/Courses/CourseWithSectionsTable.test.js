@@ -28,7 +28,7 @@ describe("CourseTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <CoursesWithSectionsTable courses={newsectionFixtures.oneSection[0]} />
+          <CoursesWithSectionsTable courses={newsectionFixtures.oneSection} />
         </MemoryRouter>
       </QueryClientProvider>
     );
