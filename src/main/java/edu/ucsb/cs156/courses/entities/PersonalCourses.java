@@ -23,5 +23,5 @@ public class PersonalCourses {
   private long id;
   private long psId;
   private String enrollCd;
-  private String quarter;
+  private String quarter; 
 }
