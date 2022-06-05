@@ -8,7 +8,7 @@ import {
     quarterRange,
     qtrNumToQuarter
   } from "main/utils/quarterUtilities";
-  
+
   describe("QuarterFormSelect conversion tests", () => {
     test("fromFormat correctly converts", () => {
       expect(fromFormat("20211")).toBe("WINTER 2021");
@@ -98,5 +98,4 @@ import {
    
         expect(quarterRange("20221", "20212")).toStrictEqual([]);
     });
-  
   });
