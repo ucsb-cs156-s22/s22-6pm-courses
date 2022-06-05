@@ -42,3 +42,4 @@ export default function CoursesWithSectionsTable({ courses }) {
         columns={columns}
         testid={"CoursesWithSectionsTable"}
     />;
+};
