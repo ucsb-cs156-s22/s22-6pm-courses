@@ -8,7 +8,7 @@ import {
 import { sectionsFixtures } from "fixtures/sectionsFixtures";
 
 describe("courseSections conversion tests", () => {
-  
+
   test("location correctly converts", () => {
     let res = location(sectionsFixtures.sections[0].classSections);
     expect(res.length).toBe(4);
