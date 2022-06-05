@@ -310,9 +310,9 @@ public void test_getFinalJSON_exception() throws Exception {
 @Test
 public void test_FinalJSON_DNE() throws Exception {
 
-    String expectedResult = "{\"error\": \"404 (Not Found): Enroll code does not exist!\"}";
+    String expectedResult = "{\"error\": \"No final exam found, contact professor for details.";
     String quarter = "20224";
-    String enrollCode = "00000";
+    String enrollCode = "02580";
 
     String params = String.format(
         "?quarter=%s&enrollCode=%s", quarter, enrollCode);

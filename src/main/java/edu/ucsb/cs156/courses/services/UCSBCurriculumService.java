@@ -197,7 +197,7 @@ public class UCSBCurriculumService {
             retVal = "{\"error\": \"401: Unauthorized\"}";
         }
         if (retVal.contains("null")){
-            retVal = "{\"error\": \"404 (Not Found): Enroll code does not exist!\"}";
+            retVal = "{\"error\": \"No final exam found, contact professor for details.";
         }
         
         logger.info("json: {} contentType: {} statusCode: {}",retVal,contentType,statusCode);
