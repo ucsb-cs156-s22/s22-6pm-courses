@@ -53,6 +53,17 @@ public class PersonalCoursesController extends ApiController {
         Iterable<PersonalCourses> personalcourses = personalcoursesRepository.findAll();
         return personalcourses;
     }
+
+    @ApiOperation(value = "List personal courses in a personal schedule")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/getBypsId")
+    public Iterable<PersonalCourses> getPersonalCoursesByPersonalScheduleID (
+        @ApiParam("personal schedule id") @RequestParam Long psId
+    ) {
+        Iterable<PersonalCourses> personalcourses = personalcoursesRepository.findAllByPsId(psId);
+        
+        return personalcourses;
+    }
     
     @ApiOperation(value = "Add a new personal course")
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -85,6 +96,21 @@ public class PersonalCoursesController extends ApiController {
         enrollCds.add(p.getEnrollCd());
       }
       return enrollCds;
+    }
+  
+    @ApiOperation(value = "Delete a personal course")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @DeleteMapping("/delete")
+    public Object deleteSchedule(
+            @ApiParam("id") @RequestParam Long id) {
+        
+        PersonalCourses personcourse = personalcoursesRepository.findById(id)
+          .orElseThrow(() -> new EntityNotFoundException(PersonalCourses.class, id));
+
+          personalcoursesRepository.delete(personcourse);
+
+        return genericMessage("Personal Course with id %s deleted".formatted(id));
+
     }
     
 }
