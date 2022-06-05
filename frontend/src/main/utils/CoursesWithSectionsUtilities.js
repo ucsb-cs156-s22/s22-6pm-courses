@@ -11,12 +11,14 @@ const location = (loc) => {
     ans = ans.split(`,`);
     return ans.map((a)=><div>{a}</div>);
 }
+
 const time = (loc) => {
     let ans = "";
     for (let i = 0; i < loc.length; i++) {
         for (let j = 0; j < loc[i].timeLocations.length; j++) {
             ans += `${loc[i].timeLocations[j].beginTime}--${loc[i].timeLocations[j].endTime}  ${loc[i].timeLocations[j].days}`;
         }
+
         if (i + 1 < loc.length) {
             ans += `,`
         }

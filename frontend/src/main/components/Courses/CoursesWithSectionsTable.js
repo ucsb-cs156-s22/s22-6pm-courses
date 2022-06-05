@@ -29,7 +29,6 @@ export default function CoursesWithSectionsTable({ courses }) {
             accessor: (row) => instructor(row.classSections),
             id: 'instructor',
         }
-
     ];
 
     return <OurTable
@@ -37,4 +36,4 @@ export default function CoursesWithSectionsTable({ courses }) {
         columns={columns}
         testid={"CoursesWithSectionsTable"}
     />;
-}; 
+};
