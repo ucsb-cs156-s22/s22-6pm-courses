@@ -12,7 +12,6 @@ const time = (loc) => {
         for (let j = 0; j < loc.timeLocations.length; j++) {
             ans += `${loc.timeLocations[j].beginTime}--${loc.timeLocations[j].endTime}  ${loc.timeLocations[j].days}`;
         }
-   
     ans = ans.split(`,`);
     return ans.map((a)=><div>{a}</div>);
 }
@@ -21,7 +20,6 @@ const enroll = (loc) => {
     let ans = "";
 
         ans += `${loc.enrolledTotal}/${loc.maxEnroll}`;
-     
     ans = ans.split(`,`);
     return ans.map((a)=><div>{a}</div>);
 }
@@ -94,8 +92,6 @@ const courseID = (loc) => {
     ans = ans.split(',');
     return ans.map((a)=><div>{a}</div>);
 }
-
-
 
 export {
     location,
