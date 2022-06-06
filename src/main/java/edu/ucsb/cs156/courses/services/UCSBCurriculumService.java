@@ -4,7 +4,9 @@ package edu.ucsb.cs156.courses.services;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -169,7 +171,7 @@ public class UCSBCurriculumService {
 
   public static final String FINAL_ENDPOINT = "https://api.ucsb.edu/academics/curriculums/v1/finals";
 
-  public String getFinalJSON(String quarter, String enrollCode) {
+  public String getFinalJSON(String quarter, String enrollCode) throws JsonProcessingException {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -188,7 +190,7 @@ public class UCSBCurriculumService {
         String retVal = "";
         MediaType contentType=null;
         HttpStatus statusCode=null;
-        try {
+        try{
             ResponseEntity<String> re = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
             contentType = re.getHeaders().getContentType();
             statusCode = re.getStatusCode();
@@ -197,7 +199,9 @@ public class UCSBCurriculumService {
             retVal = "{\"error\": \"401: Unauthorized\"}";
         }
         if (retVal.contains("null")){
-            retVal = "{\"error\": \"No final exam found, contact professor for details.";
+            Map<String,String> payload = new HashMap<>();
+            payload.put("error","No final exam found; contact professor for details");
+            retVal = new ObjectMapper().writeValueAsString(payload);
         }
         
         logger.info("json: {} contentType: {} statusCode: {}",retVal,contentType,statusCode);

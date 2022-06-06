@@ -310,7 +310,7 @@ public void test_getFinalJSON_exception() throws Exception {
 @Test
 public void test_FinalJSON_DNE() throws Exception {
 
-    String expectedResult = "{\"error\": \"No final exam found, contact professor for details.";
+    String expectedResult = "{\"error\":\"No final exam found; contact professor for details\"}";
     String quarter = "20224";
     String enrollCode = "02580";
 
