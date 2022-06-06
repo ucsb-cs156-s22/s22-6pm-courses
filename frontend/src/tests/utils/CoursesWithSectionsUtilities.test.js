@@ -44,12 +44,4 @@ describe("courseSections conversion tests", () => {
     expect(res2[0].props.children).toBe("SECTION");
   });
 
-  test("section correctly converts", () => {
-    let res = section(sectionsFixtures.sections[0].classSections);
-    expect(res.length).toBe(4);
-    expect(res[0].props.children).toBe("LECTURE");
-    expect(res[1].props.children).toBe("SECTION");
-    expect(res[2].props.children).toBe("SECTION");
-    expect(res[3].props.children).toBe("SECTION");
-  });
 });
