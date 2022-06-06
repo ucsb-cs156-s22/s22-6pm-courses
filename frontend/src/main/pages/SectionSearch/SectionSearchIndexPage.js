@@ -1,16 +1,17 @@
-
+import React from "react";
 import { useState } from "react";
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import BasicCourseSearchForm from "main/components/BasicCourseSearch/BasicCourseSearchForm";
 import CoursesWithSectionsTable from "main/components/Courses/CoursesWithSectionsTable";
 import { useBackendMutation } from "main/utils/useBackend";
 
+
 export default function SectionSearchIndexPage() {
   // Stryker disable next-line all : Can't test state because hook is internal
   const [courseJSON, setCourseJSON] = useState([]);
 
   const objectToAxiosParams = (query) => ({
-    url: "/api/public/basicsearch",
+    url: "/api/public/sectionsearch",
     params: {
       qtr: query.quarter,
       dept: query.subject,
@@ -19,7 +20,7 @@ export default function SectionSearchIndexPage() {
   });
 
   const onSuccess = (courses) => {
-    setCourseJSON(courses.classes);
+    setCourseJSON(courses);
   };
 
   const mutation = useBackendMutation(
@@ -38,7 +39,7 @@ export default function SectionSearchIndexPage() {
       <div className="pt-2">
         <h5>Welcome to the UCSB Courses Search App!</h5>
         <BasicCourseSearchForm fetchJSON={fetchBasicCourseJSON} />
-        <CoursesWithSectionsTable courses={courseJSON} />
+        <CoursesWithSectionsTable courses={courseJSON}/>
       </div>
     </BasicLayout>
   );
