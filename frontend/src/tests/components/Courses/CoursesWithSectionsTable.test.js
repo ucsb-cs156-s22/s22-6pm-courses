@@ -33,8 +33,9 @@ describe("CourseTable tests", () => {
       </QueryClientProvider>
     );
 
-    const expectedHeaders = ["Course ID", "Location", "Enrollment", "Time", "Instructor"];
-    const expectedFields = ["courseId", "location", "enrollment", "time", "instructor"];
+    const expectedHeaders = ["Course ID", "Location", "Enrollment", "Time", "Instructor", "Section"];
+    const expectedFields = ["courseId", "location", "enrollment", "time", "instructor", "section"];
+
     const testId = "CoursesWithSectionsTable";
 
     expectedHeaders.forEach((headerText) => {
@@ -51,6 +52,8 @@ describe("CourseTable tests", () => {
     expect(screen.getByTestId(`${testId}-cell-row-0-col-enrollment`)).toHaveTextContent("85/9027/3029/3029/30");
     expect(screen.getByTestId(`${testId}-cell-row-0-col-time`)).toHaveTextContent("17:00--18:15 T R 10:00--10:50 W 11:00--11:50 W 14:00--14:50 W");
     expect(screen.getByTestId(`${testId}-cell-row-0-col-instructor`)).toHaveTextContent("SOLIS S WBATTULA NYANG XTANNA A A, NOBODY");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-section`)).toHaveTextContent("LECTURE");
+
   });
 
 });

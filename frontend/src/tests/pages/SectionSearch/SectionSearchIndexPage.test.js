@@ -89,3 +89,4 @@ describe("Section Search Index Page tests", () => {
     expect(screen.getByText("CMPSC 5A")).toBeInTheDocument();
   });
 });
+
