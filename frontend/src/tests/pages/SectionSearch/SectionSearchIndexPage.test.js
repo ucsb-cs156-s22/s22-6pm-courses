@@ -90,3 +90,4 @@ describe("Section Search Index Page tests", () => {
     expect(screen.getByText("LECTURE")).toBeInTheDocument();
   });
 });
+

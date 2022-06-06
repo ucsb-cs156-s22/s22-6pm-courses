@@ -32,7 +32,6 @@ describe("CourseTable tests", () => {
         </MemoryRouter>
       </QueryClientProvider>
     );
-
     const expectedHeaders = ["Course ID", "Section", "Location", "Enrollment", "Time", "Instructor"];
     const expectedFields = ["courseInfo.courseId", "section", "location", "enrollment", "time", "instructor"];
     const testId = "CoursesWithSectionsTable";
