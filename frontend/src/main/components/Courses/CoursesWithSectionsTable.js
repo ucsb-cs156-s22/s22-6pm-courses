@@ -15,11 +15,6 @@ export default function CoursesWithSectionsTable({ courses }) {
             id: 'section',
         },
         {
-            Header: 'Section',
-            accessor: (row) => section(row.classSections),
-            id: 'section',
-        },
-        {
             Header: 'Location',
             accessor: (row) => location(row.section),
             id: 'location',
