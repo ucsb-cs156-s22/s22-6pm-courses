@@ -40,7 +40,6 @@ const instructor = (loc) => {
     ans = ans.split(`!`);
     return ans.map((a)=><div>{a}</div>);
 }
-
 const section = (loc) => {
     let ans = "";
 
