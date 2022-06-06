@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { sectionsFixtures } from "fixtures/sectionsFixtures";
+import { newsectionFixtures } from "fixtures/newsectionFixtures";
 import CoursesWithSectionsTable from "main/components/Courses/CoursesWithSectionsTable";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
@@ -28,33 +28,31 @@ describe("CourseTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <CoursesWithSectionsTable courses={sectionsFixtures.sections} />
+          <CoursesWithSectionsTable courses={newsectionFixtures.oneSection} />
         </MemoryRouter>
       </QueryClientProvider>
     );
 
-    const expectedHeaders = ["Course ID", "Location", "Enrollment", "Time", "Instructor", "Section"];
-    const expectedFields = ["courseId", "location", "enrollment", "time", "instructor", "section"];
-
+    const expectedHeaders = ["Course ID", "Title", "Enroll Code", "Location", "Enrollment", "Time and Date", "Instructor"];
+    const expectedFields = ["courseId", "title", "section", "location", "enrollment", "time", "instructor"];
     const testId = "CoursesWithSectionsTable";
 
     expectedHeaders.forEach((headerText) => {
         const header = screen.getByText(headerText);
         expect(header).toBeInTheDocument();
       });
-  
+
       expectedFields.forEach((field) => {
         const header = screen.getByTestId(`${testId}-cell-row-0-col-${field}`);
         expect(header).toBeInTheDocument();
       });
     expect(screen.getByTestId(`${testId}-cell-row-0-col-courseId`)).toHaveTextContent("CMPSC 5A");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-location`)).toHaveTextContent("ELLSN 2617PHELP 1530PHELP 1530PHELP 1530");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-enrollment`)).toHaveTextContent("85/9027/3029/3029/30");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-time`)).toHaveTextContent("17:00--18:15 T R 10:00--10:50 W 11:00--11:50 W 14:00--14:50 W");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-instructor`)).toHaveTextContent("SOLIS S WBATTULA NYANG XTANNA A A, NOBODY");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("INTRO DATA SCI 1");
     expect(screen.getByTestId(`${testId}-cell-row-0-col-section`)).toHaveTextContent("LECTURE");
-
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-location`)).toHaveTextContent("ELLSN 2617");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-enrollment`)).toHaveTextContent("85/90");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-time`)).toHaveTextContent("17:00--18:15 T R");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-instructor`)).toHaveTextContent("SOLIS S W");
   });
 
 });
-
