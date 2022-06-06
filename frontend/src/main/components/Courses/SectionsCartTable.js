@@ -2,8 +2,7 @@ import React, {_Component} from "react";
 import OurTable from "main/components/OurTable";
 import { courseID, title, location, enroll, time, instructor, section } from "main/utils/CoursesWithSectionsUtilities";
 
-
-export default function CoursesWithSectionsTable({ courses }) {
+export default function SectionsCartTable({ courses }) {
 
     const columns = [
         {
@@ -41,11 +40,12 @@ export default function CoursesWithSectionsTable({ courses }) {
             accessor: (row) => instructor(row.section),
             id: 'instructor',
         }
+
     ];
 
     return <OurTable
         data={courses}
         columns={columns}
-        testid={"CoursesWithSectionsTable"}       
+        testid={"SectionsCartTable"}
     />;
 }; 

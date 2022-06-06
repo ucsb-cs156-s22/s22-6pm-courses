@@ -1,16 +1,16 @@
 import React from 'react';
 
-import CoursesWithSectionsTable from 'main/components/Courses/CoursesWithSectionsTable';
+import SectionsCartTable from 'main/components/Courses/SectionsCartTable';
 import {newsectionFixtures} from 'fixtures/newsectionFixtures';
 
 export default {
-    title: 'components/Courses/CoursesWithSectionsTable',
-    component: CoursesWithSectionsTable
+    title: 'components/Courses/SectionsCartTable',
+    component: SectionsCartTable
 };
 
 const Template = (args) => {
     return (
-        <CoursesWithSectionsTable {...args} />
+        <SectionsCartTable {...args} />
     )
 };
 

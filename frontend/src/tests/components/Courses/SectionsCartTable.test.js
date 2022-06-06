@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { newsectionFixtures } from "fixtures/newsectionFixtures";
-import CoursesWithSectionsTable from "main/components/Courses/CoursesWithSectionsTable";
+import SectionsCartTable from "main/components/Courses/SectionsCartTable";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 
@@ -18,7 +18,7 @@ describe("CourseTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <CoursesWithSectionsTable courses={[]} />
+          <SectionsCartTable courses={[]} />
         </MemoryRouter>
       </QueryClientProvider>
     );
@@ -28,14 +28,14 @@ describe("CourseTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <CoursesWithSectionsTable courses={newsectionFixtures.oneSection} />
+          <SectionsCartTable courses={newsectionFixtures.oneSection} />
         </MemoryRouter>
       </QueryClientProvider>
     );
 
     const expectedHeaders = ["Course ID", "Title", "Enroll Code", "Location", "Enrollment", "Time and Date", "Instructor"];
     const expectedFields = ["courseId", "title", "section", "location", "enrollment", "time", "instructor"];
-    const testId = "CoursesWithSectionsTable";
+    const testId = "SectionsCartTable";
 
     expectedHeaders.forEach((headerText) => {
         const header = screen.getByText(headerText);
