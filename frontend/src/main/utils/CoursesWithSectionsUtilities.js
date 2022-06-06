@@ -26,13 +26,13 @@ const enroll = (loc) => {
 
 const instructor = (loc) => {
     let ans = "";
-
     for (let j = 0; j < Math.min(3, loc.instructors.length); j++) { // display 3 instructors at most, or else won't fit in a line
         ans += `${loc.instructors[j].instructor}`;
         if (j + 1 < Math.min(3, loc.instructors.length)) {
             ans += `, `
         } 
     }
+
     ans = ans.split(`!`);
     return ans.map((a)=><div>{a}</div>);
 }
@@ -41,13 +41,6 @@ const section = (loc) => {
     let ans = "";
 
         let enrollNum = `${loc.enrollCode}`;
-        let sectionNumber = `${loc.section}`;
-        if(sectionNumber.substring(sectionNumber.length - 2) === '00'){
-            sectionNumber = 'LECTURE'
-        }
-        else{
-            sectionNumber = enrollNum
-        }
         ans += sectionNumber;
     
 
@@ -70,6 +63,7 @@ const title = (loc) => {
     
 
     ans = ans.split(',');
+
     return ans.map((a)=><div>{a}</div>);
 }
 
