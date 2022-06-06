@@ -7,6 +7,7 @@ import { hasRole } from "main/utils/currentUser";
 import { yyyyqToQyy } from "main/utils/quarterUtilities.js";
 
 export default function PersonalSchedulesTable({ personalSchedules, currentUser }) {
+
     const navigate = useNavigate();
 
     const editCallback = (cell) => {
@@ -40,7 +41,10 @@ export default function PersonalSchedulesTable({ personalSchedules, currentUser 
         },
         {
             Header: 'Quarter',
-            accessor: (row, _rowIndex) => yyyyqToQyy(row.quarter),
+            accessor: (row, _rowIndex) => {
+                if(row?.quarter){return yyyyqToQyy(row.quarter)}
+                return "";
+            },
             id: 'quarter',
         },
     ];
