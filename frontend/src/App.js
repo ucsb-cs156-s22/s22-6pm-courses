@@ -14,6 +14,7 @@ import PersonalSchedulesCreatePage from "main/pages/PersonalSchedules/PersonalSc
 import PersonalScheduleInfoPage from "main/pages/PersonalSchedules/PersonalScheduleInfoPage";
 
 import SectionSearchIndexPage from "main/pages/SectionSearch/SectionSearchIndexPage";
+import SectionSearchCartPage from "main/pages/SectionSearch/SectionSearchCartPage";
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
           hasRole(currentUser, "ROLE_USER") && (
             <>
               <Route exact path="/sectionsearch/list" element={<SectionSearchIndexPage />} />
+              <Route exact path="/sectionsearch/cart" element={<SectionSearchCartPage />} />
             </>
           )
         }

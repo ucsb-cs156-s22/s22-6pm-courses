@@ -1,45 +1,51 @@
-import React from "react";
+import React, {_Component} from "react";
 import OurTable from "main/components/OurTable";
-import { location, enroll, time, instructor, section } from "main/utils/CoursesWithSectionsUtilities";
+import { courseID, title, location, enroll, time, instructor, section } from "main/utils/CoursesWithSectionsUtilities";
 
 export default function CoursesWithSectionsTable({ courses }) {
 
     const columns = [
         {
             Header: 'Course ID',
-            accessor: 'courseId',
+            accessor: (row) => courseID(row),
+            id: 'courseId',
         },
         {
-            Header: 'Section',
-            accessor: (row) => section(row.classSections),
+            Header: 'Title',
+            accessor: (row) => title(row),
+            id: 'title',
+        },
+        {
+            Header: 'Enroll Code',
+            accessor: (row) => section(row.section),
             id: 'section',
         },
         {
             Header: 'Location',
-            accessor: (row) => location(row.classSections),
+            accessor: (row) => location(row.section),
             id: 'location',
         },
         {
             Header: 'Enrollment',
-            accessor: (row) => enroll(row.classSections),
+            accessor: (row) => enroll(row.section),
             id: 'enrollment',
         },
         {
-            Header: 'Time',
-            accessor: (row) => time(row.classSections),
+            Header: 'Time and Date',
+            accessor: (row) => time(row.section),
             id: 'time',
         },
         {
             Header: 'Instructor',
-            accessor: (row) => instructor(row.classSections),
+            accessor: (row) => instructor(row.section),
             id: 'instructor',
         }
+
     ];
 
     return <OurTable
         data={courses}
         columns={columns}
-        testid={"CoursesWithSectionsTable"}
+        testid={"CoursesWithSectionsTable"}       
     />;
 }; 
-
