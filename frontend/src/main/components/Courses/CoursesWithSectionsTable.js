@@ -7,31 +7,31 @@ export default function CoursesWithSectionsTable({ courses }) {
     const columns = [
         {
             Header: 'Course ID',
-            accessor: 'courseId',
+            accessor: 'courseInfo.courseId',
         },
         {
             Header: 'Section',
-            accessor: (row) => section(row.classSections),
+            accessor: (row) => section(row.section),
             id: 'section',
         },
         {
             Header: 'Location',
-            accessor: (row) => location(row.classSections),
+            accessor: (row) => location(row.section),
             id: 'location',
         },
         {
             Header: 'Enrollment',
-            accessor: (row) => enroll(row.classSections),
+            accessor: (row) => enroll(row.section),
             id: 'enrollment',
         },
         {
             Header: 'Time',
-            accessor: (row) => time(row.classSections),
+            accessor: (row) => time(row.section),
             id: 'time',
         },
         {
             Header: 'Instructor',
-            accessor: (row) => instructor(row.classSections),
+            accessor: (row) => instructor(row.section),
             id: 'instructor',
         }
     ];
