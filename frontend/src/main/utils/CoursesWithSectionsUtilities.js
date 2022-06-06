@@ -40,8 +40,8 @@ const instructor = (loc) => {
 const section = (loc) => {
     let ans = "";
 
-        let enrollNum = `${loc.enrollCode}`;
-        ans += sectionNumber;
+    let enrollNum = `${loc.enrollCode}`;
+    ans += enrollNum;
     
 
     ans = ans.split(',');
