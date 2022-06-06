@@ -6,6 +6,7 @@ import CoursesWithSectionsTable from "main/components/Courses/CoursesWithSection
 import { useBackendMutation } from "main/utils/useBackend";
 import { useCurrentUser } from 'main/utils/currentUser' // use prefix indicates a React Hook
 
+
 export default function SectionSearchIndexPage() {
   const currentUser = useCurrentUser();
   
