@@ -73,4 +73,3 @@ describe("courseSections conversion tests", () => {
   });
 
 });
-
