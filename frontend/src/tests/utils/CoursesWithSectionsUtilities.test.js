@@ -71,4 +71,5 @@ describe("courseSections conversion tests", () => {
     expect(res[0].props.children).toBe("");
   });
 
+ 
 });
