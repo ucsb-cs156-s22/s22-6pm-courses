@@ -68,7 +68,6 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                 )
               }
             </Nav>
-
             
             <Nav className="mr-auto">
               {
