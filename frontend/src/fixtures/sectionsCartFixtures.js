@@ -4,7 +4,7 @@ const sectionsCartFixtures = {
         "id": 1,
         "courseId": "CMPSC 5A",
         "title": "INTRO DATA SCI 1",
-        "section": "LECTURE",
+        "section": "59600",
         "location":"ELLSN 2617",
         "enrollment":"85/90",
         "time":"17:00--18:15 T R",
