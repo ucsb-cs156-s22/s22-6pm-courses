@@ -33,7 +33,7 @@ describe("courseSections conversion tests", () => {
   test("section correctly converts", () => {
     let res = section(newsectionFixtures.sections[0].section);
     expect(res.length).toBe(1);
-    expect(res[0].props.children).toBe("LECTURE");
+    expect(res[0].props.children).toBe("59600");
   });
 
   test("Title correctly converts", () => {

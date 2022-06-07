@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.Optional;
+import java.util.ArrayList;
 
 
   
@@ -173,6 +174,21 @@ public class PersonalCoursesController extends ApiController {
         return savedPersonalCourse;
     }
 
+    @ApiOperation(value = "List all enroll cd's of the sections in a personal schedule")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/all/enrollCd")
+    public Iterable<String> allEnrollCds(
+          @ApiParam("psID") @RequestParam long psId
+    ){
+      Iterable<PersonalCourses> personalcourses = personalcoursesRepository.findAllByPsId(psId);
+      ArrayList<String> enrollCds = new ArrayList<String>();
+
+      for (PersonalCourses p: personalcourses){
+        enrollCds.add(p.getEnrollCd());
+      }
+      return enrollCds;
+    }
+  
     @ApiOperation(value = "Delete a personal course")
     @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/delete")
@@ -187,6 +203,5 @@ public class PersonalCoursesController extends ApiController {
         return genericMessage("Personal Course with id %s deleted".formatted(id));
 
     }
-
     
 }

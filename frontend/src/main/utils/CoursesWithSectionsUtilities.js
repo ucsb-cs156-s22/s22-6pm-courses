@@ -45,14 +45,8 @@ const section = (loc) => {
     let ans = "";
 
         let enrollNum = `${loc.enrollCode}`;
-        let sectionNumber = `${loc.section}`;
-        if(sectionNumber.substring(sectionNumber.length - 2) === '00'){
-            sectionNumber = 'LECTURE'
-        }
-        else{
-            sectionNumber = enrollNum
-        }
-        ans += sectionNumber;
+        
+        ans += enrollNum;
     
 
     ans = ans.split(',');
@@ -91,6 +85,7 @@ const courseID = (loc) => {
     
 
     ans = ans.split(',');
+
     return ans.map((a)=><div>{a}</div>);
 }
 
