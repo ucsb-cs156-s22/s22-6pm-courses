@@ -10,5 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface PersonalCoursesRepository extends CrudRepository<PersonalCourses, Long> {
-  Iterable<PersonalCourses> findAllByPsId(Long psId);
+    Iterable<PersonalCourses> findAllByPsId(Long psId);
 }
