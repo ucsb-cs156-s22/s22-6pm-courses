@@ -1,10 +1,14 @@
 package edu.ucsb.cs156.courses.controllers;
 
 import edu.ucsb.cs156.courses.entities.PersonalSchedule;
+import edu.ucsb.cs156.courses.entities.PersonalCourses;
 import edu.ucsb.cs156.courses.entities.User;
 import edu.ucsb.cs156.courses.errors.EntityNotFoundException;
 import edu.ucsb.cs156.courses.models.CurrentUser;
 import edu.ucsb.cs156.courses.repositories.PersonalScheduleRepository;
+import edu.ucsb.cs156.courses.repositories.PersonalCoursesRepository;
+import edu.ucsb.cs156.courses.services.UCSBCurriculumService;
+import edu.ucsb.cs156.courses.documents.ConvertedSection;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -26,6 +30,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -37,6 +45,8 @@ public class PersonalSchedulesController extends ApiController {
 
     @Autowired
     PersonalScheduleRepository personalscheduleRepository;
+    PersonalCoursesRepository personalcoursesRepository;
+    UCSBCurriculumService ucsbCurriculumService;
 
     @ApiOperation(value = "List all personal schedules")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -161,5 +171,4 @@ public class PersonalSchedulesController extends ApiController {
 
         return personalschedule;
     }
-    
 }

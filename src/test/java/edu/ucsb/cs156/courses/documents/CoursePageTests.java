@@ -15,15 +15,6 @@ public class CoursePageTests {
 
 
     @Test
-    public void convertsCoursePageToObject()  {
-        CoursePage cp = CoursePage.fromJSON(CoursePageFixtures.COURSE_PAGE_JSON);
-        assertEquals(1, cp.getPageNumber());
-        assertEquals(10, cp.getPageSize());
-        assertEquals(49, cp.getTotal());
-    }
-
-
-    @Test
     public void convertsMath3BCoursePageToObject() throws JsonProcessingException {
         CoursePage cp = CoursePage.fromJSON(CoursePageFixtures.COURSE_PAGE_JSON_MATH3B);
         assertEquals(1, cp.getPageNumber());
@@ -31,6 +22,19 @@ public class CoursePageTests {
         assertEquals(1, cp.getTotal());
 
         List<ConvertedSection> cs = cp.convertedSections();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cs);
+    }
+
+    @Test
+    public void convertsMath3BCoursePageToObjectInfo() throws JsonProcessingException {
+        CoursePage cp = CoursePage.fromJSON(CoursePageFixtures.COURSE_PAGE_JSON_MATH3B);
+        assertEquals(1, cp.getPageNumber());
+        assertEquals(10, cp.getPageSize());
+        assertEquals(1, cp.getTotal());
+
+        List<CourseInfo> cs = cp.convertedSectionsInfo();
 
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cs);
