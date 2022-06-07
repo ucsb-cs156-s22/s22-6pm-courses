@@ -4,9 +4,12 @@ import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import BasicCourseSearchForm from "main/components/BasicCourseSearch/BasicCourseSearchForm";
 import CoursesWithSectionsTable from "main/components/Courses/CoursesWithSectionsTable";
 import { useBackendMutation } from "main/utils/useBackend";
+import { useCurrentUser } from 'main/utils/currentUser' // use prefix indicates a React Hook
 
 
 export default function SectionSearchIndexPage() {
+  const currentUser = useCurrentUser();
+  
   // Stryker disable next-line all : Can't test state because hook is internal
   const [courseJSON, setCourseJSON] = useState([]);
 
@@ -39,9 +42,8 @@ export default function SectionSearchIndexPage() {
       <div className="pt-2">
         <h5>Welcome to the UCSB Courses Search App!</h5>
         <BasicCourseSearchForm fetchJSON={fetchBasicCourseJSON} />
-        <CoursesWithSectionsTable courses={courseJSON}/>
+        <CoursesWithSectionsTable courses={courseJSON} currentUser={currentUser}/>
       </div>
     </BasicLayout>
   );
 }
-
