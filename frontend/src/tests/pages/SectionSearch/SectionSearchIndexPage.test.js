@@ -86,8 +86,7 @@ describe("Section Search Index Page tests", () => {
       dept: "ANTH",
       level: "G",
     });
-
-    expect(screen.getByText("LECTURE")).toBeInTheDocument();
+    expect(screen.getByText("59600")).toBeInTheDocument();
   });
 });
 
