@@ -191,7 +191,7 @@ public class SectionsCartControllerTests extends ControllerTestCase {
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/sectionscart/post?courseId=CMPSC 5A&title=INTRO DATA SCI 1&section=LECTURE&location=ELLSN 2617&enrollment=85/90&time=17:00--18:15 T R&instructor=SOLIS S W")
+                                post("/api/sectionscart/post?courseId=CMPSC 5A&title=INTRO DATA SCI 1&section=59600&location=ELLSN 2617&enrollment=85/90&time=17:00--18:15 T R&instructor=SOLIS S W")
                                                 .with(csrf()))
                                 .andExpect(status().isOk()).andReturn();
 
