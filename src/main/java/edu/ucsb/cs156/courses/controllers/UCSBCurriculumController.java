@@ -48,5 +48,12 @@ public class UCSBCurriculumController {
         List<ConvertedSection> sections = ucsbCurriculumService.getConvertedSections(dept, qtr, level);
         
         return sections;
-    }      
+    }
+    @GetMapping(value = "/finalsearch", produces = "application/json")
+    public ResponseEntity<String> finalsearch(@RequestParam String quarter, @RequestParam String enrollCode) throws JsonProcessingException {
+
+        String body = ucsbCurriculumService.getFinalJSON(quarter, enrollCode);
+        
+        return ResponseEntity.ok().body(body);
+    } 
 }

@@ -251,5 +251,84 @@ public class UCSBCurriculumServiceTests {
         assertEquals(expectedResult, result);
     }
 
+
+
+@Test
+public void test_FinalJSON_success() throws Exception {
+    String expectedResult = """ 
+        {
+        "hasFinals": true,
+        "comments": "",
+        "examDay": "T",
+        "examDate": "20220607",
+        "beginTime": "16:00",
+        "endTime": "19:00"
+        } """;
+
+
+    String quarter = "20222";
+    String enrollCode = "08250";
+
+    String params = String.format(
+        "?quarter=%s&enrollCode=%s", quarter, enrollCode);
+    String expectedURL = UCSBCurriculumService.FINAL_ENDPOINT + params;
+
+    this.mockRestServiceServer.expect(requestTo(expectedURL))
+            .andExpect(header("Accept", MediaType.APPLICATION_JSON.toString()))
+            .andExpect(header("Content-Type", MediaType.APPLICATION_JSON.toString()))
+            .andExpect(header("ucsb-api-version", "1.0"))
+            .andExpect(header("ucsb-api-key", apiKey))
+            .andRespond(withSuccess(expectedResult, MediaType.APPLICATION_JSON));
+
+    String result = ucs.getFinalJSON(quarter, enrollCode);
+    
+    assertEquals(expectedResult, result);
 }
+
+@Test
+public void test_getFinalJSON_exception() throws Exception {
+    String expectedResult = "{\"error\": \"401: Unauthorized\"}";
+
+    String quarter = "20224";
+    String enrollCode = "08185";
+
+    String params = String.format(
+            "?quarter=%s&enrollCode=%s", quarter, enrollCode);
+    String expectedURL = UCSBCurriculumService.FINAL_ENDPOINT + params;
+
+    this.mockRestServiceServer.expect(requestTo(expectedURL))
+            .andExpect(header("Accept", MediaType.APPLICATION_JSON.toString()))
+            .andExpect(header("Content-Type", MediaType.APPLICATION_JSON.toString()))
+            .andExpect(header("ucsb-api-version", "1.0"))
+            .andExpect(header("ucsb-api-key", apiKey))
+            .andRespond(withUnauthorizedRequest());
+
+    String result = ucs.getFinalJSON(quarter, enrollCode);
+    assertEquals(expectedResult, result);
+}
+
+@Test
+public void test_FinalJSON_DNE() throws Exception {
+
+    String expectedResult = "{\"error\":\"No final exam found; contact professor for details\"}";
+    String quarter = "20224";
+    String enrollCode = "02580";
+
+    String params = String.format(
+        "?quarter=%s&enrollCode=%s", quarter, enrollCode);
+    String expectedURL = UCSBCurriculumService.FINAL_ENDPOINT + params;
+
+    this.mockRestServiceServer.expect(requestTo(expectedURL))
+            .andExpect(header("Accept", MediaType.APPLICATION_JSON.toString()))
+            .andExpect(header("Content-Type", MediaType.APPLICATION_JSON.toString()))
+            .andExpect(header("ucsb-api-version", "1.0"))
+            .andExpect(header("ucsb-api-key", apiKey))
+            .andRespond(withSuccess("null", MediaType.APPLICATION_JSON));
+
+    String result = ucs.getFinalJSON(quarter, enrollCode);
+    assertEquals(expectedResult, result);
+}
+
+}
+
 

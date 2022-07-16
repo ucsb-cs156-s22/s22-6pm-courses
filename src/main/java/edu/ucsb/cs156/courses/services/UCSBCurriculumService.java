@@ -4,7 +4,9 @@ package edu.ucsb.cs156.courses.services;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -163,6 +165,45 @@ public class UCSBCurriculumService {
             retVal = "{\"error\": \"404 (Not Found): Enroll code does not exist!\"}";
         }
 
+        logger.info("json: {} contentType: {} statusCode: {}",retVal,contentType,statusCode);
+        return retVal;
+    }
+
+  public static final String FINAL_ENDPOINT = "https://api.ucsb.edu/academics/curriculums/v1/finals";
+
+  public String getFinalJSON(String quarter, String enrollCode) throws JsonProcessingException {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("ucsb-api-version", "1.0");
+        headers.set("ucsb-api-key", this.apiKey);
+
+        HttpEntity<String> entity = new HttpEntity<>("body", headers);
+
+        String params = String.format(
+            "?quarter=%s&enrollCode=%s", quarter, enrollCode);
+        String url = FINAL_ENDPOINT + params;
+
+        logger.info("url=" + url);
+
+        String retVal = "";
+        MediaType contentType=null;
+        HttpStatus statusCode=null;
+        try{
+            ResponseEntity<String> re = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+            contentType = re.getHeaders().getContentType();
+            statusCode = re.getStatusCode();
+            retVal = re.getBody();
+        } catch (HttpClientErrorException e) {
+            retVal = "{\"error\": \"401: Unauthorized\"}";
+        }
+        if (retVal.contains("null")){
+            Map<String,String> payload = new HashMap<>();
+            payload.put("error","No final exam found; contact professor for details");
+            retVal = new ObjectMapper().writeValueAsString(payload);
+        }
+        
         logger.info("json: {} contentType: {} statusCode: {}",retVal,contentType,statusCode);
         return retVal;
     }
